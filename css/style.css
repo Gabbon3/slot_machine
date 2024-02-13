@@ -12,7 +12,7 @@ nav input {
 
 #display {
     display: flex;
-    margin: 50px auto;
+    margin: 10px auto 20px auto;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
@@ -37,6 +37,10 @@ nav input {
 
 input {
     outline: none;
+}
+
+#info {
+    text-align: center;
 }
 
 .danger {

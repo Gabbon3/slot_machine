@@ -13,7 +13,8 @@ const he = {
             aumenta_puntata: dom.get1('#aumenta_puntata'),
             diminuisci_puntata: dom.get1('#diminuisci_puntata'),
             reset_btn: dom.get1('#reset_game'),
-            items: dom.geta('.item')
+            items: dom.geta('.item'),
+            calcoli: dom.get1('#calcoli')
         }
     }
 }
@@ -44,26 +45,25 @@ const html = {
      * 3: terra => <i class="fa-solid fa-earth-europe"></i>
      */
     spin() {
+        he.e.info.innerHTML = '';
+        $(he.e.spin_btn).prop('disabled', true);
         const rulli = 5;
         const combinazione = slot.spin(rulli);
-        const display = document.getElementById('display');
-        const items = display.querySelectorAll('.item');
         const puntata = Number(he.e.puntata.value);
-        // controllo che l'utente possa fare la puntata
+        // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
             alert('Non puoi puntare piu di quello che possiedi');
             return;
         }
         // carico html
-        for (let i = 0; i < rulli; i++) {
-            items[i].innerHTML = this.num_to_html(combinazione[i]);
-            // items[i].innerHTML = combinazione[i];
-        }
+        animazione.shuffle(combinazione, 5, () => {
+            $(he.e.spin_btn).prop('disabled', false);
+            const guadagno = slot.check_player_wins(combinazione, puntata);
+            he.e.coin.innerHTML = utente.wallet;
+            this._info(puntata, guadagno);
+        });
         // verifico quanto ha vinto
-        const guadagno = slot.check_player_wins(combinazione, puntata);
-        he.e.coin.innerHTML = utente.wallet;
-        this._info(puntata, guadagno);
     },
     /**
      * mette a display le informazioni
@@ -86,31 +86,13 @@ const html = {
      * @returns 
      */
     num_to_html(n) {
-        let html = '';
-        switch (n) {
-            case 0:
-                html = '🛸'
-                break;
-            case 1:
-                html = '👽'
-                break;
-            case 2:
-                html = '🛰️'
-                break;
-            case 3:
-                html = '🚀'
-                break;
-            case 4:
-                html = '📡'
-                break;
-            case 5:
-                html = '🌎'
-                break;
-            default:
-                console.error('Invalid number, must be between 0 and 3');
-                break;
-        }
-        return html;
+        return config.simboli[n];
+    },
+    /**
+     * mostra i calcoli del guadagno a display
+     */
+    mostra_calcoli(puntata, guadagno) {
+        he.e.calcoli.innerHTML = `${guadagno} - ${puntata}`;
     }
 }
 /**
