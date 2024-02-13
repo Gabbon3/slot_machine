@@ -99,7 +99,7 @@ const slot = {
      */
     calc_coins(puntata, rarita, frequenza) {
         let multiplier = this.moltiplicatori[rarita];
-        multiplier *= 1 + (0.75 * (frequenza - config.elementi_minimi_uguali));
+        multiplier *= 1 + (0.5 * (frequenza - config.elementi_minimi_uguali));
         const result = Math.round(puntata * multiplier);
         return result;
     }
