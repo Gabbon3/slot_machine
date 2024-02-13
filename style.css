@@ -1,0 +1,48 @@
+.controller {
+    position: fixed;
+    bottom: 10px;
+    left: 5px;
+    width: 100%;
+}
+
+nav input {
+    max-width: 40%;
+    flex-grow: 2;
+}
+
+#display {
+    display: flex;
+    margin: 50px auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    width: 100%;
+    overflow: hidden;
+}
+
+#display .item {
+    flex-grow: 1;
+    text-align: center;
+    font-size: 12vw;
+}
+
+.d-flex {
+    gap: 10px;
+}
+
+#coin {
+    font-size: 30px;
+    margin-right: auto;
+}
+
+input {
+    outline: none;
+}
+
+.danger {
+    color: #dc3545;
+}
+
+.success {
+    color: #198754;
+}
