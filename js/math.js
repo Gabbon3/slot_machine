@@ -67,7 +67,7 @@ const configuratore = {
             for (let i = 1; i <= l; i++) {
                 let moltiplicatore = 0;
                 for (let j = 0; j < i; j++) {
-                    moltiplicatore += (n ** j);
+                    moltiplicatore += Math.floor((n ** j));
                 }
                 moltiplicatori.push(moltiplicatore);
             }
