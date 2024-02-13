@@ -18,6 +18,12 @@ const he = {
 
 const html = {
     /**
+     * inizializza l'html
+     */
+    _init() {
+        he.e.coin.innerHTML = utente.wallet;
+    },
+    /**
      * 
      * 0: meteora => <i class="fa-solid fa-meteor"></i>
      * 1: astronauta => <i class="fa-solid fa-user-astronaut"></i>

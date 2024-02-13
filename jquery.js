@@ -1,6 +1,7 @@
 $(document).ready(() => {
     he.e = he._init();
     slot._init();
+    html._init();
     /**
      * pulsanti per aumentare o diminuire la puntata
      */
