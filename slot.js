@@ -1,6 +1,10 @@
+const config = {
+    wallet: 1000
+}
+
 const utente = {
     // valuta iniziale del giocatore
-    wallet: 500,
+    wallet: config.wallet,
     lose: false, // verifica che il giocatore non vada sotto 0
     manage_wallet(puntata, guadagno) {
         const differenza = guadagno - puntata;
@@ -103,6 +107,14 @@ const slot = {
         }
         // reverse perche deve essere iin ordine crescente, l'opposto dei moltiplicatori
         slot_elements.rarita.reverse();
+    },
+    /**
+     * ricomincia la partita
+     */
+    reset_game() {
+        utente.lose = false;
+        utente.wallet = config.wallet;
+        html._reset();
     },
     /**
      * esegue l'azione di spin della macchina

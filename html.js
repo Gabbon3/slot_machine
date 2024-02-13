@@ -12,6 +12,8 @@ const he = {
             info: dom.get1('#info'),
             aumenta_puntata: dom.get1('#aumenta_puntata'),
             diminuisci_puntata: dom.get1('#diminuisci_puntata'),
+            reset_btn: dom.get1('#reset_game'),
+            items: dom.geta('.item')
         }
     }
 }
@@ -22,6 +24,17 @@ const html = {
      */
     _init() {
         he.e.coin.innerHTML = utente.wallet;
+    },
+    /**
+     * 
+     */
+    _reset() {
+        $(he.e.spin_btn).prop('disabled', false);
+        he.e.coin.innerHTML = config.wallet;
+        he.e.info.innerHTML = '';
+        he.e.items.forEach(item => {
+            item.innerHTML = '';
+        });
     },
     /**
      * 

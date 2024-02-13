@@ -16,6 +16,12 @@ $(document).ready(() => {
         }
         he.e.puntata.value = current - 20;
     });
+    /**
+     * reset del gioco
+     */
+    $(he.e.reset_btn).click(() => {
+        slot.reset_game();
+    });
     // ---
     console.log('Document Loaded');
 });
