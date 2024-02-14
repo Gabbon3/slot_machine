@@ -32,7 +32,7 @@ const slot = {
         // inizializzo counter
         this.frequenze = new Array(config.quantita).fill(0);
         // inizializzo i moltiplicatori
-        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(1.4, config.quantita);
+        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_k, config.quantita);
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
@@ -52,12 +52,11 @@ const slot = {
     },
     /**
      * esegue l'azione di spin della macchina
-     * @param {number} n_rulli numero dei rulli, quindi quanti elementi restituire - default = 5
      * @returns {Array} array degli elementi del rullo
      */
-    spin(n_rulli = 5) {
-        const result = new Array(n_rulli);
-        for (let i = 0; i < n_rulli; i++) {
+    spin() {
+        const result = new Array(config.rulli);
+        for (let i = 0; i < config.rulli; i++) {
             const elemento = slot_elements.get_element();
             result[i] = elemento;
         }
@@ -81,8 +80,9 @@ const slot = {
         }
         // ---
         let guadagno = 0;
+        // per ogni emoji verifico
         for (let i = 0; i < config.quantita; i++) {
-            // se almeno 3
+            // se almeno n emoji uguali
             if (this.frequenze[i] >= config.elementi_minimi_uguali) {
                 guadagno += this.calc_coins(puntata, i, this.frequenze[i]);
                 // aggiungo all'utente il guadagno
@@ -98,8 +98,18 @@ const slot = {
      * @param {number} frequenza da 3 a 5 - quante volte è uscito
      */
     calc_coins(puntata, rarita, frequenza) {
+        // prendo il moltiplicatore statico dell'emoji corrente
         let multiplier = this.moltiplicatori[rarita];
-        multiplier *= 1 + (0.5 * (frequenza - config.elementi_minimi_uguali));
+        /* 
+         * moltiplico il moltiplicatore se ci sono piu emoji uguali rispetto al minimo
+         * e moltiplico ogni nuova emoji per config.bonus_moltiplicatore
+        */
+        multiplier *= 1 + (config.bonus_moltiplicatore * (frequenza - config.elementi_minimi_uguali));
+        // moltiplico la puntata per il moltiplicatore e lo arrotondo in maniera equa
+        /**
+         * se x = 3.4 allora = 3
+         * se x = 7.6 allora = 8
+         */ 
         const result = Math.round(puntata * multiplier);
         return result;
     }

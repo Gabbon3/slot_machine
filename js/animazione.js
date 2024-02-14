@@ -1,10 +1,20 @@
 const animazione = {
     intervalli: {},
-    shuffle(results, rulli = 5, funzione_finale) {
+    shuffle(results, funzione_finale) {
+        // per ogni riga eseguo le animazioni
+        let i = 0;
         let timeout = 1000;
-        for (let i = 0; i < rulli; i++) {
-            this.scramble(results[i], he.e.items[i], i, timeout);
-            timeout += 350;
+        const righe = config.rulli / config.rulli_per_riga;
+        let rulli_animati = 0;
+        for (let r = 1; r <= righe; r++) {
+            timeout = 1000;
+            for (i = i; i < config.rulli_per_riga; i++) {
+                const indice = i + rulli_animati;
+                this.scramble(results[indice], he.e.items[indice], indice, timeout);
+                timeout += 350;
+            }
+            i = 0;
+            rulli_animati += config.rulli_per_riga;
         }
         // eseguo del codice quando l'animazione finisce
         // in qesto cas sara quando la slot non gira piu allora faccio i calcoli

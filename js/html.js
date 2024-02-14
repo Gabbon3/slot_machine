@@ -24,7 +24,16 @@ const html = {
      * inizializza l'html
      */
     _init() {
-        he.e.coin.innerHTML = utente.wallet;
+        he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
+        // mostro le rarita e i moltiplicatori sulla tabella
+        let prev_r = 0;
+        for (let i = 0; i < config.quantita; i++) {
+            const r = parseInt(slot_elements.rarita[i] * 100);
+            dom.get1('#r_' + i).innerHTML = (r - prev_r);
+            dom.get1('#m_' + i).innerHTML = slot.moltiplicatori[i].toFixed(2);
+            dom.get1('#q_' + i).innerHTML = 0;
+            prev_r = r;
+        }
     },
     /**
      * 
@@ -47,8 +56,7 @@ const html = {
     spin() {
         he.e.info.innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
-        const rulli = 5;
-        const combinazione = slot.spin(rulli);
+        const combinazione = slot.spin();
         const puntata = Number(he.e.puntata.value);
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
@@ -57,10 +65,10 @@ const html = {
             return;
         }
         // carico html
-        animazione.shuffle(combinazione, 5, () => {
+        animazione.shuffle(combinazione, () => {
             $(he.e.spin_btn).prop('disabled', false);
             const guadagno = slot.check_player_wins(combinazione, puntata);
-            he.e.coin.innerHTML = utente.wallet;
+            he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
             this._info(puntata, guadagno);
         });
         // verifico quanto ha vinto
@@ -70,13 +78,24 @@ const html = {
      * @param {number} guadagno 
      */
     _info(puntata, guadagno) {
+        // mostro le frequenze
+        for (let i = 0; i < config.quantita; i++) {
+            const f = slot.frequenze[i]; // frequenza emoji[i]
+            const b = f >= 5 ? 
+                        1 + (config.bonus_moltiplicatore * (f - config.elementi_minimi_uguali))
+                        :
+                        1; // bonus moltiplicatore
+            dom.get1('#q_' + i).innerHTML = f >= 5 ? `<b>${f}</b>` : f;
+            dom.get1('#b_' + i).innerHTML = b;
+        }
+        // mostro il guadagno effettivo
         let e = he.e.info;
         let differenza = guadagno - puntata;
         if (differenza < 0) {
             e.setAttribute('class', 'danger');
         } else {
             e.setAttribute('class', 'success');
-            differenza = '+' + differenza;
+            differenza = '+' + this.better_big_nums(differenza);
         }
         e.innerHTML = "<b>" + differenza + '</b> <i class="fa-brands fa-gg"></i>';
     },
@@ -93,6 +112,14 @@ const html = {
      */
     mostra_calcoli(puntata, guadagno) {
         he.e.calcoli.innerHTML = `${guadagno} - ${puntata}`;
+    },
+    /**
+     * migliora la visibilita dei numeri grandi
+     */
+    better_big_nums(number) {
+        number = `${number}`;
+        if (number.length <= 3) return number;
+        return [...[...number].reverse().join('').match(/.{1,3}/g).join('ˈ')].reverse().join('');
     }
 }
 /**

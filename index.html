@@ -32,11 +32,76 @@
         <span class="item"></span>
         <span class="item"></span>
         <span class="item"></span>
+        <!-- --- -->
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <!-- --- -->
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
+        <span class="item"></span>
     </div>
     <div class="container my-2">
         <h1 id="info">
 
         </h1>
+        <table class="table">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Rarità %</th>
+                <th scope="col">Moltiplicatore</th>
+                <th scope="col">Q.</th>
+                <th scope="col">Bonus *</th>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">🛸</th>
+                    <td id="r_0"></td>
+                    <td id="m_0"></td>
+                    <td id="q_0"></td>
+                    <td id="b_0"></td>
+                </tr>
+                <tr>
+                    <th scope="row">👽</th>
+                    <td id="r_1"></td>
+                    <td id="m_1"></td>
+                    <td id="q_1"></td>
+                    <td id="b_1"></td>
+                </tr>
+                <tr>
+                    <th scope="row">🛰️</th>
+                    <td id="r_2"></td>
+                    <td id="m_2"></td>
+                    <td id="q_2"></td>
+                    <td id="b_2"></td>
+                </tr>
+                <tr>
+                    <th scope="row">🚀</th>
+                    <td id="r_3"></td>
+                    <td id="m_3"></td>
+                    <td id="q_3"></td>
+                    <td id="b_3"></td>
+                </tr>
+                <tr>
+                    <th scope="row">📡</th>
+                    <td id="r_4"></td>
+                    <td id="m_4"></td>
+                    <td id="q_4"></td>
+                    <td id="b_4"></td>
+                </tr>
+                <tr>
+                    <th scope="row">🌎</th>
+                    <td id="r_5"></td>
+                    <td id="m_5"></td>
+                    <td id="q_5"></td>
+                    <td id="b_5"></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
     <div class="controller">
         <div class="container my-2 d-flex">
@@ -44,22 +109,12 @@
             <input type="number" class="form-control" id="puntata" title="Puntata" min="20" step="20" value="20">
             <button class="btn btn-outline-secondary" type="button" id="aumenta_puntata">+</button>
         </div>
-        <nav class="container d-flex">
+        <nav class="container mb-2 d-flex">
             <span id="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></span>
             <!-- --- -->
             <button class="btn btn-outline-secondary" type="button" id="reset_game">Ricomincia</button>
             <button onclick="html.spin()" id="spin_btn" class="btn btn-primary">Spin</button>
         </nav>
-        <div class="container my-3">
-            <p>
-                🛸
-                👽
-                🛰️
-                🚀
-                📡
-                🌎
-            </p>
-        </div>
     </div>
     <!-- informazioni -->
     <!-- bootstrap -->

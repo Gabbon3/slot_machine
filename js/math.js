@@ -69,7 +69,7 @@ const configuratore = {
                 for (let j = 0; j < i; j++) {
                     moltiplicatore += (n ** j);
                 }
-                moltiplicatori.push(Math.floor(moltiplicatore));
+                moltiplicatori.push(moltiplicatore);
             }
             return moltiplicatori.reverse();
         }

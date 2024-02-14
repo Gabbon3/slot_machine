@@ -1,8 +1,15 @@
+body {
+    margin-bottom: 120px;
+}
+
 .controller {
     position: fixed;
-    bottom: 10px;
-    left: 5px;
+    bottom: 0;
+    left: 0;
     width: 100%;
+    background-color: rgba(20, 20, 20, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
 
 nav input {
@@ -18,12 +25,14 @@ nav input {
     align-items: stretch;
     width: 100%;
     overflow: hidden;
+    flex-wrap: wrap;
 }
 
 #display .item {
     flex-grow: 1;
     text-align: center;
     font-size: 12vw;
+    width: 20%;
 }
 
 .d-flex {
@@ -47,6 +56,6 @@ input {
     color: #dc3545;
 }
 
-.success {
+.success, .table b {
     color: #198754;
 }
