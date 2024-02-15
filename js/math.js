@@ -99,7 +99,7 @@ const configuratore = {
          */
         proporzione(array, max) {
             let rarita = [];
-            for (let i = 0; i < config.quantita; i++) {
+            for (let i = 0; i < config.n_emoji; i++) {
                 // x : y = z : ?
                 rarita.push( math.proporzione(max, array[i], 1) );
             }

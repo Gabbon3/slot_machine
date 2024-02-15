@@ -19,7 +19,7 @@ nav input {
 
 #display {
     display: flex;
-    margin: 10px auto 20px auto;
+    margin: 0 auto 20px auto;
     flex-direction: row;
     justify-content: center;
     align-items: stretch;
@@ -33,6 +33,19 @@ nav input {
     text-align: center;
     font-size: 12vw;
     width: 20%;
+}
+
+.item.active {
+    animation: evidenzia 0.25s ease-in-out 1;
+}
+
+@keyframes evidenzia {
+    0% {
+        background-color: #2b3239;
+    }
+    100% {
+        background-color: rgba(33, 37, 41, 0);
+    }
 }
 
 .d-flex {

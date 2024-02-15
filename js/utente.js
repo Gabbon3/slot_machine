@@ -5,11 +5,21 @@ const utente = {
     manage_wallet(puntata, guadagno) {
         const differenza = guadagno - puntata;
         this.wallet += differenza;
+        // locale
+        record.last_game = utente.wallet;
+        record.set('last_game', record.last_game);
+        record.check_new_record();
+        // ----
         if (this.wallet <= 0) {
             // impedisco di far giocare il bro
             $(he.e.spin_btn).prop('disabled', true);
             he.e.info.innerHTML = 'Hai perso';
             he.e.info.setAttribute('class', 'danger');
+            // locale
+            record.partite_perse++;
+            record.set('partite_perse', record.partite_perse);
+            record.avviso('🚩 Hai perso! 🚩');
+            // ----
         }
     },
     /**

@@ -1,27 +1,4 @@
-const slot_elements = {
-    /**
-     * elementi presenti in un rullo
-     * da inizializzare
-     */
-    rarita: new Array(),
-    get_element() {
-        // numero casuale utile all'estrazione
-        const numero = random.secure_min_max(0, config.max_random_number);
-        // risultato finale - usato anche per iterare
-        const length = this.rarita.length - 1;
-        let result = length;
-        for (let i = 0; i < length; i++) {
-            // numero < max_number * n% dove n < 1
-            if (numero < (config.max_random_number * this.rarita[i])) {
-                result = i;
-                break;
-            }
-        }
-        return result;
-    }
-}
-
-const slot = {
+const slot1 = {
     frequenze: [], // contatore per verificare il punteggio di uno spin
     // moltiplicatori statici
     moltiplicatori: [],
@@ -30,9 +7,9 @@ const slot = {
      */
     _init() {
         // inizializzo counter
-        this.frequenze = new Array(config.quantita).fill(0);
+        this.frequenze = new Array(config.n_emoji).fill(0);
         // inizializzo i moltiplicatori
-        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_k, config.quantita);
+        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_k, config.n_emoji);
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
@@ -49,6 +26,7 @@ const slot = {
         utente.lose = false;
         utente.wallet = config.wallet;
         html._reset();
+        record._init_avvisi();
     },
     /**
      * esegue l'azione di spin della macchina
@@ -71,7 +49,7 @@ const slot = {
         // resetto il counter
         this.frequenze.fill(0);
         // calcolo le frequenze
-        for (let i = 0; i < config.quantita; i++) {
+        for (let i = 0; i < config.n_emoji; i++) {
             for (let j = 0; j < combinazione.length; j++) {
                 if (combinazione[j] == i) {
                     this.frequenze[i]++;
@@ -81,7 +59,7 @@ const slot = {
         // ---
         let guadagno = 0;
         // per ogni emoji verifico
-        for (let i = 0; i < config.quantita; i++) {
+        for (let i = 0; i < config.n_emoji; i++) {
             // se almeno n emoji uguali
             if (this.frequenze[i] >= config.elementi_minimi_uguali) {
                 guadagno += this.calc_coins(puntata, i, this.frequenze[i]);

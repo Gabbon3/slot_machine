@@ -10,6 +10,7 @@ const he = {
             puntata: dom.get1('#puntata'),
             coin: dom.get1('#coin-value'),
             info: dom.get1('#info'),
+            other_info: dom.get1('#other_info'),
             aumenta_puntata: dom.get1('#aumenta_puntata'),
             diminuisci_puntata: dom.get1('#diminuisci_puntata'),
             reset_btn: dom.get1('#reset_game'),
@@ -27,12 +28,20 @@ const html = {
         he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
         // mostro le rarita e i moltiplicatori sulla tabella
         let prev_r = 0;
-        for (let i = 0; i < config.quantita; i++) {
+        for (let i = 0; i < config.n_emoji; i++) {
             const r = parseInt(slot_elements.rarita[i] * 100);
             dom.get1('#r_' + i).innerHTML = (r - prev_r);
-            dom.get1('#m_' + i).innerHTML = slot.moltiplicatori[i].toFixed(2);
+            dom.get1('#m_' + i).innerHTML = slot1.moltiplicatori[i].toFixed(2);
             dom.get1('#q_' + i).innerHTML = 0;
             prev_r = r;
+        }
+        // genero dinamicamente gli id ad ogni item, memorizzando la posizione x e y
+        let riga = 0;
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                he.e.items[riga + c].setAttribute('id', 'rc_' + r + '-' + c);
+            }
+            riga += config.colonne;
         }
     },
     /**
@@ -56,7 +65,7 @@ const html = {
     spin() {
         he.e.info.innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
-        const combinazione = slot.spin();
+        const combinazione = slot1.spin();
         const puntata = Number(he.e.puntata.value);
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
@@ -65,9 +74,9 @@ const html = {
             return;
         }
         // carico html
-        animazione.shuffle(combinazione, () => {
+        animazione.shuffle(combinazione.flat(), () => {
             $(he.e.spin_btn).prop('disabled', false);
-            const guadagno = slot.check_player_wins(combinazione, puntata);
+            const guadagno = slot1.check_player_wins(combinazione, puntata);
             he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
             this._info(puntata, guadagno);
         });
@@ -79,13 +88,13 @@ const html = {
      */
     _info(puntata, guadagno) {
         // mostro le frequenze
-        for (let i = 0; i < config.quantita; i++) {
-            const f = slot.frequenze[i]; // frequenza emoji[i]
-            const b = f >= 5 ? 
-                        1 + (config.bonus_moltiplicatore * (f - config.elementi_minimi_uguali))
-                        :
-                        1; // bonus moltiplicatore
-            dom.get1('#q_' + i).innerHTML = f >= 5 ? `<b>${f}</b>` : f;
+        for (let i = 0; i < config.n_emoji; i++) {
+            const f = slot1.frequenze[i]; // frequenza emoji[i]
+            const b = f >= config.elementi_minimi_uguali ?
+                1 + (config.bonus_moltiplicatore * (f - config.elementi_minimi_uguali))
+                :
+                1; // bonus moltiplicatore
+            dom.get1('#q_' + i).innerHTML = f >= config.elementi_minimi_uguali ? `<b>${f}</b>` : f;
             dom.get1('#b_' + i).innerHTML = b;
         }
         // mostro il guadagno effettivo

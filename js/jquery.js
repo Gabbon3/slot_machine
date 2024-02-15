@@ -1,7 +1,9 @@
 $(document).ready(() => {
+    config._init();
     he.e = he._init();
-    slot._init();
+    slot1._init();
     html._init();
+    record._init();
     /**
      * pulsanti per aumentare o diminuire la puntata
      */
@@ -20,7 +22,19 @@ $(document).ready(() => {
      * reset del gioco
      */
     $(he.e.reset_btn).click(() => {
-        slot.reset_game();
+        slot1.reset_game();
+    });
+    /**
+     * mostra/nascondi tabella
+     */
+    $('#show_table').click(() => {
+        $('#info_slot').fadeToggle();
+    });
+    /**
+     * all in
+     */
+    $('#all_in_btn').click(() => {
+        he.e.puntata.value = utente.wallet;
     });
     // ---
     console.log('Document Loaded');
