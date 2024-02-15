@@ -26,26 +26,17 @@ nav input {
     width: 100%;
     overflow: hidden;
     flex-wrap: wrap;
+    padding: 5px;
+    gap: 5px;
 }
 
 #display .item {
     flex-grow: 1;
     text-align: center;
     font-size: 12vw;
-    width: 20%;
-}
-
-.item.active {
-    animation: evidenzia 0.25s ease-in-out 1;
-}
-
-@keyframes evidenzia {
-    0% {
-        background-color: #2b3239;
-    }
-    100% {
-        background-color: rgba(33, 37, 41, 0);
-    }
+    background-color: transparent;
+    padding: 5px;
+    border-radius: 20px;
 }
 
 .d-flex {
