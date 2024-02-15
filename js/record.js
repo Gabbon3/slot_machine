@@ -58,7 +58,7 @@ const record = {
         he.e.other_info.innerHTML += `<div class='container text-center' id='${id_avviso}'>${text}</div>`;
         setTimeout(() => {
             dom.get1('#' + id_avviso).remove();
-        }, 7000);
+        }, 4000);
     },
     /**
      * get e set

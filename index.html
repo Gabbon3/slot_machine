@@ -5,6 +5,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Slot</title>
+    <!-- Favicon per il web -->
+    <link rel="icon" type="image/png" href="img/favicon/favicon.ico">
+    <!-- Favicon per Android -->
+    <link rel="icon" type="image/png" sizes="192x192" href="img/favicon/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="img/favicon/android-chrome-512x512.png">
+    <!-- Favicon per iPhone -->
+    <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
+    <!-- Metatag di base per la descrizione della pagina -->
+    <meta name="description" content="Descrizione della tua pagina">
     <!-- fontawesome -->
     <script src="https://kit.fontawesome.com/5658864399.js" crossorigin="anonymous"></script>
     <!-- bootstrap -->
@@ -30,23 +39,7 @@
 
 <body>
     <div id="display">
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <!-- --- -->
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <!-- --- -->
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
-        <span class="item"></span>
+        <!-- generazione dinamica degli item -->
     </div>
     <div class="container my-2">
         <h1 id="info">
@@ -60,7 +53,7 @@
                 <th scope="col">#</th>
                 <th scope="col">Rarità %</th>
                 <th scope="col">Moltiplicatore</th>
-                <th scope="col">Q.</th>
+                <th scope="col">Q. >= <b id="emoji_minime"></b></th>
                 <th scope="col">Bonus *</th>
             </thead>
             <tbody>
@@ -100,7 +93,7 @@
                     <td id="b_4"></td>
                 </tr>
                 <tr>
-                    <th scope="row">🌎</th>
+                    <th scope="row">🌍</th>
                     <td id="r_5"></td>
                     <td id="m_5"></td>
                     <td id="q_5"></td>
@@ -118,10 +111,14 @@
         <nav class="container mb-2 d-flex">
             <span id="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></span>
             <!-- --- -->
-            <button title="Ricomincia" class="btn btn-outline-danger" type="button" id="reset_game"><i class="fa-solid fa-rotate"></i></button>
-            <button title="Informazioni" class="btn btn-outline-secondary" type="button" id="show_table"><i class="fa-solid fa-info"></i></button>
-            <button title="All In" class="btn btn-outline-secondary" type="button" id="all_in_btn">💸💸</button>
-            <button onclick="html.spin()" id="spin_btn" class="btn btn-success">Spin</button>
+            <div class="btn-sequence">
+                <button title="Ricomincia" class="btn btn-outline-danger" type="button" id="reset_game"><i
+                        class="fa-solid fa-rotate"></i></button>
+                <button title="Informazioni" class="btn btn-outline-secondary" type="button" id="show_table"><i
+                        class="fa-solid fa-info"></i></button>
+                <button title="All In" class="btn btn-outline-secondary" type="button" id="all_in_btn">💸</button>
+                <button onclick="html.spin()" id="spin_btn" class="btn btn-success">Spin</button>
+            </div>
         </nav>
     </div>
     <!-- informazioni -->

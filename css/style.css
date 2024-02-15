@@ -72,3 +72,36 @@ input {
 .success, .table b {
     color: #198754;
 }
+
+.btn-container {
+	display: flex;
+	padding: 5px;
+	gap: 5px;
+	flex-wrap: wrap;
+
+	.btn {
+		margin: 0;
+
+		&.fg-1 {
+			flex-grow: 1;
+		}
+	}
+
+	.btn-sequence {
+		padding: 0;
+	}
+
+	&.fg-1 {
+		.btn {
+			flex-grow: 1;
+		}
+
+		.btn-sequence {
+			width: 100%;
+
+			.btn {
+				flex-grow: 1;
+			}
+		}
+	}
+}

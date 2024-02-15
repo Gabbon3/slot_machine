@@ -69,6 +69,7 @@ const configuratore = {
                 for (let j = 0; j < i; j++) {
                     moltiplicatore += (n ** j);
                 }
+                moltiplicatore *= (1 + config.k_moltiplicatore);
                 moltiplicatori.push(moltiplicatore);
             }
             return moltiplicatori.reverse();

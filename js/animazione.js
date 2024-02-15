@@ -1,5 +1,6 @@
 const animazione = {
     intervalli: {},
+    wins: [],
     shuffle(results, funzione_finale) {
         // per ogni riga eseguo le animazioni
         let i = 0;
@@ -19,6 +20,7 @@ const animazione = {
         // in qesto cas sara quando la slot non gira piu allora faccio i calcoli
         setTimeout(() => {
             funzione_finale();
+            // this.show_wins();
         }, timeout);
     },
     scramble(emoj, item, i, timeout) {
@@ -35,5 +37,22 @@ const animazione = {
     },
     get_random_emoji() {
         return config.simboli[Math.floor(Math.random() * config.simboli.length)];
+    },
+    show_wins() {
+        this.deactive_items();
+        for (let i = 0; i < config.n_emoji; i++) {
+            // per ogni emoji
+            const posizioni = slot1.posizioni_emoji[i];
+            if (posizioni.length >= config.n_emoji) {
+                for (let j = 0; j < posizioni.length; j++) {
+                    he.e.items[j].classList.add('active');
+                }
+            }
+        }
+    },
+    deactive_items() {
+        for (let i = 0; i < config.rulli; i++) {
+            he.e.items[i].classList.remove('active');
+        }
     }
 }

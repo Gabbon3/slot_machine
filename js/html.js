@@ -15,7 +15,8 @@ const he = {
             diminuisci_puntata: dom.get1('#diminuisci_puntata'),
             reset_btn: dom.get1('#reset_game'),
             items: dom.geta('.item'),
-            calcoli: dom.get1('#calcoli')
+            calcoli: dom.get1('#calcoli'),
+            display: dom.get1('#display')
         }
     }
 }
@@ -25,8 +26,17 @@ const html = {
      * inizializza l'html
      */
     _init() {
-        he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
+        dom.get1('#coin-value').innerHTML = this.better_big_nums(utente.wallet);
+        dom.get1('#emoji_minime').innerHTML = config.elementi_minimi_uguali;
         // mostro le rarita e i moltiplicatori sulla tabella
+        // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
+        let riga = 0;
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                dom.get1('#display').innerHTML += `<span class="item" id="${'rc_' + r + '-' + c}"></span>`;
+            }
+            riga += config.colonne;
+        }
         let prev_r = 0;
         for (let i = 0; i < config.n_emoji; i++) {
             const r = parseInt(slot_elements.rarita[i] * 100);
@@ -34,14 +44,6 @@ const html = {
             dom.get1('#m_' + i).innerHTML = slot1.moltiplicatori[i].toFixed(2);
             dom.get1('#q_' + i).innerHTML = 0;
             prev_r = r;
-        }
-        // genero dinamicamente gli id ad ogni item, memorizzando la posizione x e y
-        let riga = 0;
-        for (let r = 0; r < config.righe; r++) {
-            for (let c = 0; c < config.colonne; c++) {
-                he.e.items[riga + c].setAttribute('id', 'rc_' + r + '-' + c);
-            }
-            riga += config.colonne;
         }
     },
     /**
@@ -70,6 +72,7 @@ const html = {
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
+            $(he.e.spin_btn).prop('disabled', false);
             alert('Non puoi puntare piu di quello che possiedi');
             return;
         }
@@ -137,5 +140,5 @@ const html = {
 2 :  🛰️
 3 :  🚀
 4 :  📡
-5 :  🌎
+5 :  🌍
 */

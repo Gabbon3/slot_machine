@@ -1,5 +1,6 @@
 const slot1 = {
     frequenze: [], // contatore per verificare il punteggio di uno spin
+    posizioni_emoji: [], // memorizza le posizioni delle emoji per ogni tipo
     // moltiplicatori statici
     moltiplicatori: [],
     /**
@@ -34,9 +35,12 @@ const slot1 = {
      */
     spin() {
         const result = new Array(config.rulli);
+        this.posizioni_emoji = Array.from({ length: 6 }, () => []); // animazione
+        // this.posizioni_emoji = [[], [], [], [], [], []];
         for (let i = 0; i < config.rulli; i++) {
             const elemento = slot_elements.get_element();
             result[i] = elemento;
+            this.posizioni_emoji[elemento].push(i); // animazione   
         }
         return result;
     },

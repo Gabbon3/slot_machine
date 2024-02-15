@@ -1,8 +1,8 @@
 $(document).ready(() => {
     config._init();
-    he.e = he._init();
     slot1._init();
     html._init();
+    he.e = he._init();
     record._init();
     /**
      * pulsanti per aumentare o diminuire la puntata
