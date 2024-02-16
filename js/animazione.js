@@ -26,7 +26,7 @@ const animazione = {
     scramble(emoj, item, i, timeout) {
         this.intervalli[i] = setInterval(() => {
             item.innerHTML = this.get_random_emoji();
-        }, 60);
+        }, 100);
         setTimeout(() => {
             clearInterval(this.intervalli[i]);
             delete this.intervalli[i];
@@ -43,7 +43,7 @@ const animazione = {
             const posizioni = slot1.posizioni_emoji[i];
             if (posizioni.length >= config.elementi_minimi_uguali) {
                 for (let j = 0; j < posizioni.length; j++) {
-                    this.animate_item(he.e.items[posizioni[j]], 330, 'rgba(25, 135, 84, 0.2)');
+                    this.animate_item(he.e.items[posizioni[j]], 330, 'rgba(25, 135, 84, 0.4)');
                 }
             }
         }
