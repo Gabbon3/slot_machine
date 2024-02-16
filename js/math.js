@@ -20,6 +20,20 @@ const math = {
             fibonacci.push(fibonacci[i] + fibonacci[i - 1]);
         }
         return fibonacci;
+    },
+    /**
+     * genera un array proporzionato ad un array passato in input
+     * l'array finale è composto da percentuali
+     * @param {array} array da proporzionare
+     * @param {number} max elemento massimo dell'array
+     */
+    proporzione_percentuali(array, max) {
+        let array_proporzionato = [];
+        for (let i = 0; i < config.n_emoji; i++) {
+            // x : y = z : ?
+            array_proporzionato.push(math.proporzione(max, array[i], 1));
+        }
+        return array_proporzionato;
     }
 }
 
@@ -59,21 +73,28 @@ const configuratore = {
     moltiplicatori: {
         /**
          * genera sequenze di moltiplicatori usando le somme di quadrati di n
-         * @param {float} n 
+         * @param {float} n base della potenza
          * @param {int} l lunghezza array del moltiplicatore
+         * @param {bool} reverse se alla fine l'array deve essere invertito
          */
-        somme_di_quadrati_di_n(n, l) {
-            const moltiplicatori = [];
+        somme_di_quadrati_di_n(n, l, reverse = false) {
+            const somme_di_potenze = [];
             for (let i = 1; i <= l; i++) {
                 let moltiplicatore = 0;
                 for (let j = 0; j < i; j++) {
                     moltiplicatore += (n ** j);
                 }
                 moltiplicatore *= (1 + config.k_moltiplicatore);
-                moltiplicatori.push(moltiplicatore);
+                somme_di_potenze.push(moltiplicatore);
             }
-            return moltiplicatori.reverse();
-        }
+            return reverse ? somme_di_potenze.reverse() : somme_di_potenze;
+        },
+        /**
+         * rimuovi la costante
+         */
+        remove_k() {
+
+        },
     },
     rarita: {
         /**
@@ -90,19 +111,6 @@ const configuratore = {
                     // max_fib : fib[i] = 1 : x
                     math.proporzione(fibonacci[l], fibonacci[i], 1)
                 );
-            }
-            return rarita;
-        },
-        /**
-         * calcola le rarita in base a una proporzione
-         * @param {array} array da proporzionare
-         * @param {number} max elemento massimo dell'array
-         */
-        proporzione(array, max) {
-            let rarita = [];
-            for (let i = 0; i < config.n_emoji; i++) {
-                // x : y = z : ?
-                rarita.push( math.proporzione(max, array[i], 1) );
             }
             return rarita;
         }

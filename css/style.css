@@ -2,6 +2,10 @@ body {
     margin-bottom: 120px;
 }
 
+* {
+    box-sizing: border-box;
+}
+
 .controller {
     position: fixed;
     bottom: 0;
@@ -22,21 +26,34 @@ nav input {
     margin: 0 auto 20px auto;
     flex-direction: row;
     justify-content: center;
-    align-items: stretch;
     width: 100%;
     overflow: hidden;
     flex-wrap: wrap;
     padding: 5px;
-    gap: 5px;
 }
 
 #display .item {
     flex-grow: 1;
-    text-align: center;
-    font-size: 12vw;
-    background-color: transparent;
+    /* Fai espandere ogni immagine per occupare lo spazio disponibile */
+    width: calc(20% - 14px);
+    /* Imposta la larghezza su 1/5 della pagina (con margine) */
+    margin: 2px;
     padding: 5px;
+    height: calc(100% / 5);
+    /* Aggiungi margine tra le immagini */
+    text-align: center;
     border-radius: 20px;
+    background-color: transparent;
+    overflow: hidden;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        text-align: center;
+        width: 100%;
+        max-height: 100%;
+    }
 }
 
 .d-flex {
@@ -60,39 +77,40 @@ input {
     color: #dc3545;
 }
 
-.success, .table b {
+.success,
+.table b {
     color: #198754;
 }
 
 .btn-container {
-	display: flex;
-	padding: 5px;
-	gap: 5px;
-	flex-wrap: wrap;
+    display: flex;
+    padding: 5px;
+    gap: 5px;
+    flex-wrap: wrap;
 
-	.btn {
-		margin: 0;
+    .btn {
+        margin: 0;
 
-		&.fg-1 {
-			flex-grow: 1;
-		}
-	}
+        &.fg-1 {
+            flex-grow: 1;
+        }
+    }
 
-	.btn-sequence {
-		padding: 0;
-	}
+    .btn-sequence {
+        padding: 0;
+    }
 
-	&.fg-1 {
-		.btn {
-			flex-grow: 1;
-		}
+    &.fg-1 {
+        .btn {
+            flex-grow: 1;
+        }
 
-		.btn-sequence {
-			width: 100%;
+        .btn-sequence {
+            width: 100%;
 
-			.btn {
-				flex-grow: 1;
-			}
-		}
-	}
+            .btn {
+                flex-grow: 1;
+            }
+        }
+    }
 }

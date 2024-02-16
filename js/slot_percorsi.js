@@ -80,7 +80,7 @@ const slot2 = {
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
-        slot_elements.rarita = configuratore.rarita.proporzione(this.moltiplicatori, this.moltiplicatori[0]);
+        slot_elements.rarita = math.proporzione_array(this.moltiplicatori, this.moltiplicatori[0]);
         slot_elements.rarita = slot_elements.rarita.reverse();
         /**
          * le RARITA devono essere in ordine CRESCENTE, l'opposto dei moltiplicatori

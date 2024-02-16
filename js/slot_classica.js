@@ -10,12 +10,12 @@ const slot1 = {
         // inizializzo counter
         this.frequenze = new Array(config.n_emoji).fill(0);
         // inizializzo i moltiplicatori
-        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_k, config.n_emoji);
+        this.moltiplicatori = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_moltiplicatori, config.n_emoji, true);
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
-        slot_elements.rarita = configuratore.rarita.proporzione(this.moltiplicatori, this.moltiplicatori[0]);
-        slot_elements.rarita = slot_elements.rarita.reverse();
+        slot_elements.rarita = configuratore.moltiplicatori.somme_di_quadrati_di_n(config.esponente_rarita, config.n_emoji, false);
+        slot_elements.rarita = math.proporzione_percentuali(slot_elements.rarita, slot_elements.rarita[config.n_emoji - 1]);
         /**
          * le RARITA devono essere in ordine CRESCENTE, l'opposto dei moltiplicatori
          */
