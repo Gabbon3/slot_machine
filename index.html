@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="it" data-bs-theme="dark">
 
@@ -33,7 +34,7 @@
     <script src="js/math.js"></script>
     <script src="js/slot_elements.js"></script>
     <script src="js/slot_classica.js"></script>
-    <script src="js/slot_percorsi.js"></script>
+    <script src="js/percorsi.js"></script>
     <script src="js/html.js"></script>
     <script src="js/record.js"></script>
     <script src="js/animazione.js"></script>
@@ -41,7 +42,7 @@
 </head>
 
 <body>
-    <div class="container-lg" id="display">
+    <div class="container" id="display">
         <!-- generazione dinamica degli item -->
     </div>
     <div class="container my-2">
@@ -60,69 +61,33 @@
                 <th scope="col">Bonus *</th>
             </thead>
             <tbody>
-                <tr>
-                    <th scope="row">🛸</th>
-                    <td id="r_0"></td>
-                    <td id="m_0"></td>
-                    <td id="q_0"></td>
-                    <td id="b_0"></td>
-                </tr>
-                <tr>
-                    <th scope="row">👽</th>
-                    <td id="r_1"></td>
-                    <td id="m_1"></td>
-                    <td id="q_1"></td>
-                    <td id="b_1"></td>
-                </tr>
-                <tr>
-                    <th scope="row">🛰️</th>
-                    <td id="r_2"></td>
-                    <td id="m_2"></td>
-                    <td id="q_2"></td>
-                    <td id="b_2"></td>
-                </tr>
-                <tr>
-                    <th scope="row">🚀</th>
-                    <td id="r_3"></td>
-                    <td id="m_3"></td>
-                    <td id="q_3"></td>
-                    <td id="b_3"></td>
-                </tr>
-                <tr>
-                    <th scope="row">📡</th>
-                    <td id="r_4"></td>
-                    <td id="m_4"></td>
-                    <td id="q_4"></td>
-                    <td id="b_4"></td>
-                </tr>
-                <tr>
-                    <th scope="row">🌍</th>
-                    <td id="r_5"></td>
-                    <td id="m_5"></td>
-                    <td id="q_5"></td>
-                    <td id="b_5"></td>
-                </tr>
+                
             </tbody>
         </table>
     </div>
     <div class="controller">
+        <span id="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></span>
         <img src="img/moon_surface.png" alt="">
         <div class="container my-2 d-flex">
-            <button class="btn btn-dark" type="button" id="diminuisci_puntata">-</button>
             <input type="number" class="form-control" id="puntata" title="Puntata" min="20" step="20" value="20">
-            <button class="btn btn-dark" type="button" id="aumenta_puntata">+</button>
+            <select class="form-select" title="Difficoltà" name="difficolta" id="select_difficult">
+                <option value="4">Super Easy</option>
+                <option value="5">Easy</option>
+                <option value="6" selected>Normal</option>
+                <option value="7">Hard</option>
+                <option value="8">Impossible</option>
+            </select>
         </div>
         <nav class="container mb-2 d-flex">
-            <span id="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></span>
             <!-- --- -->
-            <div class="btn-group" role="group">
+            <div class="btn-group btn-azione" role="group">
                 <button title="Ricomincia" class="btn btn-danger" type="button" id="reset_game"><i
                         class="fa-solid fa-rotate"></i></button>
                 <button title="Informazioni" class="btn btn-dark" type="button" id="show_table"><i
                         class="fa-solid fa-info"></i></button>
                 <button title="All In" class="btn btn-dark" type="button" id="all_in_btn">💸</button>
-                <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
             </div>
+            <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
         </nav>
     </div>
     <!-- informazioni -->

@@ -31,6 +31,7 @@ const record = {
             this.set('last_game', this.last_game);
         } else {
             this._init_avvisi();
+            utente.wallet = Number(this.last_game);
         }
     },
     _init_avvisi() {
@@ -55,9 +56,13 @@ const record = {
     avviso(text) {
         this.indice_avvisi++;
         const id_avviso = `avviso_${this.indice_avvisi}`;
-        he.e.other_info.innerHTML += `<div class='container text-center' id='${id_avviso}'>${text}</div>`;
+        dom.get1('#other_info').innerHTML += `<div class='container text-center' id='${id_avviso}'>${text}</div>`;
         setTimeout(() => {
-            dom.get1('#' + id_avviso).remove();
+            try {
+                dom.get1('#' + id_avviso).remove();
+            } catch (error) {
+                console.log('Nessun avviso da rimuovere: ' + error);
+            }
         }, 4000);
     },
     /**

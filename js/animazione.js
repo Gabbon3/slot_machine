@@ -21,6 +21,9 @@ const animazione = {
         setTimeout(() => {
             funzione_finale();
             this.show_wins();
+            setTimeout(() => {
+                this.mostra_percorsi_vincenti();
+            }, 400);
         }, timeout);
     },
     scramble(emoj, item, i, timeout) {
@@ -31,6 +34,7 @@ const animazione = {
             clearInterval(this.intervalli[i]);
             delete this.intervalli[i];
             this.animate_item(item);
+            item.setAttribute('value', emoj);
             item.innerHTML = html.num_to_html(emoj);
         }, timeout);
     },
@@ -43,8 +47,21 @@ const animazione = {
             const posizioni = slot1.posizioni_emoji[i];
             if (posizioni.length >= config.elementi_minimi_uguali) {
                 for (let j = 0; j < posizioni.length; j++) {
-                    this.animate_item(he.e.items[posizioni[j]], 330, 'rgba(25, 135, 84, 0.4)');
+                    this.animate_item(he.e.items[posizioni[j]], 250, 'rgba(25, 135, 84, 0.5)');
                 }
+            }
+        }
+    },
+    mostra_percorsi_vincenti() {
+        for (let i = 0; i < slot1.percorsi_vincenti.length; i++) {
+            const [r, p] = slot1.percorsi_vincenti[i];
+            const percorso = slot1.percorsi[r][p];
+            // per ogni percorso che ha vinto
+            for (let j = 0; j < percorso.length; j++) {
+                // lo mostro
+                const [x, y] = percorso[j];
+                const id = '#rc_' + x + '-' + y;
+                this.animate_item(dom.get1(id), 200, 'rgba(253, 125, 20, 0.8)');
             }
         }
     },

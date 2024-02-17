@@ -77,23 +77,16 @@ const configuratore = {
          * @param {int} l lunghezza array del moltiplicatore
          * @param {bool} reverse se alla fine l'array deve essere invertito
          */
-        somme_di_quadrati_di_n(n, l, reverse = false) {
+        somme_di_potenze_di_n(n, l, reverse = false) {
             const somme_di_potenze = [];
             for (let i = 1; i <= l; i++) {
                 let moltiplicatore = 0;
                 for (let j = 0; j < i; j++) {
                     moltiplicatore += (n ** j);
                 }
-                moltiplicatore *= (1 + config.k_moltiplicatore);
                 somme_di_potenze.push(moltiplicatore);
             }
             return reverse ? somme_di_potenze.reverse() : somme_di_potenze;
-        },
-        /**
-         * rimuovi la costante
-         */
-        remove_k() {
-
         },
     },
     rarita: {

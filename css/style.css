@@ -1,5 +1,5 @@
 body {
-    margin-bottom: 120px;
+    margin-bottom: 160px;
 }
 
 * {
@@ -13,10 +13,6 @@ body {
     width: 100%;
 }
 
-.btn {
-    
-}
-
 .controller img {
     position: absolute;
     top: 0;
@@ -26,18 +22,12 @@ body {
     z-index: -1;
 }
 
-nav input {
-    max-width: 40%;
-    flex-grow: 2;
-}
-
 #display {
     display: flex;
     margin: 0 auto 20px auto;
     flex-direction: row;
     justify-content: center;
     width: 100%;
-    overflow: hidden;
     flex-wrap: wrap;
     padding: 5px;
 }
@@ -45,7 +35,7 @@ nav input {
 #display .item {
     flex-grow: 1;
     /* Fai espandere ogni immagine per occupare lo spazio disponibile */
-    width: calc(25% - 10px);
+    width: calc(20% - 10px);
     /* Imposta la larghezza su 1/5 della pagina (con margine) */
     margin: 2px;
     padding: 3px;
@@ -71,7 +61,19 @@ nav input {
 
 #coin {
     font-size: 30px;
-    margin-right: auto;
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.btn {
+    padding: 12px 15px;
+    font-size: 1.1em;
+}
+
+#spin_btn {
+    margin-left: auto;
 }
 
 input {
@@ -89,13 +91,6 @@ input {
 .success,
 .table b {
     color: #198754;
-}
-
-.btn-container {
-    display: flex;
-    padding: 5px;
-    gap: 5px;
-    flex-wrap: wrap;
 }
 
 .wallpaper {

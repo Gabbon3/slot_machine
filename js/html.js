@@ -39,11 +39,25 @@ const html = {
         }
         let prev_r = 0;
         for (let i = 0; i < config.n_emoji; i++) {
-            const r = parseInt(slot_elements.rarita[i] * 100);
-            dom.get1('#r_' + i).innerHTML = (r - prev_r);
-            dom.get1('#m_' + i).innerHTML = slot1.moltiplicatori[i].toFixed(2);
-            dom.get1('#q_' + i).innerHTML = 0;
+            const r = parseInt(config.rarita[i] * 100);
+            const html = `
+                <tr>
+                    <th scope="row">${i}</th>
+                    <td id="r_${i}">${(r - prev_r)}</td>
+                    <td id="m_${i}">${config.moltiplicatori[i].toFixed(2)}</td>
+                    <td id="q_${i}">0</td>
+                    <td id="b_${i}"></td>
+                </tr>
+            `;
+            dom.get1('#info_slot tbody').innerHTML += html;
             prev_r = r;
+        }
+        // init difficult
+        const livelli_difficolta = 5;
+        let livelli = config.elementi_minimi_uguali - 2;
+        const opzioni = dom.geta('#select_difficult option');
+        for (let i = 0; i < livelli_difficolta; i++) {
+            opzioni[i].setAttribute('value', livelli + i);
         }
     },
     /**
@@ -53,6 +67,7 @@ const html = {
         $(he.e.spin_btn).prop('disabled', false);
         he.e.coin.innerHTML = config.wallet;
         he.e.info.innerHTML = '';
+        he.e.other_info.innerHTML = '';
         he.e.items.forEach(item => {
             item.innerHTML = '';
         });
@@ -67,8 +82,8 @@ const html = {
     spin() {
         he.e.info.innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
-        const combinazione = slot1.spin();
         const puntata = Number(he.e.puntata.value);
+        const combinazione = slot1.spin();
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
