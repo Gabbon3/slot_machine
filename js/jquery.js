@@ -39,7 +39,7 @@ $(document).ready(() => {
     $(document).keydown((event) => {
         const current = Number(he.e.puntata.value);
         // console.log(event.which);
-        if (event.which === 13){
+        if (event.which === 13 && !config.sta_giocando){
             html.spin();
         } 
         // a - freccia su

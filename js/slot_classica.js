@@ -35,7 +35,6 @@ const slot1 = {
         const l = config.n_emoji;
         config.rarita = configuratore.moltiplicatori.somme_di_potenze_di_n(config.esponente_rarita, l, false);
         config.rarita = math.proporzione_percentuali(config.rarita, config.rarita[l - 1], l);
-        console.log(config.rarita);
         /**
          * le RARITA devono essere in ordine CRESCENTE, l'opposto dei moltiplicatori
          */
@@ -115,7 +114,9 @@ const slot1 = {
                 }
             }
         }
-        return guadagno;
+        // const divisore_guadagno = this.percorsi_vincenti.length ? this.percorsi_vincenti.length : 1;
+        // guadagno /= divisore_guadagno;
+        return Math.round(guadagno);
     },
     get_elemento_da_coordinate(coordinate) {
         [x, y] = coordinate;

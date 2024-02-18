@@ -42,7 +42,7 @@ const html = {
             const r = parseInt(config.rarita[i] * 100);
             const html = `
                 <tr>
-                    <th scope="row">${i}</th>
+                    <th scope="row">${config.simboli[i]}</th>
                     <td id="r_${i}">${(r - prev_r)}</td>
                     <td id="m_${i}">${config.moltiplicatori[i].toFixed(2)}</td>
                     <td id="q_${i}">0</td>
@@ -82,18 +82,21 @@ const html = {
     spin() {
         he.e.info.innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
+        config.sta_giocando = true;
         const puntata = Number(he.e.puntata.value);
         slot1.spin();
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
             $(he.e.spin_btn).prop('disabled', false);
+            config.sta_giocando = false;
             alert('Non puoi puntare piu di quello che possiedi');
             return;
         }
         // carico html
         animazione.shuffle(slot_elements.griglia, () => {
             $(he.e.spin_btn).prop('disabled', false);
+            config.sta_giocando = false;
             const guadagno = slot1.check_player_wins(puntata);
             he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
             this._info(puntata, guadagno);

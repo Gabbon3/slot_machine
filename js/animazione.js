@@ -50,16 +50,21 @@ const animazione = {
         return config.simboli[Math.floor(Math.random() * config.simboli.length)];
     },
     mostra_percorsi_vincenti() {
+        let timeout = 0;
+        // per ogni percorso che ha vinto
         for (let i = 0; i < slot1.percorsi_vincenti.length; i++) {
             const [r, p] = slot1.percorsi_vincenti[i];
             const percorso = slot1.percorsi[r][p];
-            // per ogni percorso che ha vinto
-            for (let j = 0; j < percorso.length; j++) {
-                // lo mostro
-                const [x, y] = percorso[j];
-                const id = '#rc_' + x + '-' + y;
-                this.animate_item(dom.get1(id), 200, 'rgba(253, 125, 20, 0.8)');
-            }
+            // animo tutti gli elementi presenti nel percorso
+            setTimeout(() => {
+                for (let j = 0; j < percorso.length; j++) {
+                    // lo mostro
+                    const [x, y] = percorso[j];
+                    const id = '#rc_' + x + '-' + y;
+                    this.animate_item(dom.get1(id), 200, 'rgba(253, 125, 20, 0.8)');
+                }
+            }, timeout);
+            timeout += (800);
         }
     },
     animate_item(item, duration = 100, colore = '#2b3239') {

@@ -93,6 +93,10 @@ input {
     color: #198754;
 }
 
+.table img {
+    width: 25px;
+}
+
 .wallpaper {
     position: fixed;
     top: 50%;
