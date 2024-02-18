@@ -26,10 +26,11 @@ const math = {
      * l'array finale è composto da percentuali
      * @param {array} array da proporzionare
      * @param {number} max elemento massimo dell'array
+     * @param {number} l lunghezza array finale
      */
-    proporzione_percentuali(array, max) {
+    proporzione_percentuali(array, max, l) {
         let array_proporzionato = [];
-        for (let i = 0; i < config.n_emoji; i++) {
+        for (let i = 0; i < l; i++) {
             // x : y = z : ?
             array_proporzionato.push(math.proporzione(max, array[i], 1));
         }

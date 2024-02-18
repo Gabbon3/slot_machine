@@ -9,7 +9,7 @@ $(document).ready(() => {
      */
     $('#select_difficult').on('change', function () {
         const difficolta = Number(this.value);
-        config.elementi_minimi_uguali = difficolta;
+        config.elementi_minimi_linea = difficolta;
         dom.get1('#emoji_minime').innerHTML = difficolta;
         const opzione_selezionata = $(this).find('option:selected');
         record.avviso("⚙️ Difficoltà impostata a " + opzione_selezionata.html() + " ⚙️");

@@ -1,20 +1,25 @@
 const slot1 = {
-    frequenze: [], // contatore per verificare il punteggio di uno spin
-    posizioni_emoji: [], // memorizza le posizioni delle emoji per ogni tipo
     percorsi: [
         [
+            [[0, 0], [0, 1], [1, 2], [2, 3], [2, 4]], // -\\- . -00-
             [[0, 0], [0, 1], [0, 2], [0, 3], [0, 4]], // ----
             [[0, 0], [1, 1], [2, 2], [1, 3], [0, 4]], // \\// . 0011
         ], // riga 1
         [
+            [[1, 0], [0, 1], [0, 2], [0, 3], [1, 4]], // /--\ . 1--0
+            [[1, 0], [0, 1], [1, 2], [0, 3], [1, 4]], // /\/\ . 1010
             [[1, 0], [1, 1], [1, 2], [1, 3], [1, 4]], // ----
+            [[1, 0], [2, 1], [1, 2], [2, 3], [1, 4]], // \/\/ . 0101
+            [[1, 0], [2, 1], [2, 2], [2, 3], [1, 4]], // \--/ . 0--1
         ], // riga 2
         [
             [[2, 0], [2, 1], [2, 2], [2, 3], [2, 4]], // ----
             [[2, 0], [1, 1], [0, 2], [1, 3], [2, 4]], // //\\ . 1100
+            [[2, 0], [2, 1], [1, 2], [0, 3], [0, 4]], // -//- . -11-
         ], // riga 3
     ],
-    moltiplicatore_bonus: 1,
+    moltiplicatore_somma_bonus: 0, // che si somma al moltiplicatore statico
+    moltiplicatore_per_bonus: 1, // che moltiplica la vincita
     percorsi_vincenti: [],
     /**
      * inizializza le probabilita
@@ -27,8 +32,10 @@ const slot1 = {
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
-        config.rarita = configuratore.moltiplicatori.somme_di_potenze_di_n(config.esponente_rarita, config.n_emoji, false);
-        config.rarita = math.proporzione_percentuali(config.rarita, config.rarita[config.n_emoji - 1]);
+        const l = config.n_emoji;
+        config.rarita = configuratore.moltiplicatori.somme_di_potenze_di_n(config.esponente_rarita, l, false);
+        config.rarita = math.proporzione_percentuali(config.rarita, config.rarita[l - 1], l);
+        console.log(config.rarita);
         /**
          * le RARITA devono essere in ordine CRESCENTE, l'opposto dei moltiplicatori
          */
@@ -49,51 +56,37 @@ const slot1 = {
      * @returns {Array} array degli elementi del rullo
      */
     spin() {
-        const result = new Array(config.rulli);
-        this.posizioni_emoji = Array.from({ length: config.n_emoji }, () => []); // animazione
-        for (let i = 0; i < config.rulli; i++) {
-            const elemento = slot_elements.get_element();
-            result[i] = elemento;
-            this.posizioni_emoji[elemento].push(i); // animazione   
-        }
-        return result;
+        slot_elements.set_griglia();
     },
     /**
      * in base alla combinazione ottenuta l'utente ottiene da 0 a MAX soldi
-     * @param {*} combinazione 
      * @returns {number} 
      */
-    check_player_wins(combinazione, puntata) {
-        // resetto il counter
-        this.frequenze.fill(0);
+    check_player_wins(puntata) {
+        // inizializzo
+        this.moltiplicatore_somma_bonus = 0;
+        // ----
         // controllo se ci sono linee vincenti
-        this.check_percorsi();
-        // calcolo le frequenze
-        for (let i = 0; i < config.n_emoji; i++) {
-            for (let j = 0; j < combinazione.length; j++) {
-                if (combinazione[j] == i) {
-                    this.frequenze[i]++;
-                }
-            }
-        }
+        let guadagno = this.check_percorsi(puntata);
         // ---
-        let guadagno = 0;
-        // per ogni emoji verifico
+        /*
+        vecchio codice di come funzionava prima la slot
+        // per ogni elemento standard della griglia verifico
         for (let i = 0; i < config.n_emoji; i++) {
-            // se almeno n emoji uguali
-            if (this.frequenze[i] >= config.elementi_minimi_uguali) {
-                guadagno += this.calc_coins(puntata, i, this.frequenze[i]);
-                // aggiungo all'utente il guadagno
+            if (slot_elements.frequenze.normali[i] >= config.elementi_minimi_uguali) {
+                guadagno += this.calc_coins(puntata, i, slot_elements.frequenze.normali[i]);
             }
         }
+        */
+        // aggiungo all'utente il guadagno
         utente.manage_wallet(puntata, guadagno);
         return guadagno;
     },
     /**
      * verifica se ci sono possibili percorsi vincenti
      */
-    check_percorsi() {
-        this.moltiplicatore_bonus = 1;
+    check_percorsi(puntata) {
+        let guadagno = 0;
         this.percorsi_vincenti = [];
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
@@ -105,22 +98,42 @@ const slot1 = {
                 // il percorso
                 for (let p = 0; p < percorso.length; p++) {
                     const coordinata = percorso[p];
-                    const emoj = this.check_item(coordinata);
-                    linea.push(emoj);
+                    const simbolo = this.get_elemento_da_coordinate(coordinata);
+                    linea.push(simbolo.index);
                 }
-                if (linea.every(elemento => elemento === linea[0])) {
-                    this.moltiplicatore_bonus += config.moltiplicatore_percorso;
+                // verifico quanti elementi sono uguali rispetto al primo nella linea
+                const n_elementi_uguali_al_primo = this.elementi_identici_linea(linea);
+                // se almeno n elementi partendo dal primo sono uguali allora
+                if (n_elementi_uguali_al_primo >= config.elementi_minimi_linea) {
+                    /**
+                     * puntata: la puntata del giocatore
+                     * linea[0]: l'indice di rarità del simbolo
+                     * n_elementi_uguali_al_primo: la frequenza del simbolo all'interno della linea
+                     */
+                    guadagno += this.calc_coins(puntata, linea[0], n_elementi_uguali_al_primo);
                     this.percorsi_vincenti.push([i, j]);
                 }
             }
         }
+        return guadagno;
     },
-    check_item(coordinate) {
+    get_elemento_da_coordinate(coordinate) {
         [x, y] = coordinate;
-        const id = '#rc_' + x + '-' + y;
-        const item = dom.get1(id);
-        const emoj = Number(item.getAttribute('value'));
-        return emoj;
+        const simbolo = slot_elements.griglia.find(item => item.r === x && item.c === y);
+        return simbolo;
+    },
+    elementi_identici_linea(linea) {
+        // Conta quante volte appare il primo elemento
+        const primoElemento = linea[0];
+        let conteggio = 0;
+        for (let i = 0; i < linea.length; i++) {
+            if (linea[i] === primoElemento) {
+                conteggio++;
+            } else {
+                break;
+            }
+        }
+        return conteggio;
     },
     /**
      * restituisce quanti coin vince o perde
@@ -135,15 +148,16 @@ const slot1 = {
          * moltiplico il moltiplicatore se ci sono piu emoji uguali rispetto al minimo
          * e moltiplico ogni nuova emoji per config.bonus_moltiplicatore
         */
-        multiplier *= 1 + (config.bonus_moltiplicatore * (frequenza - config.elementi_minimi_uguali));
+        multiplier *= 1 + (config.bonus_moltiplicatore * (frequenza - config.elementi_minimi_linea));
         // moltiplico la puntata per il moltiplicatore e lo arrotondo in maniera equa
         /**
          * se x = 3.4 allora = 3
          * se x = 7.6 allora = 8
          */ 
+        multiplier += this.moltiplicatore_somma_bonus;
         let total_coins = puntata * multiplier;
+        total_coins *= this.moltiplicatore_per_bonus;
         // se ci sono delle linee vincenti allora moltiplico il guadagno per il moltiplicatore bonus
-        total_coins *= this.moltiplicatore_bonus;
         return Math.round(total_coins);
     }
 }
