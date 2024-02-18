@@ -27,7 +27,6 @@ const html = {
      */
     _init() {
         dom.get1('#coin-value').innerHTML = this.better_big_nums(utente.wallet);
-        dom.get1('#emoji_minime').innerHTML = config.elementi_minimi_linea;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
         let riga = 0;
@@ -45,8 +44,6 @@ const html = {
                     <th scope="row">${config.simboli[i]}</th>
                     <td id="r_${i}">${(r - prev_r)}</td>
                     <td id="m_${i}">${config.moltiplicatori[i].toFixed(2)}</td>
-                    <td id="q_${i}">0</td>
-                    <td id="b_${i}"></td>
                 </tr>
             `;
             dom.get1('#info_slot tbody').innerHTML += html;
@@ -108,16 +105,6 @@ const html = {
      * @param {number} guadagno 
      */
     _info(puntata, guadagno) {
-        // mostro le frequenze
-        for (let i = 0; i < config.n_emoji; i++) {
-            const f = slot_elements.frequenze.normali[i]; // frequenza emoji[i]
-            const b = f >= config.elementi_minimi_linea ?
-                1 + (config.bonus_moltiplicatore * (f - config.elementi_minimi_linea))
-                :
-                1; // bonus moltiplicatore
-            dom.get1('#q_' + i).innerHTML = f >= config.elementi_minimi_linea ? `<b>${f}</b>` : f;
-            dom.get1('#b_' + i).innerHTML = b;
-        }
         // mostro il guadagno effettivo
         let e = he.e.info;
         let differenza = guadagno - puntata;
