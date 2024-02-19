@@ -38,11 +38,15 @@ $(document).ready(() => {
      */
     $(document).keydown((event) => {
         const current = Number(he.e.puntata.value);
+        const max_puntata = config.max_puntata;
         // console.log(event.which);
         // se la puntata è bloccata allora non faccio modificare l'importo all'utente
         if (!slot1.blocca_puntata) {
             // a - freccia su
             if (event.which === 38) {
+                if (current >= max_puntata) {
+                    return;
+                }
                 he.e.puntata.value = current + 10;
             }
             // s - freggia giu
@@ -54,14 +58,17 @@ $(document).ready(() => {
             }
             // freccia destra
             else if (event.which === 39) {
-                he.e.puntata.value = current + 1;
+                if (current >= max_puntata) {
+                    return;
+                }
+                he.e.puntata.value = current + 0.5;
             }
             // freggia sinistra
             else if (event.which === 37) {
-                if (current <= 1) {
+                if (current <= 0.5) {
                     return;
                 }
-                he.e.puntata.value = current - 1;
+                he.e.puntata.value = current - 0.5;
             }
         }
         if (event.which === 13 && !config.sta_giocando) {

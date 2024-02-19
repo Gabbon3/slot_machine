@@ -37,8 +37,8 @@ body {
     /* Fai espandere ogni immagine per occupare lo spazio disponibile */
     width: calc(20% - 10px);
     /* Imposta la larghezza su 1/5 della pagina (con margine) */
-    margin: 2px;
-    padding: 3px;
+    margin: 1px;
+    padding: 4px;
     /* Aggiungi margine tra le immagini */
     text-align: center;
     border-radius: 20px;

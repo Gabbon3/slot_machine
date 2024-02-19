@@ -1,5 +1,5 @@
 const config = {
-    wallet: 500, // valore di coin di partenza
+    wallet: 100, // valore di coin di partenza
     max_random_number: 10000, // numero massimo estraibile dall estrattore di numeri casuali
     n_emoji: 0, // quanti elementi contiene un rullo | numero totale delle emoji usate
     esponente_moltiplicatori: 1.4, // costante utilizzata per fare la somma delle potenze
@@ -10,6 +10,7 @@ const config = {
     bonus_moltiplicatore: 0.5, // bonus moltiplicatore se si trovano oggetti in piu nelle linee
     elementi_minimi_linea: 3, // numero di elementi minimi che devono essere presenti in una linea per attivare il bonus percorsi
     sta_giocando: false, // memorizza quando la slot sta spinnando
+    max_puntata: 20, // massima puntata che si puo fare
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;

@@ -58,6 +58,10 @@ const slot1 = {
      * @returns {Array} array degli elementi del rullo
      */
     spin(puntata) {
+        // controllo che la puntata non sia stata manomessa
+        if (puntata >= config.max_puntata) {
+            puntata = config.max_puntata;
+        }
         // se ci sono giri bonus non tolgo la puntata e rimuovo man mano i giri bonus
         // quando saranno finiti torno a togliere come di norma la puntata
         if (this.giri_bonus > 0) {
@@ -134,8 +138,7 @@ const slot1 = {
                 }
             }
         }
-        
-        return Math.round(guadagno);
+        return guadagno;
     },
     get_elemento_da_coordinate(coordinate) {
         [x, y] = coordinate;
