@@ -49,13 +49,6 @@ const html = {
             dom.get1('#info_slot tbody').innerHTML += html;
             prev_r = r;
         }
-        // init difficult
-        const livelli_difficolta = 5;
-        let livelli = config.elementi_minimi_linea - 2;
-        const opzioni = dom.geta('#select_difficult option');
-        for (let i = 0; i < livelli_difficolta; i++) {
-            opzioni[i].setAttribute('value', livelli + i);
-        }
     },
     /**
      * 
@@ -94,6 +87,7 @@ const html = {
             const guadagno = slot1.check_player_wins(puntata);
             he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
             this._info(puntata, guadagno);
+            dom.get1('#giri_bonus').innerHTML = slot1.giri_bonus;
         });
         // verifico quanto ha vinto
     },
