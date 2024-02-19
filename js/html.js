@@ -27,6 +27,7 @@ const html = {
      */
     _init() {
         dom.get1('#coin-value').innerHTML = this.better_big_nums(utente.wallet);
+        dom.get1('#versione_slot').innerHTML = config.versione;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
         let riga = 0;
