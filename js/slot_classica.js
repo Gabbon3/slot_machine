@@ -242,7 +242,6 @@ const slot1 = {
          * se x = 7.6 allora = 8
          */
         let total_coins = puntata * moltiplicatore;
-        console.log(total_coins + ' = ' + puntata +  ' * ' + moltiplicatore + ' ; ' + config.nomi_simboli[indice_simbolo] + ' x' + frequenza);
         html.informazioni_giocata(total_coins, puntata, moltiplicatore, config.nomi_simboli[indice_simbolo], frequenza);
         // se ci sono delle linee vincenti allora moltiplico il guadagno per il moltiplicatore bonus
         return total_coins;
