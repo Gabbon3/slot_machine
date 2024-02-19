@@ -77,7 +77,7 @@ const html = {
         $(he.e.spin_btn).prop('disabled', true);
         config.sta_giocando = true;
         const puntata = Number(he.e.puntata.value);
-        slot1.spin();
+        slot1.spin(puntata);
         he.e.coin.innerHTML = utente.wallet;
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);

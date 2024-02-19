@@ -57,7 +57,7 @@ const slot1 = {
      * esegue l'azione di spin della macchina
      * @returns {Array} array degli elementi del rullo
      */
-    spin() {
+    spin(puntata) {
         // se ci sono giri bonus non tolgo la puntata e rimuovo man mano i giri bonus
         // quando saranno finiti torno a togliere come di norma la puntata
         if (this.giri_bonus > 0) {
