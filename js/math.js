@@ -107,6 +107,17 @@ const configuratore = {
                 );
             }
             return rarita;
+        },
+        /**
+         * inizializza la sequenza manuale
+         */
+        _init_manuale() {
+            // per ogni simbolo
+            let p = 0; // precedente
+            for (let i = 0; i < config.n_emoji; i++) {
+                config.rarita[i] += p; // rarita[i] = rarita[i] + rarita[i - 1] (cioe p (precedente))
+                p = config.rarita[i];
+            }
         }
     }
 }

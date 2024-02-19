@@ -36,12 +36,14 @@ const animazione = {
     /**
      */
     scramble(simbolo, item, i, timeout) {
+        item.classList.add('spin');
         this.intervalli[i] = setInterval(() => {
             item.innerHTML = this.get_random_emoji();
         }, 100);
         setTimeout(() => {
             clearInterval(this.intervalli[i]);
             delete this.intervalli[i];
+            item.classList.remove('spin');
             this.animate_item(item);
             item.innerHTML = html.num_to_html(simbolo.index);
         }, timeout);

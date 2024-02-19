@@ -4,6 +4,7 @@ const slot_elements = {
         normali: []
     }, // contatore per verificare il punteggio di uno spin
     griglia: [],
+    conteggio_wild: 0, // numero totale dei wild per giro
     /**
      * elementi presenti in un rullo
      * da inizializzare
@@ -32,6 +33,7 @@ const slot_elements = {
         this.frequenze.normali = new Array(config.n_emoji).fill(0);
         this.frequenze.speciali = new Array(config.n_spec).fill(0);
         this.posizioni_emoji = Array.from({ length: config.n_emoji }, () => []); // animazione
+        this.conteggio_wild = 0; // azzero il conteggio dei wild
         // ----
         this.griglia = [];
         /**
@@ -42,6 +44,10 @@ const slot_elements = {
         let colonna = 0;
         for (let i = 0; i < config.rulli; i++) {
             const indice_del_simbolo = this.get_element(config.rarita);
+            // controllo se il simbolo è il wild
+            if (indice_del_simbolo == config.indice_wild) {
+                this.conteggio_wild++;
+            }
             // controllo le coordinate
             if (colonna == config.colonne) {
                 colonna = 0;

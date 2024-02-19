@@ -2,9 +2,8 @@ const utente = {
     // valuta iniziale del giocatore
     wallet: config.wallet,
     lose: false, // verifica che il giocatore non vada sotto 0
-    manage_wallet(puntata, guadagno) {
-        const differenza = guadagno - puntata;
-        this.wallet += differenza;
+    manage_wallet(guadagno) {
+        this.wallet += guadagno;
         // locale
         record.last_game = utente.wallet;
         record.set('last_game', record.last_game);

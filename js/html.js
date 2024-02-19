@@ -43,7 +43,7 @@ const html = {
                 <tr>
                     <th scope="row">${config.simboli[i]}</th>
                     <td id="r_${i}">${(r - prev_r)}</td>
-                    <td id="m_${i}">${config.moltiplicatori[i].toFixed(2)}</td>
+                    <td id="m_${i}">${config.moltiplicatori[i].join(', ')}</td>
                 </tr>
             `;
             dom.get1('#info_slot tbody').innerHTML += html;
@@ -71,10 +71,6 @@ const html = {
     },
     /**
      * 
-     * 0: meteora => <i class="fa-solid fa-meteor"></i>
-     * 1: astronauta => <i class="fa-solid fa-user-astronaut"></i>
-     * 2: shuttle => <i class="fa-solid fa-shuttle-space"></i>
-     * 3: terra => <i class="fa-solid fa-earth-europe"></i>
      */
     spin() {
         he.e.info.innerHTML = '';
@@ -82,6 +78,7 @@ const html = {
         config.sta_giocando = true;
         const puntata = Number(he.e.puntata.value);
         slot1.spin();
+        he.e.coin.innerHTML = utente.wallet;
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
@@ -100,6 +97,9 @@ const html = {
         });
         // verifico quanto ha vinto
     },
+    blocca_puntata(bool) {
+        $(he.e.puntata).prop('disabled', bool);
+    },
     /**
      * mette a display le informazioni
      * @param {number} guadagno 
@@ -112,9 +112,9 @@ const html = {
             e.setAttribute('class', 'danger');
         } else {
             e.setAttribute('class', 'success');
-            differenza = '+' + this.better_big_nums(differenza);
+            // differenza = this.better_big_nums(differenza);
         }
-        e.innerHTML = "<b>" + differenza + '</b> <i class="fa-brands fa-gg"></i>';
+        e.innerHTML = "<b>" + guadagno + '</b> <i class="fa-brands fa-gg"></i>';
     },
     /**
      * restituisce l html in base al numero

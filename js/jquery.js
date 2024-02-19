@@ -39,23 +39,45 @@ $(document).ready(() => {
     $(document).keydown((event) => {
         const current = Number(he.e.puntata.value);
         // console.log(event.which);
-        if (event.which === 13 && !config.sta_giocando){
-            html.spin();
-        } 
-        // a - freccia su
-        else if (event.which === 38) {
-            he.e.puntata.value = current + 10;
-        } 
-        // s - freggia giu
-        else if (event.which === 40) {
-            if (current <= 0) {
-                return;
+        // se la puntata è bloccata allora non faccio modificare l'importo all'utente
+        if (!slot1.blocca_puntata) {
+            // a - freccia su
+            if (event.which === 38) {
+                he.e.puntata.value = current + 10;
             }
-            he.e.puntata.value = current - 10;
+            // s - freggia giu
+            else if (event.which === 40) {
+                if (current <= 10) {
+                    return;
+                }
+                he.e.puntata.value = current - 10;
+            }
+            // freccia destra
+            else if (event.which === 39) {
+                he.e.puntata.value = current + 1;
+            }
+            // freggia sinistra
+            else if (event.which === 37) {
+                if (current <= 1) {
+                    return;
+                }
+                he.e.puntata.value = current - 1;
+            }
+        }
+        if (event.which === 13 && !config.sta_giocando) {
+            html.spin();
         }
         // i - informazioni
         else if (event.which === 73) {
             $('#info_slot').fadeToggle();
+        }
+        // r - ricomincia
+        else if (event.which === 82) {
+            slot1.reset_game();
+        }
+        // p - percorsi vincenti
+        else if (event.which === 80) {
+            animazione.mostra_percorsi_vincenti();
         }
     })
     console.log('Document Loaded');
