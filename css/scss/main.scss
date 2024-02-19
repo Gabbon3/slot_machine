@@ -1,0 +1,16 @@
+/*
+cd css/scss
+sass --watch main.scss:../main.css
+*/
+
+body {
+    margin-bottom: 160px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+@import 'specifici.scss';
+@import 'elementi_comuni.scss';
+@import 'animazioni.scss';

@@ -1,0 +1,161 @@
+/*
+cd css/scss
+sass --watch main.scss:../main.css
+*/
+body {
+  margin-bottom: 160px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+#display {
+  display: flex;
+  margin: 5px auto 20px auto;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  flex-wrap: wrap;
+  padding: 3px 5px;
+  border: 5px solid rgba(43, 50, 57, 0.5);
+  border-radius: 20px;
+}
+#display .item {
+  flex-grow: 1;
+  /* Fai espandere ogni immagine per occupare lo spazio disponibile */
+  width: calc(20% - 14px);
+  /* Imposta la larghezza su 1/5 della pagina (con margine) */
+  padding: 6px;
+  /* Aggiungi margine tra le immagini */
+  text-align: center;
+  background-color: transparent;
+  overflow: hidden;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 3px;
+  margin-bottom: 3px;
+  background-color: rgba(43, 50, 57, 0.5);
+}
+#display .item:first-child, #display .item:nth-child(5n+1) {
+  border-radius: 10px 0 0 10px;
+}
+#display .item:nth-child(5n) {
+  border-radius: 0 10px 10px 0;
+}
+#display .item img {
+  text-align: center;
+  width: 100%;
+  max-height: 100%;
+  animation: up-down cubic-bezier(0.59, 0.23, 0.4, 0.75) 2s infinite;
+}
+#display .item.spin img {
+  animation: spin linear 0.1s infinite;
+}
+
+.controller {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.controller img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+#coin {
+  font-size: 30px;
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#spin_btn {
+  margin-left: auto;
+}
+
+#info {
+  text-align: center;
+}
+
+.wallpaper {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: -2;
+  pointer-events: none;
+}
+
+#other_info .avviso {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+#calcoli span {
+  display: block;
+  font-weight: bold;
+  font-size: 1.17em;
+}
+#calcoli span b {
+  background-color: #134e32;
+}
+
+.btn {
+  padding: 12px 15px;
+  font-size: 1.1em;
+}
+
+input {
+  outline: none;
+}
+
+.danger {
+  color: #dc3545;
+}
+
+.success {
+  color: #198754;
+}
+
+.table b {
+  color: #198754;
+}
+.table img {
+  width: 25px;
+}
+
+@keyframes up-down {
+  0% {
+    transform: translateY(3px);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(3px);
+  }
+}
+@keyframes spin {
+  0% {
+    transform: translateY(-100%);
+  }
+  50% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+/*# sourceMappingURL=main.css.map */

@@ -45,6 +45,7 @@ const html = {
                     <th scope="row">${config.simboli[i]}</th>
                     <td id="r_${i}">${(r - prev_r)}</td>
                     <td id="m_${i}">${config.moltiplicatori[i].join(', ')}</td>
+                    <td>${config.informazioni_simboli[i]}</td>
                 </tr>
             `;
             dom.get1('#info_slot tbody').innerHTML += html;
@@ -68,6 +69,7 @@ const html = {
      */
     spin() {
         he.e.info.innerHTML = '';
+        dom.get1('#calcoli').innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
         config.sta_giocando = true;
         const puntata = Number(he.e.puntata.value);
@@ -86,11 +88,10 @@ const html = {
             $(he.e.spin_btn).prop('disabled', false);
             config.sta_giocando = false;
             const guadagno = slot1.check_player_wins(puntata);
-            he.e.coin.innerHTML = this.better_big_nums(utente.wallet);
+            he.e.coin.innerHTML = utente.wallet;
             this._info(puntata, guadagno);
-            dom.get1('#giri_bonus').innerHTML = slot1.giri_bonus;
+            dom.get1('#giri_bonus').value = slot1.giri_bonus;
         });
-        // verifico quanto ha vinto
     },
     blocca_puntata(bool) {
         $(he.e.puntata).prop('disabled', bool);
@@ -110,6 +111,13 @@ const html = {
             // differenza = this.better_big_nums(differenza);
         }
         e.innerHTML = "<b>" + guadagno + '</b> <i class="fa-brands fa-gg"></i>';
+    },
+    /**
+     * altre informazioni sulla giocata
+     */
+    informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza) {
+        const calcolo = total_coins + ' = ' + puntata +  ' * ' + moltiplicatore + ' ; ' + nome_simbolo + ' x' + frequenza;
+        dom.get1('#calcoli').innerHTML += '<span><b>' + calcolo + '<b></span>';
     },
     /**
      * restituisce l html in base al numero

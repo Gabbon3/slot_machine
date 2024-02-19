@@ -14,7 +14,7 @@ const animazione = {
                 const indice = i + rulli_animati;
                 const simbolo = griglia[indice];
                 this.scramble(simbolo, he.e.items[indice], indice, timeout);
-                timeout += 250;
+                timeout += 200;
             }
             i = 0;
             rulli_animati += config.colonne;
@@ -42,10 +42,10 @@ const animazione = {
         }, 100);
         setTimeout(() => {
             clearInterval(this.intervalli[i]);
+            item.innerHTML = html.num_to_html(simbolo.index);
             delete this.intervalli[i];
             item.classList.remove('spin');
             this.animate_item(item);
-            item.innerHTML = html.num_to_html(simbolo.index);
         }, timeout);
     },
     get_random_emoji() {
@@ -55,11 +55,14 @@ const animazione = {
         let timeout = 0;
         // per ogni percorso che ha vinto
         for (let i = 0; i < slot1.percorsi_vincenti.length; i++) {
-            const [r, p] = slot1.percorsi_vincenti[i];
+            const oggetto = slot1.percorsi_vincenti[i];
+            // recupero le informazioni dall'oggetto
+            const [r, p] = oggetto.percorso;
+            const elementi_da_evidenziare = oggetto.elementi_da_evidenziare;
             const percorso = slot1.percorsi[r][p];
             // animo tutti gli elementi presenti nel percorso
             setTimeout(() => {
-                for (let j = 0; j < percorso.length; j++) {
+                for (let j = 0; j < elementi_da_evidenziare; j++) {
                     // lo mostro
                     const [x, y] = percorso[j];
                     const id = '#rc_' + x + '-' + y;
@@ -74,7 +77,7 @@ const animazione = {
             backgroundColor: colore
         }, duration, () => {
             $(item).animate({
-                backgroundColor: 'transparent'
+                backgroundColor: 'rgba(43, 50, 57, 0.5)'
             }, duration * 3)
         });
     }

@@ -56,7 +56,7 @@ const record = {
     avviso(text) {
         this.indice_avvisi++;
         const id_avviso = `avviso_${this.indice_avvisi}`;
-        dom.get1('#other_info').innerHTML += `<div class='container text-center' id='${id_avviso}'>${text}</div>`;
+        dom.get1('#other_info').innerHTML += `<div class='container text-center avviso' id='${id_avviso}'>${text}</div>`;
         setTimeout(() => {
             try {
                 dom.get1('#' + id_avviso).remove();

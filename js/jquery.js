@@ -27,10 +27,10 @@ $(document).ready(() => {
         $('#info_slot').fadeToggle();
     });
     /**
-     * all in
+     * mostra o meno i calcoli
      */
-    $('#all_in_btn').click(() => {
-        he.e.puntata.value = utente.wallet;
+    $('#show_calcoli').click(() => {
+        $('#calcoli').fadeToggle();
     });
     // ---
     /**
@@ -47,14 +47,14 @@ $(document).ready(() => {
                 if (current >= max_puntata) {
                     return;
                 }
-                he.e.puntata.value = current + 10;
+                he.e.puntata.value = current + 1;
             }
             // s - freggia giu
             else if (event.which === 40) {
                 if (current <= 10) {
                     return;
                 }
-                he.e.puntata.value = current - 10;
+                he.e.puntata.value = current - 1;
             }
             // freccia destra
             else if (event.which === 39) {

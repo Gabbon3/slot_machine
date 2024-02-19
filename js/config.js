@@ -34,16 +34,16 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        40, // 1
-        50, // 2
-        50, // 3
+        50, // 1
+        70, // 2
+        70, // 3
         100, // 4
         100, // 5
         200, // 6
         200, // 7
-        500, // 8
-        500, // 9
-        500, // 10
+        400, // 8
+        400, // 9
+        400, // 10
     ],
     /**
      * Libro di Ra - rarita:
@@ -71,38 +71,88 @@ const config = {
     }
      * per ogni simbolo indico quanto si deve moltiplicare la puntata
      * per identificare un simbolo uso il suo indice, utilizzando l'array 'simboli' 
+     * 
+     * in moltiplicatori quando in un array ci sono 4 elementi
+     * significa che per essere attivato quel moltiplicatore ci devono essere minimo 2 elementi nella linea
+     * se no 3 elementi
      */
     moltiplicatori: [
-        [ // 1 - faraone
+        [ // 0 - faraone
             2, 20, 200, 1000
         ],
-        [ // 2 - tavola d'oro, bonus e scatter
+        [ // 1 - tavola d'oro, bonus e scatter
             4, 40, 400
         ],
-        [ // 3 - guardia
-            8, 80, 400
+        [ // 2 - guardia
+            1, 8, 80, 400
         ],
-        [ // 4 - piramide
+        [ // 3 - piramide
             1, 6, 20, 150
         ],
-        [ // 5 - ufo
+        [ // 4 - ufo
             1, 6, 20, 150
         ],
-        [ // 6 - A
-            1, 8, 30
+        [ // 5 - A
+            1, 8, 25
         ],
-        [ // 7 - K
-            1, 8, 30
+        [ // 6 - K
+            1, 8, 25
         ],
-        [ // 8 - Q
-            1, 5, 20
+        [ // 7 - Q
+            1, 5, 15
         ],
-        [ // 9 - J
-            1, 5, 20
+        [ // 8 - J
+            1, 5, 15
         ],
-        [ // 10 - 10
-            1, 5, 20
+        [ // 9 - 10
+            1, 5, 15
         ],
+    ],
+    nomi_simboli: [
+        'Faraone',
+        'Tavola Wild - Scatter',
+        'Guardia',
+        'Piramide',
+        'UFO',
+        'Asso',
+        'Re',
+        'Donna',
+        'Jack',
+        '10'
+    ],
+    informazioni_simboli: [
+        // 0 - faraone
+        "Il leggendario faraone Kahmunrah"
+        ,
+        // 1 - tavola d'oro, bonus e scatter
+        `La tavola di Kahmunrah, anche conosciuta come Jolly o Scatter,
+        si attiva il suo moltiplicatore se si trova in una linea, si sostituisce a tutti gli altri simboli, 
+        se trovi almeno 3 tavole di Kahmunrah vinci 10/15/20 giri gratis!`
+        ,
+        // 2 - guardia
+        `Le impenetrabili guardie del faraone`
+        ,
+        // 3 - piramide
+        `La piramide dove sono sepolti tutti i misteri e le storie di un popolo vissuto ormai millenni addietro`
+        ,
+        // 4 - ufo
+        `La navicella spaziale preferita dal popolo alieno, molto costosa ma molto efficiente`
+        ,
+        // 5 - A
+        `l'Asso`
+        ,
+        // 5 - K
+        `Il Re`
+        ,
+        // 5 - Q
+        `La Donna`
+        ,
+        // 5 - J
+        `Il Jack`
+        ,
+        // 9 - 10
+        `Il 10`
+        ,
     ],
     /**
      * variabili legacy

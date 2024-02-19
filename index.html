@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="it" data-bs-theme="dark">
 
@@ -27,7 +26,7 @@
     <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"
         integrity="sha256-lSjKY0/srUM9BE3dPm+c4fBo1dky2v27Gdjm2uoZaL0=" crossorigin="anonymous"></script>
     <!-- *** -->
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
     <script src="js/script.js"></script>
     <script src="js/config.js"></script>
     <script src="js/utente.js"></script>
@@ -52,24 +51,37 @@
         <p id="other_info">
 
         </p>
+        <p id="calcoli" style="display: none">
+
+        </p>
         <table class="table" id="info_slot" style="display: none">
             <thead>
                 <th scope="col">#</th>
                 <th scope="col">Rarità %</th>
                 <th scope="col">Moltiplicatore</th>
+                <th scope="col">Lore</th>
             </thead>
             <tbody>
-                
+
             </tbody>
-            <tr><td colspan="3">Versione slot: <b id="versione_slot"></b></td></tr>
+            <tr>
+                <td colspan="4">Versione slot: <b id="versione_slot"></b></td>
+            </tr>
         </table>
     </div>
     <div class="controller">
         <span id="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></span>
         <img src="img/moon_surface.png" alt="">
-        <div class="container my-2 d-flex">
-            <input type="number" class="form-control" id="puntata" title="Puntata" min="0.5" max="20" step="0.5" value="2">
-            <span class="form-control">Giri Bonus: <b id="giri_bonus">0</b></span>
+        <div class="container input-group my-2 d-flex">
+            <div class="form-floating inline-flex">
+                <input type="number" class="form-control" id="puntata" title="Puntata" min="0.5" max="20" step="0.5"
+                    value="2">
+                <label for="puntata">Puntata <i class="fa-brands fa-gg"></i></label>
+            </div>
+            <div class="form-floating inline-flex">
+                <input class="form-control" id="giri_bonus" value="0" readonly>
+                <label for="giri_bonus">Giri Bonus</label>
+            </div>
         </div>
         <nav class="container mb-2 d-flex">
             <!-- --- -->
@@ -78,7 +90,8 @@
                         class="fa-solid fa-rotate"></i></button>
                 <button title="Informazioni" class="btn btn-dark" type="button" id="show_table"><i
                         class="fa-solid fa-info"></i></button>
-                <button title="All In" class="btn btn-dark" type="button" id="all_in_btn">💸</button>
+                <button title="Informazioni" class="btn btn-dark" type="button" id="show_calcoli">
+                    <i class="fa-solid fa-calculator"></i></button>
             </div>
             <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
         </nav>
