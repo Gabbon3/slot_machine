@@ -1,5 +1,5 @@
 const config = {
-    versione: '4.0.3', // versione della slot
+    versione: '4.0.4', // versione della slot
     wallet: 100, // valore di coin di partenza
     max_random_number: 10000, // numero massimo estraibile dall estrattore di numeri casuali
     n_emoji: 0, // quanti elementi contiene un rullo | numero totale delle emoji usate
@@ -34,32 +34,32 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        50, // 1
-        70, // 2
-        70, // 3
-        100, // 4
-        100, // 5
-        200, // 6
-        200, // 7
-        400, // 8
-        400, // 9
-        400, // 10
-    ],
-    /**
-     * Libro di Ra - rarita:
-    rarita: [
-        20, // 1
-        30, // 2
-        30, // 3
+        90, // 1
+        100, // 2
+        100, // 3
         150, // 4
         150, // 5
-        400, // 6
-        400, // 7
-        1000, // 8
-        1000, // 9
-        1000, // 10
+        350, // 6
+        350, // 7
+        500, // 8
+        500, // 9
+        500, // 10
     ],
-     */
+    /**
+     * Libro di Ra - rarita:*/
+    // rarita: [
+    //     20, // 1
+    //     30, // 2
+    //     30, // 3
+    //     150, // 4
+    //     150, // 5
+    //     400, // 6
+    //     400, // 7
+    //     1000, // 8
+    //     1000, // 9
+    //     1000, // 10
+    // ],
+    /* */
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra
     moltiplicatori: {

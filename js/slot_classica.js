@@ -17,9 +17,10 @@ const slot1 = {
             [[2, 0], [1, 1], [1, 2], [1, 3], [0, 4]], // /--/ . 1--1
         ], // riga 3
     ],
-    giri_bonus: 0, // numero dei giri bonus che vince il giocatore
+    giri_bonus: -1, // numero dei giri bonus che vince il giocatore
     blocca_puntata: false, // blocca la puntata se sono attivi i giri bonus
     percorsi_vincenti: [],
+    vincita_durante_scatter: 0, //
     /**
      * inizializza le probabilita
      */
@@ -57,9 +58,7 @@ const slot1 = {
      */
     spin(puntata) {
         // controllo che la puntata non sia stata manomessa
-        if (puntata >= config.max_puntata) {
-            puntata = config.max_puntata;
-        }
+        puntata = this.check_puntata(puntata);
         // se ci sono giri bonus non tolgo la puntata e rimuovo man mano i giri bonus
         // quando saranno finiti torno a togliere come di norma la puntata
         if (this.giri_bonus > 0) {
@@ -68,6 +67,16 @@ const slot1 = {
             utente.wallet -= puntata;
         }
         slot_elements.set_griglia();
+    },
+    /**
+     * controlla che la puntata non sia superiore a quella consentita
+     * @param {number} puntata 
+     */
+    check_puntata(puntata) {
+        if (puntata >= config.max_puntata) {
+            puntata = config.max_puntata;
+        }
+        return puntata;
     },
     /**
      * in base alla combinazione ottenuta l'utente ottiene da 0 a MAX soldi
@@ -82,15 +91,6 @@ const slot1 = {
         // verifico se si puo attivare la funzione scatter
         this.scatter();
         // ---
-        /*
-        vecchio codice di come funzionava prima la slot
-        // per ogni elemento standard della griglia verifico
-        for (let i = 0; i < config.n_emoji; i++) {
-            if (slot_elements.frequenze.normali[i] >= config.elementi_minimi_uguali) {
-                guadagno += this.calc_coins(puntata, i, slot_elements.frequenze.normali[i]);
-            }
-        }
-        */
         // aggiungo all'utente il guadagno
         utente.manage_wallet(guadagno);
         return guadagno;
@@ -101,7 +101,6 @@ const slot1 = {
     check_percorsi(puntata) {
         let guadagno = 0;
         this.percorsi_vincenti = [];
-        console.log(' *** ');
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
             const riga = this.percorsi[i];
@@ -176,8 +175,10 @@ const slot1 = {
                 }
             }
         }
-        // calcolo anche i wild
-        // poiche non vengono calcolati
+        // se ci sono i giri gratis memorizzo il guadagno
+        if (this.blocca_puntata) {
+            this.vincita_durante_scatter += guadagno;
+        }
         return guadagno;
     },
     get_elemento_da_coordinate(coordinate) {
@@ -215,15 +216,25 @@ const slot1 = {
          * se il numero di scatter è superiore al numero minimo richiesto
          */
         if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
+            this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
             this.giri_bonus += (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)));
             record.avviso('🔥 Hai vinto ' + this.giri_bonus + ' giri gratis! 🔥');
             this.blocca_puntata = true;
             html.blocca_puntata(true);
-            dom.get1('#giri_bonus').value = slot1.giri_bonus; // html necessatio
+            dom.get1('#giri_bonus').value = slot1.giri_bonus; // html necessario
+            he.e.display.classList.add('scatter-attivo');
         }
         if (this.giri_bonus == 0) {
             this.blocca_puntata = false;
             html.blocca_puntata(false);
+            record.avviso('💰 Durante i giri gratis hai vinto ' + this.vincita_durante_scatter + ' <i class="fa-brands fa-gg" aria-hidden="true"></i> 💰');
+            this.vincita_durante_scatter = 0;
+            dom.get1('#giri_bonus').value = 0;
+            he.e.display.classList.remove('scatter-attivo');
+            this.giri_bonus = -1;
+        }
+        if (this.giri_bonus >= 0) {
+            dom.get1('#giri_bonus').value = this.giri_bonus;
         }
     },
     /**

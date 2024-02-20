@@ -1,23 +1,68 @@
 @keyframes up-down {
     0% {
-        transform: translateY(3px);
+        transform: translateY(0);
     }
+
     50% {
-        transform: translateY(-3px);
+        transform: translateY(-4px);
     }
+
     100% {
-        transform: translateY(3px);
+        transform: translateY(0);
     }
 }
 
 @keyframes spin {
     0% {
-        transform: translateY(-100%);
+        transform: translateY(-105%);
     }
+
     50% {
         transform: translateY(0);
     }
+
     100% {
-        transform: translateY(100%);
+        transform: translateY(105%);
+    }
+}
+
+@keyframes spin-finale {
+    0% {
+        transform: translateY(-105%);
+    }
+
+    60% {
+        transform: translateY(15px);
+    }
+
+    100% {
+        transform: translateY(0);
+    }
+}
+
+@keyframes spin-start {
+    0% {
+        transform: translateY(0);
+    }
+
+    100% {
+        transform: translateY(105%);
+    }
+}
+
+@keyframes scatter-attivo {
+    0% {
+        background-color: rgba(43, 50, 57, 0.3);
+        border-color: rgba(43, 50, 57, 0.3);
+    }
+
+    50% {
+        background-color: rgba(184, 126, 26, 0.15);
+        border-color: rgba(184, 126, 26, 0.15);
+    }
+
+    100% {
+        background-color: rgba(43, 50, 57, 0.3);
+        border-color: rgba(43, 50, 57, 0.3);
     }
 }

@@ -26,7 +26,7 @@ const html = {
      * inizializza l'html
      */
     _init() {
-        dom.get1('#coin-value').innerHTML = this.better_big_nums(utente.wallet);
+        dom.get1('#coin-value').innerHTML = utente.wallet;
         dom.get1('#versione_slot').innerHTML = config.versione;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
@@ -39,11 +39,11 @@ const html = {
         }
         let prev_r = 0;
         for (let i = 0; i < config.n_emoji; i++) {
-            const r = parseInt(config.rarita[i] * 100);
+            const r = config.rarita[i] * 100;
             const html = `
                 <tr>
                     <th scope="row">${config.simboli[i]}</th>
-                    <td id="r_${i}">${(r - prev_r)}</td>
+                    <td id="r_${i}">${(r - prev_r).toFixed(2)}%</td>
                     <td id="m_${i}">${config.moltiplicatori[i].join(', ')}</td>
                     <td>${config.informazioni_simboli[i]}</td>
                 </tr>
@@ -72,9 +72,8 @@ const html = {
         dom.get1('#calcoli').innerHTML = '';
         $(he.e.spin_btn).prop('disabled', true);
         config.sta_giocando = true;
-        const puntata = Number(he.e.puntata.value);
-        slot1.spin(puntata);
-        he.e.coin.innerHTML = utente.wallet;
+        // controllo se la puntata non è stata manomessa
+        const puntata = slot1.check_puntata(Number(he.e.puntata.value));
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
@@ -83,14 +82,14 @@ const html = {
             alert('Non puoi puntare piu di quello che possiedi');
             return;
         }
+        slot1.spin(puntata);
+        he.e.coin.innerHTML = utente.wallet;
         // carico html
         animazione.shuffle(slot_elements.griglia, () => {
-            $(he.e.spin_btn).prop('disabled', false);
             config.sta_giocando = false;
             const guadagno = slot1.check_player_wins(puntata);
             he.e.coin.innerHTML = utente.wallet;
             this._info(puntata, guadagno);
-            dom.get1('#giri_bonus').value = slot1.giri_bonus;
         });
     },
     blocca_puntata(bool) {

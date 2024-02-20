@@ -18,15 +18,21 @@ body {
   width: 100%;
   flex-wrap: wrap;
   padding: 3px 5px;
-  border: 5px solid rgba(43, 50, 57, 0.5);
+  border: 5px solid rgba(43, 50, 57, 0.3);
+  background-color: rgba(43, 50, 57, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
+}
+#display.scatter-attivo {
+  animation: scatter-attivo ease-in-out 2.5s infinite;
 }
 #display .item {
   flex-grow: 1;
   /* Fai espandere ogni immagine per occupare lo spazio disponibile */
-  width: calc(20% - 14px);
+  width: calc(20% - 12px);
   /* Imposta la larghezza su 1/5 della pagina (con margine) */
-  padding: 6px;
+  padding: 7px 6px 3px 6px;
   /* Aggiungi margine tra le immagini */
   text-align: center;
   background-color: transparent;
@@ -36,7 +42,7 @@ body {
   align-items: center;
   margin-top: 3px;
   margin-bottom: 3px;
-  background-color: rgba(43, 50, 57, 0.5);
+  background-color: rgba(43, 50, 57, 0.3);
 }
 #display .item:first-child, #display .item:nth-child(5n+1) {
   border-radius: 10px 0 0 10px;
@@ -51,7 +57,13 @@ body {
   animation: up-down cubic-bezier(0.59, 0.23, 0.4, 0.75) 2s infinite;
 }
 #display .item.spin img {
-  animation: spin linear 0.1s infinite;
+  animation: spin linear 0.2s infinite;
+}
+#display .item.spin-finale img {
+  animation: spin-finale ease-out 0.2s 1;
+}
+#display .item.spin-start img {
+  animation: spin-start ease-in 0.2s 1;
 }
 
 .controller {
@@ -108,7 +120,11 @@ body {
   font-size: 1.17em;
 }
 #calcoli span b {
-  background-color: #134e32;
+  background-color: rgb(19, 78, 50);
+}
+
+.audio {
+  display: none;
 }
 
 .btn {
@@ -128,6 +144,9 @@ input {
   color: #198754;
 }
 
+.table {
+  font-size: 1.17em;
+}
 .table b {
   color: #198754;
 }
@@ -137,24 +156,57 @@ input {
 
 @keyframes up-down {
   0% {
-    transform: translateY(3px);
+    transform: translateY(0);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-4px);
   }
   100% {
-    transform: translateY(3px);
+    transform: translateY(0);
   }
 }
 @keyframes spin {
   0% {
-    transform: translateY(-100%);
+    transform: translateY(-105%);
   }
   50% {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(100%);
+    transform: translateY(105%);
+  }
+}
+@keyframes spin-finale {
+  0% {
+    transform: translateY(-105%);
+  }
+  60% {
+    transform: translateY(15px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+@keyframes spin-start {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(105%);
+  }
+}
+@keyframes scatter-attivo {
+  0% {
+    background-color: rgba(43, 50, 57, 0.3);
+    border-color: rgba(43, 50, 57, 0.3);
+  }
+  50% {
+    background-color: rgba(184, 126, 26, 0.15);
+    border-color: rgba(184, 126, 26, 0.15);
+  }
+  100% {
+    background-color: rgba(43, 50, 57, 0.3);
+    border-color: rgba(43, 50, 57, 0.3);
   }
 }
 
