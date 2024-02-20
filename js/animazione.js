@@ -31,12 +31,10 @@ const animazione = {
     },
     /**
      * esegue l'animazione dello shuffle per un simbolo
-     * @param {*} simbolo oggetto del simbolo
-     * @param {*} item elemento html
-     * @param {*} i indice item
-     * @param {*} timeout 
-     */
-    /**
+     * @param {Object} simbolo oggetto del simbolo
+     * @param {HTMLElement} item elemento html
+     * @param {Number} i indice simbolo nella griglia
+     * @param {Number} timeout Ritardo al reveal del simbolo
      */
     scramble(simbolo, item, i, timeout, start_timeout) {
         setTimeout(() => {
@@ -65,8 +63,14 @@ const animazione = {
     get_random_emoji() {
         return config.simboli[Math.floor(Math.random() * config.simboli.length)];
     },
+    /**
+     * Oltre a mostrare quali percorsi sono vincitori
+     * memorizza quali item hanno vinto, nonche gli elementi delle linne vincitrici
+     * ed attiva la funzione reroll, attivando cosi la fase bonus 'STREAK'
+     */
     mostra_percorsi_vincenti() {
         let timeout = 0;
+        slot1.reroll_simboli = []; // simboli che hanno vinto
         // per ogni percorso che ha vinto
         for (let i = 0; i < slot1.percorsi_vincenti.length; i++) {
             const oggetto = slot1.percorsi_vincenti[i];
@@ -76,17 +80,19 @@ const animazione = {
             const percorso = slot1.percorsi[r][p];
             // animo tutti gli elementi presenti nel percorso
             setTimeout(() => {
-                for (let j = 0; j < elementi_da_evidenziare; j++) {
+                for (let j = 0; j < config.colonne; j++) {
                     // lo mostro
                     const [x, y] = percorso[j];
+                    slot1.reroll_simboli.push(slot1.get_elemento_da_coordinate([x, y])); // pusho gli elementi da rerollare
                     const id = '#rc_' + x + '-' + y;
-                    this.animate_item(dom.get1(id), 200, 'rgba(19, 78, 50, 0.8)');
+                    this.animate_item(dom.get1(id), 200, 'rgba(212, 174, 89, 0.9)');
                 }
             }, timeout);
             timeout += (800);
         }
         setTimeout(() => {
-            $(he.e.spin_btn).prop('disabled', false);
+            slot1.reroll();
+            // $(he.e.spin_btn).prop('disabled', false);
         }, timeout);
     },
     animate_item(item, duration = 100, colore = '#2b3239') {
@@ -99,3 +105,73 @@ const animazione = {
         });
     }
 }
+
+/*
+
+[
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            0,
+            0
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            0,
+            1
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            0,
+            2
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            1,
+            0
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            1,
+            1
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            1,
+            2
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            2,
+            0
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            2,
+            2
+        ]
+    },
+    {
+        "elementi_da_evidenziare": 5,
+        "percorso": [
+            2,
+            3
+        ]
+    },
+]
+
+*/

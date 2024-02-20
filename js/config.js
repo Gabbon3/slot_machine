@@ -17,6 +17,7 @@ const config = {
         this.n_emoji = this.simboli.length;
     },
     indice_wild: 1, // il wild è in posizione 1 - la tavola aliena d'oro
+    indice_scatter: 1, // lo scatter è in posizione 1 - poichè è lo stesso oggetto che funge da wild
     quantita_scatter_minimo: 3, // numero minimo di scatter che devono essere presenti in un giro
     /**
      * simboli
@@ -34,32 +35,17 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        90, // 1
-        100, // 2
-        100, // 3
-        150, // 4
-        150, // 5
-        350, // 6
-        350, // 7
-        500, // 8
-        500, // 9
-        500, // 10
+        60,
+        80,
+        80,
+        115,
+        115,
+        250,
+        250,
+        470,
+        470,
+        470
     ],
-    /**
-     * Libro di Ra - rarita:*/
-    // rarita: [
-    //     20, // 1
-    //     30, // 2
-    //     30, // 3
-    //     150, // 4
-    //     150, // 5
-    //     400, // 6
-    //     400, // 7
-    //     1000, // 8
-    //     1000, // 9
-    //     1000, // 10
-    // ],
-    /* */
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra
     moltiplicatori: {
@@ -76,37 +62,49 @@ const config = {
      * significa che per essere attivato quel moltiplicatore ci devono essere minimo 2 elementi nella linea
      * se no 3 elementi
      */
-    moltiplicatori: [
+    percentuale_guadagno: [
         [ // 0 - faraone
-            2, 20, 200, 1000
+            1, 10, 100, 500
         ],
         [ // 1 - tavola d'oro, bonus e scatter
-            4, 40, 400
+            2, 20, 200
         ],
         [ // 2 - guardia
-            1, 8, 80, 400
+            0.5, 4, 40, 200
         ],
         [ // 3 - piramide
-            1, 6, 20, 150
+            0.5, 3, 10, 75
         ],
         [ // 4 - ufo
-            1, 6, 20, 150
+            0.5, 3, 10, 75
         ],
         [ // 5 - A
-            1, 8, 25
+            0.5, 4, 15
         ],
         [ // 6 - K
-            1, 8, 25
+            0.5, 4, 15
         ],
         [ // 7 - Q
-            1, 5, 15
+            0.5, 2.5, 10
         ],
         [ // 8 - J
-            1, 5, 15
+            0.5, 2.5, 10
         ],
         [ // 9 - 10
-            1, 5, 15
+            0.5, 2.5, 10
         ],
+    ],
+    /**
+     * moltiplicatori che si attivano man mano per vincite consecutive fino al massimo
+     */
+    moltiplicatore_ufo_attivo: 0,
+    moltiplicatori_ufo: [
+        1,
+        2,
+        4,
+        8,
+        16,
+        32
     ],
     nomi_simboli: [
         'Faraone',

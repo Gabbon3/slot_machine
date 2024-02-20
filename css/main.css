@@ -2,8 +2,9 @@
 cd css/scss
 sass --watch main.scss:../main.css
 */
+@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap");
 body {
-  margin-bottom: 160px;
+  margin-bottom: 250px;
 }
 
 * {
@@ -23,6 +24,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 20px;
+  max-width: 600px;
 }
 #display.scatter-attivo {
   animation: scatter-attivo ease-in-out 2.5s infinite;
@@ -81,20 +83,17 @@ body {
   z-index: -1;
 }
 
-#coin {
-  font-size: 30px;
-  position: absolute;
-  bottom: 100%;
-  left: 50%;
-  transform: translateX(-50%);
-}
-
 #spin_btn {
   margin-left: auto;
 }
 
 #info {
   text-align: center;
+  font-size: 2.2em;
+  -webkit-text-stroke: 0.5px #fff;
+}
+#info i {
+  -webkit-text-stroke: 0px;
 }
 
 .wallpaper {
@@ -110,8 +109,10 @@ body {
 }
 
 #other_info .avviso {
+  margin: 3px;
   font-weight: bold;
   font-size: 20px;
+  padding: 5px;
 }
 
 #calcoli span {
@@ -125,6 +126,39 @@ body {
 
 .audio {
   display: none;
+}
+
+#coin {
+  font-size: 35px;
+  -webkit-text-stroke: 1px #222;
+  text-align: center;
+}
+
+.container_saldo_moltiplicatori_ufo {
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+}
+.container_saldo_moltiplicatori_ufo #coin {
+  flex-grow: 1;
+}
+.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo {
+  flex-grow: 2;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: stretch;
+}
+.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b {
+  flex-grow: 1;
+  text-align: center;
+  font-size: 2em;
+  color: #fff;
+  -webkit-text-stroke: 1px #222;
+  font-family: Impact;
+}
+.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b.active {
+  color: yellowgreen;
 }
 
 .btn {
@@ -152,6 +186,14 @@ input {
 }
 .table img {
   width: 25px;
+}
+
+.glass-container {
+  padding: 10px;
+  border-radius: 10px;
+  background-color: rgba(43, 50, 57, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
 }
 
 @keyframes up-down {
@@ -201,8 +243,8 @@ input {
     border-color: rgba(43, 50, 57, 0.3);
   }
   50% {
-    background-color: rgba(184, 126, 26, 0.15);
-    border-color: rgba(184, 126, 26, 0.15);
+    background-color: rgba(184, 126, 26, 0.3);
+    border-color: rgba(184, 126, 26, 0.3);
   }
   100% {
     background-color: rgba(43, 50, 57, 0.3);

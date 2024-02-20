@@ -21,6 +21,11 @@ const slot1 = {
     blocca_puntata: false, // blocca la puntata se sono attivi i giri bonus
     percorsi_vincenti: [],
     vincita_durante_scatter: 0, //
+    // variabili utili per eseguire il codice delle STREAK
+    guadagno_giro: 0, // memorizza il guadagno per ogni roll
+    guadagno_totale: 0, // memorizza il guadagno totale in caso di serie
+    puntata_giro: 0, // memorizza la puntata per ogni giro
+    reroll_simboli: [], //
     /**
      * inizializza le probabilita
      */
@@ -28,7 +33,7 @@ const slot1 = {
         // inizializzo counter
         this.frequenze = new Array(config.n_emoji).fill(0);
         // inizializzo i moltiplicatori
-        // config.moltiplicatori = configuratore.moltiplicatori.somme_di_potenze_di_n(config.esponente_moltiplicatori, config.n_emoji, true);
+        // config.percentuale_guadagno = configuratore.moltiplicatori.somme_di_potenze_di_n(config.esponente_moltiplicatori, config.n_emoji, true);
         /*
          * i MOLTIPLICATORI devono essere in ordine DECRESCENTE
          */
@@ -67,6 +72,46 @@ const slot1 = {
             utente.wallet -= puntata;
         }
         slot_elements.set_griglia();
+        this.guadagno_totale = 0;
+    },
+    /**
+     * rolla di nuovo in caso di vittoria
+     */
+    reroll() {
+        // rimuovo i duplicati
+        this.reroll_simboli = Array.from(new Set(this.reroll_simboli.map(JSON.stringify)), JSON.parse);
+        // se è maggiore di 0 allora rerollo i simboli che hanno vinto
+        if (this.guadagno_giro > 0) { 
+            // aumento il moltiplicatore ufo
+            this.moltiplicatore_ufo(this.guadagno_giro);
+            const simboli_da_rerollare = this.reroll_simboli.length;
+            // rerollo i simboli
+            for (let i = 0; i < simboli_da_rerollare; i++) {
+                const simbolo = this.reroll_simboli[i]; // l'oggetto del simbolo
+                // 
+                const nuovo_simbolo = slot_elements.inizializza_nuovo_simbolo(simbolo.r, simbolo.c, simbolo.i).result;
+                // console.log(nuovo_simbolo);
+                slot_elements.griglia[simbolo.i] = nuovo_simbolo;
+                animazione.scramble(nuovo_simbolo, he.e.items[simbolo.i], simbolo.i, 1400);
+            }
+            setTimeout(() => {
+                // calcolo il numero di scatter nella griglia poiche potrebbe essere cambiato
+                slot_elements.conteggio_scatter = slot_elements.n_scatter();
+                // calcolo il guadagno del giocatore
+                const guadagno = this.check_player_wins(this.puntata_giro);
+                // html
+                he.e.coin.innerHTML = utente.wallet;
+                html._info(this.puntata_giro, guadagno);
+                // ripeto il ciclo
+                animazione.mostra_percorsi_vincenti();
+            }, 1400);
+        } else {
+            // quando la serie di vincite consecutive finisce:
+            this.moltiplicatore_ufo(0);
+            config.sta_giocando = false;
+            $(he.e.spin_btn).prop('disabled', false);
+            html._info(this.puntata_giro, this.guadagno_totale);
+        }
     },
     /**
      * controlla che la puntata non sia superiore a quella consentita
@@ -76,6 +121,7 @@ const slot1 = {
         if (puntata >= config.max_puntata) {
             puntata = config.max_puntata;
         }
+        this.puntata_giro = puntata;
         return puntata;
     },
     /**
@@ -84,10 +130,11 @@ const slot1 = {
      */
     check_player_wins(puntata) {
         // inizializzo
-        this.moltiplicatore_somma_bonus = 0;
         // ----
         // controllo se ci sono linee vincenti
         let guadagno = this.check_percorsi(puntata);
+        this.guadagno_giro = guadagno;
+        this.guadagno_totale += guadagno;
         // verifico se si puo attivare la funzione scatter
         this.scatter();
         // ---
@@ -141,11 +188,11 @@ const slot1 = {
                      * attivarlo è 5 - 4 + 1 = 2 elementi minimi
                      */
                     [n_elementi_uguali_al_primo, n_wild_linea] = this.elementi_identici_linea(linea, indice_primo_simbolo);
-                    elementi_minimi_richiesti_del_simbolo = config.colonne - config.moltiplicatori[indice_primo_simbolo].length + 1;
+                    elementi_minimi_richiesti_del_simbolo = config.colonne - config.percentuale_guadagno[indice_primo_simbolo].length + 1;
                 }
                 let linea_vincente = false; // tiene traccia se l'utente ha vinto
                 // se la linea contiene dei wild di fila
-                const elementi_minimi_wild = config.colonne - config.moltiplicatori[config.indice_wild].length + 1;
+                const elementi_minimi_wild = config.colonne - config.percentuale_guadagno[config.indice_wild].length + 1;
                 /**
                  * se sulla stessa linea trovo dei wild allora calcolo la vincita
                  * indipendentemente dall'ordine
@@ -218,24 +265,36 @@ const slot1 = {
         if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
             this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
             this.giri_bonus += (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)));
-            record.avviso('🔥 Hai vinto ' + this.giri_bonus + ' giri gratis! 🔥');
             this.blocca_puntata = true;
-            html.blocca_puntata(true);
-            dom.get1('#giri_bonus').value = slot1.giri_bonus; // html necessario
-            he.e.display.classList.add('scatter-attivo');
+            html.giri_bonus(true);
         }
         if (this.giri_bonus == 0) {
             this.blocca_puntata = false;
-            html.blocca_puntata(false);
-            record.avviso('💰 Durante i giri gratis hai vinto ' + this.vincita_durante_scatter + ' <i class="fa-brands fa-gg" aria-hidden="true"></i> 💰');
+            html.giri_bonus(false);
             this.vincita_durante_scatter = 0;
-            dom.get1('#giri_bonus').value = 0;
-            he.e.display.classList.remove('scatter-attivo');
             this.giri_bonus = -1;
         }
         if (this.giri_bonus >= 0) {
             dom.get1('#giri_bonus').value = this.giri_bonus;
         }
+    },
+    /**
+     * gestisce il moltiplicatore ufo
+     */
+    moltiplicatore_ufo(guadagno) {
+        const MAX = config.moltiplicatori_ufo.length - 1; // indice moltiplicatore massimo
+        const aumenta = guadagno == 0 ? false : true;
+        let current = config.moltiplicatore_ufo_attivo;
+        if (current == MAX) {
+            return;
+        }
+        if (aumenta && current < MAX) {
+            current++;
+        } else {
+            current = 0;
+        }
+        html.moltiplicatore_ufo(config.moltiplicatore_ufo_attivo, current);
+        config.moltiplicatore_ufo_attivo = current;
     },
     /**
      * restituisce quanti coin vince o perde
@@ -246,13 +305,14 @@ const slot1 = {
     calc_coins(puntata, indice_simbolo, frequenza, elementi_minimi) {
         // prendo il moltiplicatore statico dell'emoji corrente
         const indice_moltiplicatore = frequenza - elementi_minimi;
-        let moltiplicatore = config.moltiplicatori[indice_simbolo][indice_moltiplicatore];
+        let moltiplicatore = config.percentuale_guadagno[indice_simbolo][indice_moltiplicatore];
         // moltiplico la puntata per il moltiplicatore e lo arrotondo in maniera equa
         /**
          * se x = 3.4 allora = 3
          * se x = 7.6 allora = 8
          */
         let total_coins = puntata * moltiplicatore;
+        total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];
         html.informazioni_giocata(total_coins, puntata, moltiplicatore, config.nomi_simboli[indice_simbolo], frequenza);
         // se ci sono delle linee vincenti allora moltiplico il guadagno per il moltiplicatore bonus
         return total_coins;

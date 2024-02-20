@@ -25,3 +25,11 @@ input {
         width: 25px;
     }
 }
+
+.glass-container {
+    padding: 10px;
+    border-radius: 10px;
+    background-color: rgba(43, 50, 57, 0.3);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}

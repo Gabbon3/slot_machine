@@ -44,7 +44,7 @@ const html = {
                 <tr>
                     <th scope="row">${config.simboli[i]}</th>
                     <td id="r_${i}">${(r - prev_r).toFixed(2)}%</td>
-                    <td id="m_${i}">${config.moltiplicatori[i].join(', ')}</td>
+                    <td id="m_${i}">${config.percentuale_guadagno[i].join(', ')}</td>
                     <td>${config.informazioni_simboli[i]}</td>
                 </tr>
             `;
@@ -86,14 +86,38 @@ const html = {
         he.e.coin.innerHTML = utente.wallet;
         // carico html
         animazione.shuffle(slot_elements.griglia, () => {
-            config.sta_giocando = false;
-            const guadagno = slot1.check_player_wins(puntata);
-            he.e.coin.innerHTML = utente.wallet;
-            this._info(puntata, guadagno);
+            this.funzione_finale_allo_shuffle(puntata);
         });
     },
-    blocca_puntata(bool) {
-        $(he.e.puntata).prop('disabled', bool);
+    funzione_finale_allo_shuffle(puntata) {
+        const guadagno = slot1.check_player_wins(puntata);
+        he.e.coin.innerHTML = utente.wallet;
+    },
+    /** 
+     * attiva o disattiva
+     * @param {bool} attiva true or false 
+     */
+    giri_bonus(attiva) {
+        $(he.e.puntata).prop('disabled', attiva);
+        if (attiva) {
+            dom.get1('.wallpaper').setAttribute('src', 'img/sfondo_bonus.jpg');
+            dom.get1('#giri_bonus').value = slot1.giri_bonus;
+            he.e.display.classList.add('scatter-attivo');
+            record.avviso('🔥 Hai vinto ' + slot1.giri_bonus + ' giri gratis! 🔥');
+        } else {
+            dom.get1('.wallpaper').setAttribute('src', 'img/wallpaper.jpg');
+            he.e.display.classList.remove('scatter-attivo');
+            dom.get1('#giri_bonus').value = 0;
+            record.avviso('💰 Durante i giri gratis hai vinto ' + slot1.vincita_durante_scatter + ' <i class="fa-brands fa-gg" aria-hidden="true"></i> 💰');
+        }
+    },
+    /**
+     * gestisce l'html dei moltiplicatori ufo
+     */
+    moltiplicatore_ufo(prec, current) {
+        const m_ufo = dom.geta('#moltiplicatori_ufo b');
+        m_ufo[prec].classList.remove('active');
+        m_ufo[current].classList.add('active');
     },
     /**
      * mette a display le informazioni

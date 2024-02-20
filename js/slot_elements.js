@@ -43,28 +43,39 @@ const slot_elements = {
         let riga = 0;
         let colonna = 0;
         for (let i = 0; i < config.rulli; i++) {
-            const indice_del_simbolo = this.get_element(config.rarita);
-            // controllo se il simbolo è il wild
-            if (indice_del_simbolo == config.indice_wild) {
-                this.conteggio_scatter++;
-            }
             // controllo le coordinate
             if (colonna == config.colonne) {
                 colonna = 0;
                 riga++;
             }
-            // creo un nuovo oggetto per memorizzare l'item
-            const result = {
-                r: riga,
-                c: colonna,
-                index: indice_del_simbolo,
-                i: i // indice all'interno dell'array della griglia da 0 a (config.rulli - 1)
-            };
-            this.posizioni_emoji[indice_del_simbolo].push(i);
-            this.frequenze.normali[indice_del_simbolo]++;
-            result.index = indice_del_simbolo;
-            this.griglia.push(result);
+            const nuovo_simbolo = this.inizializza_nuovo_simbolo(riga, colonna, i);
+            this.posizioni_emoji[nuovo_simbolo.indice_del_simbolo].push(i);
+            this.frequenze.normali[nuovo_simbolo.indice_del_simbolo]++;
+            nuovo_simbolo.result.index = nuovo_simbolo.indice_del_simbolo;
+            this.griglia.push(nuovo_simbolo.result);
             colonna++;
         }
+        // calcolo quanti scatter ci sono
+        this.conteggio_scatter = this.n_scatter();
+    },
+    inizializza_nuovo_simbolo(riga, colonna, indice_nei_rulli) {
+        const indice_del_simbolo = this.get_element(config.rarita);
+        // creo un nuovo oggetto per memorizzare l'item
+        const result = {
+            r: riga,
+            c: colonna,
+            index: indice_del_simbolo,
+            i: indice_nei_rulli // indice all'interno dell'array della griglia da 0 a (config.rulli - 1)
+        };
+        return {
+            indice_del_simbolo: indice_del_simbolo,
+            result: result,
+        }
+    },
+    /**
+     * calcola quanti scatter ci sono nella griglia
+     */
+    n_scatter() {
+        return this.griglia.filter(obj => obj.index === config.indice_scatter).length;
     }
 }
