@@ -39,7 +39,7 @@ $(document).ready(() => {
     $(document).keydown((event) => {
         const current = Number(he.e.puntata.value);
         const max_puntata = config.max_puntata;
-        // console.log(event.which);
+        console.log(event.which);
         // se la puntata è bloccata allora non faccio modificare l'importo all'utente
         if (!slot1.blocca_puntata) {
             // a - freccia su
@@ -71,7 +71,8 @@ $(document).ready(() => {
                 he.e.puntata.value = current - 0.5;
             }
         }
-        if (event.which === 13 && !config.sta_giocando) {
+        // invio / spazio - fai lo spin()
+        if ((event.which === 13 || event.which === 32) && !config.sta_giocando) {
             html.spin();
         }
         // i - informazioni
@@ -81,10 +82,6 @@ $(document).ready(() => {
         // r - ricomincia
         else if (event.which === 82) {
             slot1.reset_game();
-        }
-        // p - percorsi vincenti
-        else if (event.which === 80) {
-            animazione.mostra_percorsi_vincenti();
         }
     })
     console.log('Document Loaded');

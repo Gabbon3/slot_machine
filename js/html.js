@@ -90,7 +90,7 @@ const html = {
         });
     },
     funzione_finale_allo_shuffle(puntata) {
-        const guadagno = slot1.check_player_wins(puntata);
+        slot1.check_player_wins(puntata);
         he.e.coin.innerHTML = utente.wallet;
     },
     /** 
@@ -100,12 +100,14 @@ const html = {
     giri_bonus(attiva) {
         $(he.e.puntata).prop('disabled', attiva);
         if (attiva) {
-            dom.get1('.wallpaper').setAttribute('src', 'img/sfondo_bonus.jpg');
+            $('#sfondo-normale').fadeOut();
+            $('#sfondo-bonus').fadeIn();
             dom.get1('#giri_bonus').value = slot1.giri_bonus;
             he.e.display.classList.add('scatter-attivo');
             record.avviso('🔥 Hai vinto ' + slot1.giri_bonus + ' giri gratis! 🔥');
         } else {
-            dom.get1('.wallpaper').setAttribute('src', 'img/wallpaper.jpg');
+            $('#sfondo-bonus').fadeOut();
+            $('#sfondo-normale').fadeIn();
             he.e.display.classList.remove('scatter-attivo');
             dom.get1('#giri_bonus').value = 0;
             record.avviso('💰 Durante i giri gratis hai vinto ' + slot1.vincita_durante_scatter + ' <i class="fa-brands fa-gg" aria-hidden="true"></i> 💰');
@@ -123,23 +125,17 @@ const html = {
      * mette a display le informazioni
      * @param {number} guadagno 
      */
-    _info(puntata, guadagno) {
-        // mostro il guadagno effettivo
-        let e = he.e.info;
-        let differenza = guadagno - puntata;
-        if (differenza < 0) {
-            e.setAttribute('class', 'danger');
-        } else {
-            e.setAttribute('class', 'success');
-            // differenza = this.better_big_nums(differenza);
+    _info(guadagno) {
+        if (guadagno == 0) {
+            return;
         }
-        e.innerHTML = "<b>" + guadagno + '</b> <i class="fa-brands fa-gg"></i>';
+        he.e.info.innerHTML = "<b>" + guadagno + '</b> <i class="fa-brands fa-gg"></i>';
     },
     /**
      * altre informazioni sulla giocata
      */
-    informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza) {
-        const calcolo = total_coins + ' = ' + puntata +  ' * ' + moltiplicatore + ' ; ' + nome_simbolo + ' x' + frequenza;
+    informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza, moltiplicatore_ufo) {
+        const calcolo = total_coins + ' = ' + puntata +  ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
         dom.get1('#calcoli').innerHTML += '<span><b>' + calcolo + '<b></span>';
     },
     /**

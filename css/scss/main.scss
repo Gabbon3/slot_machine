@@ -3,10 +3,11 @@ cd css/scss
 sass --watch main.scss:../main.css
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
 
 body {
     margin-bottom: 250px;
+    font-family: "Protest Riot";
 }
 
 * {

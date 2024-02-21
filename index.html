@@ -45,7 +45,7 @@
         <!-- generazione dinamica degli item -->
     </div>
     <div class="container my-2">
-        <h1 id="info">
+        <h1 id="info" class="coin testo-colorato">
 
         </h1>
         <p id="other_info">
@@ -71,7 +71,7 @@
     </div>
     <div class="controller">
         <div class="container_saldo_moltiplicatori_ufo">
-            <div id="coin" class="coin-font"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></div>
+            <div id="coin" class="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></div>
             <div id="moltiplicatori_ufo">
                 <b class="active">x1</b>
                 <b>x2</b>
@@ -107,7 +107,8 @@
         </nav>
     </div>
     <!-- --- -->
-    <img src="img/wallpaper.jpg" alt="Immagine Sfondo" class="wallpaper">
+    <img src="img/wallpaper.jpg" id="sfondo-normale" alt="Immagine Sfondo" class="wallpaper">
+    <img src="img/sfondo_bonus.jpg" id="sfondo-bonus" alt="Immagine Sfondo Scatter" class="wallpaper" style="display:none">
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

@@ -1,23 +1,33 @@
 const animazione = {
     intervalli: {},
     wins: [],
-    shuffle(griglia, funzione_finale) {
+    tempo_intervallo: 200,
+    start_time: 100,
+    /**
+     * 
+     * @param {*} griglia 
+     * @param {*} funzione_finale 
+     * @param {*} one_time se fare l'animazione dello scramble una sola volta
+     */
+    shuffle(griglia, funzione_finale, one_time = false) {
         // per ogni riga eseguo le animazioni
         let i = 0;
-        let timeout = 2000;
+        let timeout = one_time ? this.tempo_intervallo : 1000;
         let start_timeout = 0;
         let rulli_animati = 0;
         // per ogni riga eseguo le animazioni
         for (let r = 1; r <= config.righe; r++) {
-            timeout = 1000;
+            timeout = one_time ? this.tempo_intervallo : 1000;
             start_timeout = 0;
             // itero 3 colonne alla volta
             for (i = i; i < config.colonne; i++) {
                 const indice = i + rulli_animati;
                 const simbolo = griglia[indice];
-                this.scramble(simbolo, he.e.items[indice], indice, timeout, start_timeout);
-                timeout += 200;
-                start_timeout += 100;
+                this.scramble(simbolo, he.e.items[indice], indice, timeout, start_timeout, one_time);
+                if (!one_time) {
+                    timeout += this.tempo_intervallo;
+                    start_timeout += this.start_time;
+                }
             }
             i = 0;
             rulli_animati += config.colonne;
@@ -36,7 +46,11 @@ const animazione = {
      * @param {Number} i indice simbolo nella griglia
      * @param {Number} timeout Ritardo al reveal del simbolo
      */
-    scramble(simbolo, item, i, timeout, start_timeout) {
+    scramble(simbolo, item, i, timeout, start_timeout, one_time) {
+        if (!simbolo.shuffle) {
+            return;
+        }
+        const t_intervallo = this.tempo_intervallo;
         setTimeout(() => {
             item.classList.remove('spin');
             item.classList.add('spin-start');
@@ -45,8 +59,8 @@ const animazione = {
                 item.classList.add('spin');
                 this.intervalli[i] = setInterval(() => {
                     item.innerHTML = this.get_random_emoji();
-                }, 200);
-            }, 200);
+                }, t_intervallo);
+            }, t_intervallo);
             setTimeout(() => {
                 clearInterval(this.intervalli[i]);
                 item.innerHTML = html.num_to_html(simbolo.index);
@@ -56,7 +70,7 @@ const animazione = {
                 item.classList.add('spin-finale');
                 setTimeout(() => {
                     item.classList.remove('spin-finale');
-                }, 200);
+                }, t_intervallo);
             }, timeout);
         }, start_timeout);
     },
@@ -80,10 +94,10 @@ const animazione = {
             const percorso = slot1.percorsi[r][p];
             // animo tutti gli elementi presenti nel percorso
             setTimeout(() => {
-                for (let j = 0; j < config.colonne; j++) {
+                for (let j = 0; j < elementi_da_evidenziare; j++) {
                     // lo mostro
                     const [x, y] = percorso[j];
-                    slot1.reroll_simboli.push(slot1.get_elemento_da_coordinate([x, y])); // pusho gli elementi da rerollare
+                    slot1.reroll_simboli.push(slot_elements.get_elemento_da_coordinate([x, y])); // pusho gli elementi da rerollare
                     const id = '#rc_' + x + '-' + y;
                     this.animate_item(dom.get1(id), 200, 'rgba(212, 174, 89, 0.9)');
                 }

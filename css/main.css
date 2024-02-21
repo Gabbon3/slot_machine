@@ -2,9 +2,10 @@
 cd css/scss
 sass --watch main.scss:../main.css
 */
-@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
 body {
   margin-bottom: 250px;
+  font-family: "Protest Riot";
 }
 
 * {
@@ -18,13 +19,14 @@ body {
   justify-content: center;
   width: 100%;
   flex-wrap: wrap;
-  padding: 3px 5px;
+  padding: 1px;
   border: 5px solid rgba(43, 50, 57, 0.3);
   background-color: rgba(43, 50, 57, 0.3);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 20px;
+  border-radius: 15px;
   max-width: 600px;
+  overflow: hidden;
 }
 #display.scatter-attivo {
   animation: scatter-attivo ease-in-out 2.5s infinite;
@@ -42,15 +44,22 @@ body {
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  margin-top: 3px;
-  margin-bottom: 3px;
+  margin-top: 1px;
+  margin-bottom: 1px;
   background-color: rgba(43, 50, 57, 0.3);
+  border-radius: 0;
 }
-#display .item:first-child, #display .item:nth-child(5n+1) {
-  border-radius: 10px 0 0 10px;
+#display .item:nth-child(5) {
+  border-radius: 0 10px 0 0;
 }
-#display .item:nth-child(5n) {
-  border-radius: 0 10px 10px 0;
+#display .item:nth-child(11) {
+  border-radius: 0 0 0 10px;
+}
+#display .item:first-child {
+  border-radius: 10px 0 0 0;
+}
+#display .item:last-child {
+  border-radius: 0 0 10px 0;
 }
 #display .item img {
   text-align: center;
@@ -89,11 +98,12 @@ body {
 
 #info {
   text-align: center;
-  font-size: 2.2em;
-  -webkit-text-stroke: 0.5px #fff;
+  font-size: 2em;
+  -webkit-text-stroke: 1px #fff;
+  color: #222;
 }
-#info i {
-  -webkit-text-stroke: 0px;
+#info b {
+  font-size: 2.2em;
 }
 
 .wallpaper {
@@ -128,26 +138,23 @@ body {
   display: none;
 }
 
-#coin {
-  font-size: 35px;
-  -webkit-text-stroke: 1px #222;
-  text-align: center;
-}
-
 .container_saldo_moltiplicatori_ufo {
   display: flex;
   flex-wrap: nowrap;
-  align-items: center;
+  align-items: stretch;
   justify-content: center;
 }
 .container_saldo_moltiplicatori_ufo #coin {
   flex-grow: 1;
+  font-size: 2.5em;
+  text-align: center;
+  -webkit-text-stroke: 1px #222;
 }
 .container_saldo_moltiplicatori_ufo #moltiplicatori_ufo {
   flex-grow: 2;
   display: flex;
   flex-wrap: nowrap;
-  align-items: stretch;
+  align-items: center;
 }
 .container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b {
   flex-grow: 1;
@@ -155,10 +162,12 @@ body {
   font-size: 2em;
   color: #fff;
   -webkit-text-stroke: 1px #222;
-  font-family: Impact;
+  transition: 0.2s;
+  margin: auto;
 }
 .container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b.active {
-  color: yellowgreen;
+  color: gold;
+  font-size: 2.5em;
 }
 
 .btn {

@@ -5,13 +5,14 @@
     justify-content: center;
     width: 100%;
     flex-wrap: wrap;
-    padding: 3px 5px;
+    padding: 1px;
     border: 5px solid rgba(43, 50, 57, 0.3);
     background-color: rgba(43, 50, 57, 0.3);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
-    border-radius: 20px;
+    border-radius: 15px;
     max-width: 600px;
+    overflow: hidden;
 
     &.scatter-attivo {
         animation: scatter-attivo ease-in-out 2.5s infinite;
@@ -30,17 +31,25 @@
         display: inline-flex;
         justify-content: center;
         align-items: center;
-        margin-top: 3px;
-        margin-bottom: 3px;
+        margin-top: 1px;
+        margin-bottom: 1px;
         background-color: rgba(43, 50, 57, 0.3);
+        border-radius: 0;
 
-        &:first-child,
-        &:nth-child(5n + 1) {
-            border-radius: 10px 0 0 10px;
+        &:nth-child(5) {
+            border-radius: 0 10px 0 0;
         }
 
-        &:nth-child(5n) {
-            border-radius: 0 10px 10px 0;
+        &:nth-child(11) {
+            border-radius: 0 0 0 10px;
+        }
+
+        &:first-child {
+            border-radius: 10px 0 0 0;
+        }
+
+        &:last-child {
+            border-radius: 0 0 10px 0;
         }
 
         img {
@@ -86,12 +95,17 @@
 
 #info {
     text-align: center;
-    font-size: 2.2em;
-    -webkit-text-stroke: 0.5px #fff;
+    font-size: 2em;
+    -webkit-text-stroke: 1px #fff;
+    color: #222;
 
-    i {
-        -webkit-text-stroke: 0px;
+    b {
+        font-size: 2.2em;
     }
+
+    // i {
+    //     -webkit-text-stroke: 0px;
+    // }
 }
 
 .wallpaper {
@@ -131,27 +145,24 @@
     display: none;
 }
 
-#coin {
-    font-size: 35px;
-    -webkit-text-stroke: 1px #222;
-    text-align: center;
-}
-
 .container_saldo_moltiplicatori_ufo {
     display: flex;
     flex-wrap: nowrap;
-    align-items: center;
+    align-items: stretch;
     justify-content: center;
 
     #coin {
         flex-grow: 1;
+        font-size: 2.5em;
+        text-align: center;
+        -webkit-text-stroke: 1px #222;
     }
 
     #moltiplicatori_ufo {
         flex-grow: 2;
         display: flex;
         flex-wrap: nowrap;
-        align-items: stretch;
+        align-items: center;
 
         b {
             flex-grow: 1;
@@ -159,10 +170,12 @@
             font-size: 2em;
             color: #fff;
             -webkit-text-stroke: 1px #222;
-            font-family: Impact;
+            transition: 0.2s;
+            margin: auto;
 
             &.active {
-                color: yellowgreen;
+                color: gold;
+                font-size: 2.5em;
             }
         }
     }
