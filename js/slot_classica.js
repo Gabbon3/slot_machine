@@ -79,13 +79,18 @@ const slot1 = {
      */
     reroll() {
         // disattivo lo shuffle per tutti
-        slot_elements.shuffle(false);
+        slot_elements.reset_elementi(false, []);
         // rimuovo i duplicati
+        // cerco i wild e li faccio esplodere
+        for (let i = 0; i < slot_elements.posizioni_wild.length; i++) {
+            const [r, c] = slot_elements.posizioni_wild[i];
+            slot_elements.esplodi_wild(r, c);
+        }
         this.reroll_simboli = Array.from(new Set(this.reroll_simboli.map(JSON.stringify)), JSON.parse);
         // se è maggiore di 0 allora rerollo i simboli che hanno vinto
-        if (this.guadagno_giro > 0) {
+        if (this.reroll_simboli.length > 0) {
             // aumento il moltiplicatore ufo
-            this.moltiplicatore_ufo(this.guadagno_giro);
+            this.moltiplicatore_ufo(true);
             const simboli_da_rerollare = this.reroll_simboli.length;
             // rerollo i simboli
             for (let i = 0; i < simboli_da_rerollare; i++) {
@@ -94,11 +99,15 @@ const slot1 = {
                  * rimuovo dalla colonna l'elemento da cambiare
                  * genero un nuovo elemento per la riga 0;
                 */
-                slot_elements.rimuovi_elemento_dalla_colonna(simbolo_da_cambiare);
+                if (simbolo_da_cambiare.index == config.wild) {
+                    slot_elements.esplodi_wild(simbolo_da_cambiare.r, simbolo_da_cambiare.c);
+                } else {
+                    slot_elements.rimuovi_elemento_dalla_colonna(simbolo_da_cambiare.r, simbolo_da_cambiare.c);
+                }
                 // animazione.scramble(nuovo_simbolo, he.e.items[simbolo_da_cambiare.i], simbolo_da_cambiare.i, 1400);
             }
             setTimeout(() => {
-                animazione.shuffle(slot_elements.griglia, () => {
+                animazione.shuffle(() => {
                     // calcolo il numero di scatter nella griglia poiche potrebbe essere cambiato
                     slot_elements.conteggio_scatter = slot_elements.n_scatter();
                     // calcolo il guadagno del giocatore
@@ -111,7 +120,7 @@ const slot1 = {
         } else {
             // quando la serie (la STREAK) di vincite consecutive finisce:
             setTimeout(() => {
-                this.moltiplicatore_ufo(0);
+                this.moltiplicatore_ufo(false);
                 config.sta_giocando = false;
                 $(he.e.spin_btn).prop('disabled', false);
                 html._info(this.guadagno_totale);
@@ -152,6 +161,8 @@ const slot1 = {
     check_percorsi(puntata) {
         let guadagno = 0;
         this.percorsi_vincenti = [];
+        this.percorsi = percorso.genera_percorsi_vincenti();
+        // console.log(this.percorsi);
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
             const riga = this.percorsi[i];
@@ -161,8 +172,8 @@ const slot1 = {
                 const linea = [];
                 // il percorso
                 for (let p = 0; p < percorso.length; p++) {
-                    const coordinata = percorso[p];
-                    const simbolo = slot_elements.get_elemento_da_coordinate(coordinata);
+                    const [riga, colonna] = percorso[p];
+                    const simbolo = slot_elements.griglia[riga][colonna];
                     linea.push(simbolo.index);
                 }
                 /**
@@ -176,7 +187,8 @@ const slot1 = {
                 let elementi_minimi_richiesti_del_simbolo = 0; // n elementi minimi necessari ad attivare i moltiplicatori
                 // se il primo elemento è il wild
                 if (indice_primo_simbolo === config.indice_wild) {
-                    indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
+                    // indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
+                    indice_primo_simbolo = config.simbolo_super;
                 }
                 // se non sono stati trovati elementi diversi dal wild in una linea
                 // significa che la linea contiene solo wild
@@ -203,13 +215,13 @@ const slot1 = {
                  * i wild si attivano anche se non sono in successione
                  */
                 if (n_wild_linea >= elementi_minimi_wild) {
-                    const vincita_linea = this.calc_coins(puntata, config.indice_wild, n_wild_linea, elementi_minimi_wild);
+                    const vincita_linea = this.calc_coins(puntata, config.indice_wild, n_wild_linea, elementi_minimi_wild, i);
                     guadagno += vincita_linea;
                     linea_vincente = true;
                 }
                 // attivo l'if se ci sono almeno n simboli e se i wild non coprono tutta la linea
                 if (n_elementi_uguali_al_primo >= elementi_minimi_richiesti_del_simbolo && n_wild_linea < config.colonne) {
-                    const vincita_linea = this.calc_coins(puntata, indice_primo_simbolo, n_elementi_uguali_al_primo, elementi_minimi_richiesti_del_simbolo);
+                    const vincita_linea = this.calc_coins(puntata, indice_primo_simbolo, n_elementi_uguali_al_primo, elementi_minimi_richiesti_del_simbolo, i);
                     /**
                      * puntata: la puntata del giocatore
                      * linea[0]: l'indice di rarità del simbolo
@@ -280,10 +292,10 @@ const slot1 = {
     /**
      * gestisce il moltiplicatore ufo
      */
-    moltiplicatore_ufo(guadagno) {
+    moltiplicatore_ufo(aumenta) {
         const MAX = config.moltiplicatori_ufo.length - 1; // indice moltiplicatore massimo
-        const aumenta = guadagno == 0 ? false : true;
         let current = config.moltiplicatore_ufo_attivo;
+        // console.log(aumenta);
         if (current == MAX) {
             return;
         }
@@ -300,8 +312,10 @@ const slot1 = {
      * @param {number} puntata 
      * @param {number} indice_simbolo l'indice del simbolo attuale
      * @param {number} frequenza da 2/3 a 5 - quante volte è uscito
+     * @param {number} elementi_minimi
+     * @param {number} riga la riga da dove è iniziata la linea
      */
-    calc_coins(puntata, indice_simbolo, frequenza, elementi_minimi) {
+    calc_coins(puntata, indice_simbolo, frequenza, elementi_minimi, riga) {
         // prendo il moltiplicatore statico dell'emoji corrente
         const indice_moltiplicatore = frequenza - elementi_minimi;
         let moltiplicatore = config.percentuale_guadagno[indice_simbolo][indice_moltiplicatore];
@@ -318,7 +332,8 @@ const slot1 = {
             moltiplicatore, 
             config.nomi_simboli[indice_simbolo], 
             frequenza, 
-            config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo]
+            config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo],
+            riga
         );
         // se ci sono delle linee vincenti allora moltiplico il guadagno per il moltiplicatore bonus
         return total_coins;

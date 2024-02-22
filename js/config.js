@@ -12,6 +12,7 @@ const config = {
     elementi_minimi_linea: 3, // numero di elementi minimi che devono essere presenti in una linea per attivare il bonus percorsi
     sta_giocando: false, // memorizza quando la slot sta spinnando
     max_puntata: 20, // massima puntata che si puo fare
+    simbolo_super: 0, // 
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;

@@ -5,33 +5,35 @@ const animazione = {
     start_time: 100,
     /**
      * 
-     * @param {*} griglia 
-     * @param {*} funzione_finale 
-     * @param {*} one_time se fare l'animazione dello scramble una sola volta
+     * @param {*} funzione_finale
      */
-    shuffle(griglia, funzione_finale, one_time = false) {
+    shuffle(funzione_finale) {
         // per ogni riga eseguo le animazioni
-        let i = 0;
-        let timeout = one_time ? this.tempo_intervallo : 1000;
+        let timeout = 1000;
         let start_timeout = 0;
-        let rulli_animati = 0;
-        // per ogni riga eseguo le animazioni
-        for (let r = 1; r <= config.righe; r++) {
-            timeout = one_time ? this.tempo_intervallo : 1000;
+        for (let c = 0; c < config.colonne; c++) {
+            timeout = 1000;
+            for (let r = 0; r < config.righe; r++) {
+                const simbolo = slot_elements.griglia[r][c];
+                this.scramble(simbolo, he.e.items[r][c], timeout, start_timeout);
+            }
+            timeout += this.tempo_intervallo;
+            start_timeout += this.start_time;
+        }
+        // per ogni colonna eseguo le animazioni
+        /*
+        for (let c = 0; c < config.colonne; c++) {
+            timeout = 1000;
             start_timeout = 0;
             // itero 3 colonne alla volta
-            for (i = i; i < config.colonne; i++) {
-                const indice = i + rulli_animati;
-                const simbolo = griglia[indice];
-                this.scramble(simbolo, he.e.items[indice], indice, timeout, start_timeout, one_time);
-                if (!one_time) {
-                    timeout += this.tempo_intervallo;
-                    start_timeout += this.start_time;
-                }
+            for (let r = 0; r < config.righe; r++) {
+                const simbolo = slot_elements.griglia[r][c];
+                this.scramble(simbolo, he.e.items[r][c], timeout, start_timeout);
             }
-            i = 0;
-            rulli_animati += config.colonne;
+            timeout += this.tempo_intervallo;
+            start_timeout += this.start_time;
         }
+        */
         // eseguo del codice quando l'animazione finisce
         // in qesto cas sara quando la slot non gira piu allora faccio i calcoli
         setTimeout(() => {
@@ -43,28 +45,32 @@ const animazione = {
      * esegue l'animazione dello shuffle per un simbolo
      * @param {Object} simbolo oggetto del simbolo
      * @param {HTMLElement} item elemento html
-     * @param {Number} i indice simbolo nella griglia
      * @param {Number} timeout Ritardo al reveal del simbolo
      */
-    scramble(simbolo, item, i, timeout, start_timeout, one_time) {
+    scramble(simbolo, item, timeout, start_timeout) {
         if (!simbolo.shuffle) {
             return;
         }
         const t_intervallo = this.tempo_intervallo;
+        // init
+        const riga = simbolo.r;
+        const colonna = simbolo.c;
+        // ---
         setTimeout(() => {
             item.classList.remove('spin');
             item.classList.add('spin-start');
             setTimeout(() => {
                 item.classList.remove('spin-start');
                 item.classList.add('spin');
-                this.intervalli[i] = setInterval(() => {
+                this.intervalli[`${riga}${colonna}`] = setInterval(() => {
                     item.innerHTML = this.get_random_emoji();
                 }, t_intervallo);
             }, t_intervallo);
             setTimeout(() => {
-                clearInterval(this.intervalli[i]);
+                clearInterval(this.intervalli[`${riga}${colonna}`]);
                 item.innerHTML = html.num_to_html(simbolo.index);
-                delete this.intervalli[i];
+                //
+                delete this.intervalli[`${riga}${colonna}`]
                 // this.animate_item(item);
                 item.classList.remove('spin');
                 item.classList.add('spin-finale');
@@ -97,9 +103,8 @@ const animazione = {
                 for (let j = 0; j < elementi_da_evidenziare; j++) {
                     // lo mostro
                     const [x, y] = percorso[j];
-                    slot1.reroll_simboli.push(slot_elements.get_elemento_da_coordinate([x, y])); // pusho gli elementi da rerollare
-                    const id = '#rc_' + x + '-' + y;
-                    this.animate_item(dom.get1(id), 200, 'rgba(212, 174, 89, 0.9)');
+                    slot1.reroll_simboli.push(slot_elements.griglia[x][y]); // pusho gli elementi da rerollare
+                    this.animate_item(he.e.items[x][y], 200, 'rgba(212, 174, 89, 0.9)');
                 }
             }, timeout);
             timeout += (800);
@@ -114,9 +119,30 @@ const animazione = {
             backgroundColor: colore
         }, duration, () => {
             $(item).animate({
-                backgroundColor: 'rgba(43, 50, 57, 0.3)'
+                // backgroundColor: 'rgba(43, 50, 57, 0.3)'
+                backgroundColor: 'rgba(43, 50, 57, 0)'
             }, duration * 3)
         });
+    },
+    esplodi_wild(riga, colonna) {
+        // img/gif/explode.gif
+        let wild = $(he.e.items[riga][colonna]);
+        var offset = wild.offset();
+        var gif = $('<img>').attr('src', 'img/gif/explode.gif');
+        // console.log(gif);
+        const height = wild.height();
+        const width = wild.width();
+        gif.css({
+            'position': 'absolute',
+            'top': (offset.top - (height)) + 'px',
+            'left': (offset.left - (height)) + 'px',
+            'width': (width * 3) + 'px',
+            'z-index': 5
+        });
+        $('body').append(gif);
+        setTimeout(() => {
+            $(gif).remove();
+        }, 500);
     }
 }
 

@@ -4,21 +4,21 @@ const slot_elements = {
         normali: []
     }, // contatore per verificare il punteggio di uno spin
     griglia: [],
+    griglia_indici: [],
     conteggio_scatter: 0, // numero totale dei wild per giro
+    posizioni_wild: [],
     /**
-     * elementi presenti in un rullo
-     * da inizializzare
-     * @param {Array} array l'array su cui si itera
+     * restituisce un simbolo
      */
-    get_element(array = config.rarita) {
+    get_element() {
         // numero casuale utile all'estrazione
         const numero = random.min_max(0, config.max_random_number);
         // risultato finale - usato anche per iterare
-        const length = array.length - 1;
+        const length = config.rarita.length - 1;
         let result = length;
         for (let i = 0; i < length; i++) {
             // numero < max_number * n% dove n < 1
-            if (numero < (config.max_random_number * array[i])) {
+            if (numero < (config.max_random_number * config.rarita[i])) {
                 result = i;
                 break;
             }
@@ -30,54 +30,67 @@ const slot_elements = {
      */
     set_griglia() {
         // inizializzo
-        this.frequenze.normali = new Array(config.n_emoji).fill(0);
-        this.frequenze.speciali = new Array(config.n_spec).fill(0);
-        this.posizioni_emoji = Array.from({ length: config.n_emoji }, () => []); // animazione
-        this.conteggio_scatter = 0; // azzero il conteggio dei wild
+        this.griglia = this._init_griglia();
+        this.griglia_indici = this._init_griglia();
         // ----
-        this.griglia = [];
-        /**
-         * true: restituisce un elemento speciale
-         * false: restituisce una carta normale
-        */
-        let riga = 0;
-        let colonna = 0;
-        for (let i = 0; i < config.rulli; i++) {
-            // controllo le coordinate
-            if (colonna == config.colonne) {
-                colonna = 0;
-                riga++;
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                this.griglia[r][c] = this.inizializza_nuovo_simbolo(r, c);
+                this.griglia_indici[r][c] = this.griglia[r][c].index;
             }
-            const nuovo_simbolo = this.inizializza_nuovo_simbolo(riga, colonna, i);
-            this.posizioni_emoji[nuovo_simbolo.indice_del_simbolo].push(i);
-            this.frequenze.normali[nuovo_simbolo.indice_del_simbolo]++;
-            nuovo_simbolo.result.index = nuovo_simbolo.indice_del_simbolo;
-            this.griglia.push(nuovo_simbolo.result);
-            colonna++;
         }
         // calcolo quanti scatter ci sono
         this.conteggio_scatter = this.n_scatter();
     },
-    inizializza_nuovo_simbolo(riga, colonna, indice_nei_rulli) {
+    set_griglia_indici() {
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                this.griglia_indici[r][c] = this.griglia[r][c].index;
+            }
+        }
+    },
+    /**
+     * restituisce l'array della griglia
+     * @returns {Array} griglia
+     */
+    _init_griglia() {
+        let matrice = [];
+        for (let riga = 0; riga < config.righe; riga++) {
+            let riga_matrice = [];
+            for (let colonna = 0; colonna < config.colonne; colonna++) {
+                riga_matrice.push(0);
+            }
+            matrice.push(riga_matrice);
+        }
+        return matrice;
+    },
+    inizializza_nuovo_simbolo(riga, colonna) {
         const indice_del_simbolo = this.get_element(config.rarita);
         // creo un nuovo oggetto per memorizzare l'item
         const result = {
             r: riga,
             c: colonna,
             index: indice_del_simbolo,
-            i: indice_nei_rulli, // indice all'interno dell'array della griglia da 0 a (config.rulli - 1)
             shuffle: true, // esegui si o no l'animazione di shuffle
+            controllato: [],
         };
-        return {
-            indice_del_simbolo: indice_del_simbolo,
-            result: result,
-        }
+        return result;
     },
     /**
      * calcola quanti scatter ci sono nella griglia
      */
     n_scatter() {
-        return this.griglia.filter(obj => obj.index === config.indice_scatter).length;
+        let n = 0;
+        this.posizioni_wild = [];
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                if (this.griglia[r][c].index == config.indice_scatter) {
+                    this.posizioni_wild.push([r, c]);
+                    n++;
+                }
+            }
+        }
+        return n;
     },
     /**
      * restituisce un elemento della griglia basandosi sulle sue coordinate
@@ -90,42 +103,19 @@ const slot_elements = {
         return simbolo;
     },
     /**
-     * abbassa di uno gli elementi di una colonna
-     * @param {Object} simbolo l'oggetto del simbolo da spostare
-     * @param {Int} riga la riga di destinazione
-     */
-    sposta_elemento_colonna(simbolo) {
-        const riga = simbolo.r + 1; // nuove coordinate del simbolo
-        // const colonna = simbolo.c; // nuove coordinate del simbolo
-        const simbolo_sotto = this.get_elemento_da_coordinate([riga, simbolo.c]); // il simbolo sotto a quello attuale
-        if (!simbolo_sotto) {
-            // se non ce nessun simbolo sotto
-            return;
-        } else {
-            // se ce allora in maniera ricorsiva sposto quello sotto utilizzando la medesima funzione
-            this.sposta_elemento_colonna(simbolo_sotto);
-            // memorizzo la nuova riga del simbolo da spostare
-            simbolo.r = riga;
-            // utilizzo l'indice del simbolo sotto per impostare il simbolo corrente nella sua posizione
-            // e quindi effettuare lo spostamento vero e proprio
-            this.griglia[simbolo_sotto.i] = simbolo;
-        }
-    },
-    /**
      * rimuove un simbolo da una colonna, spostando quelli sopra di lui 
      * @param {Object} simbolo simbolo da eliminare
      */
-    rimuovi_elemento_dalla_colonna(simbolo) {
+    rimuovi_elemento_dalla_colonna(riga, colonna) {
         // inizializzo
-        const colonna = simbolo.c;
-        const simbolo_riga_0 = this.get_elemento_da_coordinate([0, colonna]);
-        this.griglia[simbolo_riga_0.i].shuffle = true;
+        const simbolo_riga_0 = this.griglia[0][colonna];
+        simbolo_riga_0.shuffle = true;
         // se l'elemento si trova in riga 0 cioe la prima allora niente
-        if (simbolo.r == 0) {
+        if (riga == 0) {
             // attivo l'animazione shuffle per il nuovo elemento
             // imposto il nuovo simbolo alla riga 0
             // simbolo i perche nel for l'ultimo elemento che è stato selezionato era quello della riga 0
-            this.griglia[simbolo_riga_0.i].index = this.get_element(config.rarita);
+            simbolo_riga_0.index = this.get_element();
             return;
         }
         // la riga del simbolo indica anche quante righe si trovano sopra di esso
@@ -133,24 +123,69 @@ const slot_elements = {
          * un elemento alla riga 1 vuol dire che si trova nella seconda riga e quindi
          * che sopra di lui ce solo una riga cioè la prima
          */
+        let precedente = this.griglia[riga][colonna];
         // r = riga attuale: 2 o 1
-        let precedente = simbolo;
-        for (let r = simbolo.r; r > 0; r--) {
-            const s = this.get_elemento_da_coordinate([r - 1, colonna]); // simbolo sopra
-            this.griglia[precedente.i].shuffle = true;
-            this.griglia[precedente.i].index = s.index;
-            precedente = s;
+        for (let r = riga; r > 0; r--) {
+            const simbolo_sopra = this.griglia[r - 1][colonna]; // simbolo sopra
+            // imposto l'index del simbolo sopra al simbolo attuale
+            precedente.shuffle = true;
+            precedente.index = simbolo_sopra.index;
+            precedente = simbolo_sopra;
         }
         // imposto il nuovo simbolo alla riga 0
-        this.griglia[simbolo_riga_0.i].index = this.get_element(config.rarita);
+        simbolo_riga_0.index = this.get_element();
     },
     /**
-     * attiva o meno lo shuffle per tutti gli elementi della griglia
-     * @param {*} attivo 
+     * Fai esplodere un wild cambiando anche gli elementi adiacenti
+     * @param {Number} r 
+     * @param {Number} c 
      */
-    shuffle(attivo) {
-        for (let i = 0; i < this.griglia.length; i++) {
-            this.griglia[i].shuffle = attivo;
+    esplodi_wild(r, c) {
+        const adiacenti = [];
+        const max_r = config.righe - 1;
+        const max_c = config.colonne - 1;
+        // Ciclo per le righe adiacenti
+        for (var i = r - 1; i <= r + 1; i++) {
+            // Ciclo per le colonne adiacenti
+            for (var j = c - 1; j <= c + 1; j++) {
+                // Controlla che non si superi il massimo
+                if (!(i < 0 || i > max_r || j < 0 || j > max_c)) {
+                    adiacenti.push([i, j]); // Aggiungi l'elemento stesso
+                }
+            }
+        }
+        // const adiacenti = [
+        //     [r - 1, c], // |
+        //     [r + 1, c], // |
+        //     [r, c - 1], // <-
+        //     [r, c + 1], // ->
+        //     // ---
+        //     [r + 1, c + 1], //
+        //     [r + 1, c - 1], //
+        //     [r - 1, c + 1], //
+        //     [r - 1, c - 1], //
+        //     // --- wild
+        //     [r, c]
+        // ];
+        for (let i = 0; i < adiacenti.length; i++) {
+            [riga, colonna] = adiacenti[i];
+            const simbolo = this.griglia[riga][colonna];
+            slot1.reroll_simboli.push(simbolo);
+            // this.rimuovi_elemento_dalla_colonna(riga, colonna);
+        }
+        animazione.esplodi_wild(r, c);
+    },
+    /**
+     * reimposta alcune variabili degli elementi
+     * @param {Boolean} shuffle attiva o disattiva l'animazione
+     * @param {Boolean} controllato il controllo che viene fatto quando si cercano percorsi
+     */
+    reset_elementi(shuffle, controllato) {
+        for (let r = 0; r < config.righe; r++) {
+            for (let c = 0; c < config.colonne; c++) {
+                this.griglia[r][c].shuffle = shuffle;
+                this.griglia[r][c].controllato = controllato;
+            }
         }
     }
 }

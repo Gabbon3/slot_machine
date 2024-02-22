@@ -4,6 +4,10 @@
 const he = {
     e: {}, // lista elementi html
     _init() {
+        const items = Array.from({ length: config.righe }, () => []);
+        for (let r = 0; r < config.righe; r++) {
+            items[r] = dom.geta('#r' + r + ' .item');
+        }
         return {
             puntata: dom.get1('#puntata'),
             spin_btn: dom.get1('#spin_btn'),
@@ -14,7 +18,7 @@ const he = {
             aumenta_puntata: dom.get1('#aumenta_puntata'),
             diminuisci_puntata: dom.get1('#diminuisci_puntata'),
             reset_btn: dom.get1('#reset_game'),
-            items: dom.geta('.item'),
+            items: items,
             calcoli: dom.get1('#calcoli'),
             display: dom.get1('#display')
         }
@@ -30,12 +34,14 @@ const html = {
         dom.get1('#versione_slot').innerHTML = config.versione;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
-        let riga = 0;
         for (let r = 0; r < config.righe; r++) {
+            let riga = '<div class="riga" id="r' + r + '">';
+            riga += '<span class="guadagno-riga" id="guadagno_riga_' + r + '"></span>';
             for (let c = 0; c < config.colonne; c++) {
-                dom.get1('#display').innerHTML += `<span class="item" id="${'rc_' + r + '-' + c}"></span>`;
+                riga += '<span class="item" id="c' + c + '"></span>';
             }
-            riga += config.colonne;
+            riga += '</div>';
+            dom.get1('#display').innerHTML += riga;
         }
         let prev_r = 0;
         for (let i = 0; i < config.n_emoji; i++) {
@@ -70,6 +76,10 @@ const html = {
     spin() {
         he.e.info.innerHTML = '';
         dom.get1('#calcoli').innerHTML = '';
+        dom.geta('.guadagno-riga').forEach(item => {
+            item.innerHTML = '0';
+            $(item).hide();
+        });
         $(he.e.spin_btn).prop('disabled', true);
         config.sta_giocando = true;
         // controllo se la puntata non è stata manomessa
@@ -85,7 +95,7 @@ const html = {
         slot1.spin(puntata);
         he.e.coin.innerHTML = utente.wallet;
         // carico html
-        animazione.shuffle(slot_elements.griglia, () => {
+        animazione.shuffle(() => {
             this.funzione_finale_allo_shuffle(puntata);
         });
     },
@@ -134,9 +144,12 @@ const html = {
     /**
      * altre informazioni sulla giocata
      */
-    informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza, moltiplicatore_ufo) {
-        const calcolo = total_coins + ' = ' + puntata +  ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
+    informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza, moltiplicatore_ufo, riga) {
+        const calcolo = total_coins + ' = ' + puntata + ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
         dom.get1('#calcoli').innerHTML += '<span><b>' + calcolo + '<b></span>';
+        const guadagno_riga = dom.get1('#guadagno_riga_' + riga);
+        guadagno_riga.innerHTML = total_coins + Number(guadagno_riga.innerHTML);
+        $(guadagno_riga).show();
     },
     /**
      * restituisce l html in base al numero

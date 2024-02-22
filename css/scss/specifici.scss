@@ -1,8 +1,7 @@
 #display {
     display: flex;
     margin: 5px auto 20px auto;
-    flex-direction: row;
-    justify-content: center;
+    flex-direction: column;
     width: 100%;
     flex-wrap: wrap;
     padding: 1px;
@@ -12,65 +11,75 @@
     -webkit-backdrop-filter: blur(10px);
     border-radius: 15px;
     max-width: 600px;
-    overflow: hidden;
 
     &.scatter-attivo {
         animation: scatter-attivo ease-in-out 2.5s infinite;
     }
 
-    .item {
-        flex-grow: 1;
-        /* Fai espandere ogni immagine per occupare lo spazio disponibile */
-        width: calc(20% - 12px);
-        /* Imposta la larghezza su 1/5 della pagina (con margine) */
-        padding: 7px 6px 3px 6px;
-        /* Aggiungi margine tra le immagini */
-        text-align: center;
-        background-color: transparent;
-        overflow: hidden;
-        display: inline-flex;
+    .riga {
+        display: flex;
         justify-content: center;
-        align-items: center;
-        margin-top: 1px;
-        margin-bottom: 1px;
         background-color: rgba(43, 50, 57, 0.3);
-        border-radius: 0;
-
-        &:nth-child(5) {
-            border-radius: 0 10px 0 0;
-        }
-
-        &:nth-child(11) {
-            border-radius: 0 0 0 10px;
-        }
+        margin: 1px 0;
+        position: relative;
 
         &:first-child {
-            border-radius: 10px 0 0 0;
+            border-radius: 10px 10px 0 0;
         }
 
         &:last-child {
-            border-radius: 0 0 10px 0;
+            border-radius: 0 0 10px 10px;
         }
 
-        img {
+        .item {
+            flex-grow: 1;
+            /* Fai espandere ogni immagine per occupare lo spazio disponibile */
+            width: calc(20% - 12px);
+            /* Imposta la larghezza su 1/5 della pagina (con margine) */
+            padding: 7px 6px 3px 6px;
+            /* Aggiungi margine tra le immagini */
             text-align: center;
-            width: 100%;
-            max-height: 100%;
-            animation: up-down cubic-bezier(.59, .23, .4, .75) 2s infinite;
+            overflow: hidden;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+
+            img {
+                text-align: center;
+                width: 100%;
+                max-height: 100%;
+                animation: up-down cubic-bezier(.59, .23, .4, .75) 2s infinite;
+            }
+
+            &.spin img {
+                animation: spin linear 0.2s infinite;
+            }
+
+            &.spin-finale img {
+                animation: spin-finale ease-out 0.2s 1;
+            }
+
+            &.spin-start img {
+                animation: spin-start ease-in 0.2s 1;
+            }
         }
 
-        &.spin img {
-            animation: spin linear 0.2s infinite;
-        }
-
-        &.spin-finale img {
-            animation: spin-finale ease-out 0.2s 1;
-        }
-
-        &.spin-start img {
-            animation: spin-start ease-in 0.2s 1;
+        .guadagno-riga {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            right: calc(99%);
+            padding: 4px 6px;
+            font-weight: normal;
+            border: 1px solid #fff;
+            color: gold;
+            font-size: 0.8em;
+            background-color: #222;
+            z-index: 2;
+            display: none;
         }
     }
+
 }
 
 .controller {
@@ -96,16 +105,16 @@
 #info {
     text-align: center;
     font-size: 2em;
-    -webkit-text-stroke: 1px #fff;
-    color: #222;
+    -webkit-text-stroke: 2px #222;
+    color: #fff;
 
     b {
         font-size: 2.2em;
     }
 
-    // i {
-    //     -webkit-text-stroke: 0px;
-    // }
+    i {
+        -webkit-text-stroke: 0px;
+    }
 }
 
 .wallpaper {
