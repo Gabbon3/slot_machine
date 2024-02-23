@@ -169,11 +169,11 @@ const html = {
      * altre informazioni sulla giocata
      */
     informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza, moltiplicatore_ufo, riga) {
-        total_coins = total_coins.toFixed(2);
-        const calcolo = total_coins + ' = ' + puntata + ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
+        const calcolo = total_coins.toFixed(2) + ' = ' + puntata + ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
         dom.get1('#calcoli').innerHTML += '<span><b>' + calcolo + '<b></span>';
         const guadagno_riga = dom.get1('#guadagno_riga_' + riga);
-        guadagno_riga.innerHTML = math.approssima(total_coins + Number(guadagno_riga.innerHTML));
+        const calcolo_guadagno_riga = total_coins + Number(guadagno_riga.innerHTML);
+        guadagno_riga.innerHTML = calcolo_guadagno_riga.toFixed(2);
         $(guadagno_riga).show();
     },
     /**
