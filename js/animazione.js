@@ -156,10 +156,10 @@ const animazione = {
         let numero = somma;
         let i = 0;
         var increaser = setInterval(() => {
-            $(html_target).text(Number(numero.toFixed(2)));
+            $(html_target).text(math.approssima(numero));
             if (i == step) {
                 clearInterval(increaser);
-                $(html_target).text(stop);
+                $(html_target).text(math.approssima(stop));
             }
             i++;
             numero += somma;

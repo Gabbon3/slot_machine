@@ -105,15 +105,14 @@ body {
 }
 
 #info {
-  display: none;
   position: fixed;
-  top: 50%;
+  bottom: 20%;
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   text-align: center;
   font-size: calc((20vh + 20vw) / 2);
   color: #fff;
-  -webkit-text-stroke: calc((1vh + 1vw) / 2) #222;
+  -webkit-text-stroke: calc((0.5vh + 0.5vw) / 2) #000717;
   font-weight: bolder;
   z-index: 5;
 }

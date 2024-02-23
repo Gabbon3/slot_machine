@@ -10,6 +10,14 @@ const math = {
         return (y * z) / x;
     },
     /**
+     * Approssima un numero utilizzando due cifre decimali dopo la virgola
+     * @param {Number} num 
+     * @returns 
+     */
+    approssima(num) {
+        return Math.round(num * 100) / 100;
+    },
+    /**
      * genera la sequenza di fibonacci fino a: 'l'
      * partendo da [n, k] che sono due elementi della sequenza fibonacci
      * @returns {array} sequenza di fibonacci personalizzata

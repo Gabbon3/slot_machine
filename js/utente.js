@@ -2,8 +2,7 @@ const utente = {
     // valuta iniziale del giocatore
     wallet: config.wallet,
     lose: false, // verifica che il giocatore non vada sotto 0
-    manage_wallet(guadagno) {
-        guadagno = Number(guadagno.toFixed(2));
+    manage_wallet(guadagno) {;
         this.wallet += guadagno;
         // locale
         record.last_game = utente.get_wallet();
@@ -21,7 +20,7 @@ const utente = {
         }
     },
     get_wallet() {
-        return Number(this.wallet.toFixed(2));
+        return math.approssima(this.wallet);
     },
     /**
      * controlla se il bro puo puntare x in base al suo wallet

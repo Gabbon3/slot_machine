@@ -123,7 +123,6 @@ const slot1 = {
                 this.moltiplicatore_ufo(false);
                 config.sta_giocando = false;
                 $(he.e.spin_btn).prop('disabled', false);
-                console.log(this.guadagno_totale);
                 html._info(this.guadagno_totale, true);
             }, 500);
         }
@@ -235,7 +234,7 @@ const slot1 = {
                      * linea[0]: l'indice di rarità del simbolo
                      * n_elementi_uguali_al_primo: la frequenza del simbolo all'interno della linea
                      */
-                    guadagno += Number(vincita_linea.toFixed(2));
+                    guadagno += vincita_linea;
                     linea_vincente = true;
                 }
                 if (linea_vincente) {
@@ -335,7 +334,6 @@ const slot1 = {
         }
         let total_coins = puntata * moltiplicatore;
         total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];
-        total_coins = Number(total_coins.toFixed(2));
         html.informazioni_giocata(
             total_coins, 
             puntata, 
