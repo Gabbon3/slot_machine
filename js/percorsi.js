@@ -109,8 +109,10 @@ const percorso = {
             // per ogni percorso generato
             for (let p = 0; p < result.length; p++) {
                 const percorso = result[p];
-                const primo = percorso[0];
-                percorsi[primo[0]].push(percorso);
+                if (percorso.length >= 3) {
+                    const primo = percorso[0];
+                    percorsi[primo[0]].push(percorso);
+                }
             }
         }
         // console.log(percorsi);

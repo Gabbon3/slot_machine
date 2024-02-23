@@ -43,7 +43,11 @@ const html = {
             riga += '</div>';
             dom.get1('#display').innerHTML += riga;
         }
+        this._init_tabella();
+    },
+    _init_tabella() {
         let prev_r = 0;
+        dom.get1('#info_slot tbody').innerHTML = '';
         for (let i = 0; i < config.n_emoji; i++) {
             const r = config.rarita[i] * 100;
             const html = `
@@ -64,7 +68,6 @@ const html = {
     _reset() {
         $(he.e.spin_btn).prop('disabled', false);
         he.e.coin.innerHTML = config.wallet;
-        he.e.info.innerHTML = '';
         he.e.other_info.innerHTML = '';
         he.e.items.forEach(item => {
             item.innerHTML = '';
@@ -74,12 +77,12 @@ const html = {
      * 
      */
     spin() {
-        he.e.info.innerHTML = '';
         dom.get1('#calcoli').innerHTML = '';
         dom.geta('.guadagno-riga').forEach(item => {
             item.innerHTML = '0';
             $(item).hide();
         });
+        this._info(0, false);
         $(he.e.spin_btn).prop('disabled', true);
         config.sta_giocando = true;
         // controllo se la puntata non è stata manomessa
@@ -137,26 +140,39 @@ const html = {
      * @param {Boolean} attiva 
      */
     simbolo_super(attiva) {
+        const indice = config.simbolo_super;
+        if (indice < 0) return;
         if (attiva) {
-            
+            const m = [];
+            for (let i = 0; i < config.percentuale_guadagno[indice].length; i++) {
+                const nuovo_moltiplicatore = config.percentuale_guadagno[indice][i] * config.moltiplicatore_super;
+                m.push(nuovo_moltiplicatore.toFixed(2));
+            }
+            $('#m_' + indice).html(`<b>${m.join(', ')}</b>`);
         } else {
-
+            this._init_tabella();
         }
     },
     /**
-     * mette a display le informazioni
+     * mette a display le informazioni su quanto è stato guadagnato
      * @param {number} guadagno 
      */
-    _info(guadagno) {
-        if (guadagno == 0) {
-            return;
+    _info(guadagno, mostra) {
+        const coin = he.e.info;
+        if (mostra) {
+            $(coin).fadeIn('fast');
+        } else {
+            $(coin).hide(0);
         }
-        he.e.info.innerHTML = "<b>" + guadagno + '</b> <i class="fa-brands fa-gg"></i>';
+        if (guadagno > 0) {
+            animazione.number_increaser(guadagno, 1700, 100, '#info b');
+        }
     },
     /**
      * altre informazioni sulla giocata
      */
     informazioni_giocata(total_coins, puntata, moltiplicatore, nome_simbolo, frequenza, moltiplicatore_ufo, riga) {
+        total_coins = Number(total_coins.toFixed(2));
         const calcolo = total_coins + ' = ' + puntata + ' * ' + moltiplicatore + ' * ' + moltiplicatore_ufo + ' ; ' + nome_simbolo + ' x' + frequenza;
         dom.get1('#calcoli').innerHTML += '<span><b>' + calcolo + '<b></span>';
         const guadagno_riga = dom.get1('#guadagno_riga_' + riga);

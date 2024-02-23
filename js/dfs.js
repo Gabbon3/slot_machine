@@ -6,8 +6,10 @@ function dfs(matrix, target) {
     const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
 
     if (target == config.indice_wild) {
-        target = random.min_max(1, (config.n_emoji - 1));
-        config.simbolo_super = target;
+        if (config.simbolo_super == -1) {
+            config.simbolo_super = random.secure_min_max(1, (config.n_emoji - 1))
+        }
+        target = config.simbolo_super;
     }
 
     function isValidMove(row, col) {

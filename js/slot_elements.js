@@ -12,7 +12,7 @@ const slot_elements = {
      */
     get_element() {
         // numero casuale utile all'estrazione
-        const numero = random.min_max(0, config.max_random_number);
+        const numero = random.secure_min_max(0, config.max_random_number);
         // risultato finale - usato anche per iterare
         const length = config.rarita.length - 1;
         let result = length;

@@ -113,7 +113,7 @@ const slot1 = {
                     // calcolo il guadagno del giocatore
                     this.check_player_wins(this.puntata_giro);
                     // html
-                    he.e.coin.innerHTML = utente.wallet;
+                    he.e.coin.innerHTML = Number(utente.wallet.toFixed(2));
                     // ripeto il ciclo
                 }, false); // one time animazione
             }, 500);
@@ -123,7 +123,7 @@ const slot1 = {
                 this.moltiplicatore_ufo(false);
                 config.sta_giocando = false;
                 $(he.e.spin_btn).prop('disabled', false);
-                html._info(this.guadagno_totale);
+                html._info(this.guadagno_totale, true);
             }, 500);
         }
     },
@@ -169,6 +169,8 @@ const slot1 = {
         // se è stato scelto un simbolo super
         if (config.simbolo_super != -1) {
             html.simbolo_super(true);
+        } else {
+            html.simbolo_super(false);
         }
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
@@ -176,6 +178,7 @@ const slot1 = {
             // per ogni percorso che ha una riga
             for (let j = 0; j < riga.length; j++) {
                 const percorso = riga[j];
+                // verifico che il percorso sia lungo almeno 3
                 if (percorso.length < 3) {
                     continue;
                 }
@@ -327,7 +330,7 @@ const slot1 = {
          */
         // se la prima carta era un wild allora controllo se la carta scelta è quella corrente
         if (indice_simbolo == config.simbolo_super) {
-            moltiplicatore **= 2;
+            moltiplicatore *= config.moltiplicatore_super;
         }
         let total_coins = puntata * moltiplicatore;
         total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];

@@ -18,6 +18,7 @@ const config = {
      * allora il moltiplicatore del simbolo scelto viene raddoppiato elevato al quadrato
      */
     simbolo_super: -1, // 
+    moltiplicatore_super: 3, //
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;

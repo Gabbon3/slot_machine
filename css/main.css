@@ -105,16 +105,18 @@ body {
 }
 
 #info {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   text-align: center;
-  font-size: 2em;
-  -webkit-text-stroke: 2px #222;
+  font-size: calc((20vh + 20vw) / 2);
+  -webkit-text-stroke: 1px #222;
+  text-shadow: 5px 5px 10px rgba(255, 215, 0, 0.6);
   color: #fff;
-}
-#info b {
-  font-size: 2.2em;
-}
-#info i {
-  -webkit-text-stroke: 0px;
+  font-weight: bolder;
+  z-index: 5;
 }
 
 .wallpaper {

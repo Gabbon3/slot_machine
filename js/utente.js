@@ -13,8 +13,6 @@ const utente = {
         if (this.wallet <= 0) {
             // impedisco di far giocare il bro
             $(he.e.spin_btn).prop('disabled', true);
-            he.e.info.innerHTML = 'Hai perso';
-            he.e.info.setAttribute('class', 'danger');
             // locale
             record.partite_perse++;
             record.set('partite_perse', record.partite_perse);

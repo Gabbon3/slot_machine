@@ -32,6 +32,10 @@ $(document).ready(() => {
     $('#show_calcoli').click(() => {
         $('#calcoli').fadeToggle();
     });
+    // info
+    $('#info').click(() => {
+        $('#info').hide(0);
+    })
     // ---
     /**
      * Key Event
@@ -51,7 +55,7 @@ $(document).ready(() => {
             }
             // s - freggia giu
             else if (event.which === 40) {
-                if (current <= 0) {
+                if (current <= 0.5) {
                     return;
                 }
                 he.e.puntata.value = current - 1;

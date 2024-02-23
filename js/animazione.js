@@ -143,75 +143,26 @@ const animazione = {
         setTimeout(() => {
             $(gif).remove();
         }, 500);
-    }
+    },
+    /**
+     * 
+     * @param {Number} stop numero finale da raggiungere
+     * @param {Number} duration in ms
+     * @param {*} step quanti step devono essere fatti
+     */
+    number_increaser(stop, duration, step, html_target) {
+        const intervallo = duration / step;
+        let somma = stop / step;
+        let numero = somma;
+        let i = 0;
+        var increaser = setInterval(() => {
+            $(html_target).text(Number(numero.toFixed(2)));
+            if (i == step) {
+                clearInterval(increaser);
+                $(html_target).text(stop);
+            }
+            i++;
+            numero += somma;
+        }, intervallo);
+    },
 }
-
-/*
-
-[
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            0,
-            0
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            0,
-            1
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            0,
-            2
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            1,
-            0
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            1,
-            1
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            1,
-            2
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            2,
-            0
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            2,
-            2
-        ]
-    },
-    {
-        "elementi_da_evidenziare": 5,
-        "percorso": [
-            2,
-            3
-        ]
-    },
-]
-
-*/
