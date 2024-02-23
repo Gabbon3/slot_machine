@@ -158,13 +158,11 @@ const html = {
      */
     _info(guadagno, mostra) {
         const coin = he.e.info;
-        if (mostra) {
+        if (mostra && guadagno > 0) {
             $(coin).fadeIn('fast');
+            animazione.number_increaser(guadagno, 1700, 100, '#info b');
         } else {
             $(coin).hide(0);
-        }
-        if (guadagno > 0) {
-            animazione.number_increaser(guadagno, 1700, 100, '#info b');
         }
     },
     /**

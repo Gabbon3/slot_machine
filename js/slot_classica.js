@@ -123,6 +123,7 @@ const slot1 = {
                 this.moltiplicatore_ufo(false);
                 config.sta_giocando = false;
                 $(he.e.spin_btn).prop('disabled', false);
+                console.log(this.guadagno_totale);
                 html._info(this.guadagno_totale, true);
             }, 500);
         }
