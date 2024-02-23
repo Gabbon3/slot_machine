@@ -12,20 +12,25 @@ const config = {
     elementi_minimi_linea: 3, // numero di elementi minimi che devono essere presenti in una linea per attivare il bonus percorsi
     sta_giocando: false, // memorizza quando la slot sta spinnando
     max_puntata: 20, // massima puntata che si puo fare
-    simbolo_super: 0, // 
+    /**
+     * il moltiplicatore_prima_carta_wild viene attivato quando un wild si trova nella prima colonna
+     * e scegliendo un simbolo casuale della slot, viene generato un percorso partendo dal wild,
+     * allora il moltiplicatore del simbolo scelto viene raddoppiato elevato al quadrato
+     */
+    simbolo_super: -1, // 
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;
     },
-    indice_wild: 1, // il wild è in posizione 1 - la tavola aliena d'oro
-    indice_scatter: 1, // lo scatter è in posizione 1 - poichè è lo stesso oggetto che funge da wild
+    indice_wild: 0, // il wild è in posizione 1 - la tavola aliena d'oro
+    indice_scatter: 0, // lo scatter è in posizione 1 - poichè è lo stesso oggetto che funge da wild
     quantita_scatter_minimo: 3, // numero minimo di scatter che devono essere presenti in un giro
     /**
      * simboli
      */
     simboli: [
-        '<img src="img/items/faraone_alieno.png"></img>', // 1
-        '<img src="img/items/tavola_aliena_oro.png"></img>', // 2 - wild e scatter
+        '<img src="img/items/tavola_aliena_oro.png"></img>', // 1 - wild e scatter
+        '<img src="img/items/faraone_alieno.png"></img>', // 2
         '<img src="img/items/guardia_faraone.png"></img>', // 3
         '<img src="img/items/piramide.png"></img>', // 4
         '<img src="img/items/ufo.png"></img>', // 5
@@ -36,16 +41,16 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        60,
-        80,
-        80,
-        115,
-        115,
-        250,
-        250,
-        470,
-        470,
-        470
+        10,
+        15,
+        15,
+        20,
+        20,
+        30,
+        30,
+        50,
+        50,
+        50
     ],
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra
@@ -63,36 +68,70 @@ const config = {
      * significa che per essere attivato quel moltiplicatore ci devono essere minimo 2 elementi nella linea
      * se no 3 elementi
      */
+    // percentuali guadagno della book of ra
+    // percentuale_guadagno: [
+    //     [ // 0 - faraone
+    //         1, 10, 100, 500
+    //     ],
+    //     [ // 1 - tavola d'oro, bonus e scatter
+    //         2, 20, 200
+    //     ],
+    //     [ // 2 - guardia
+    //         0.5, 4, 40, 200
+    //     ],
+    //     [ // 3 - piramide
+    //         0.5, 3, 10, 75
+    //     ],
+    //     [ // 4 - ufo
+    //         0.5, 3, 10, 75
+    //     ],
+    //     [ // 5 - A
+    //         0.5, 4, 15
+    //     ],
+    //     [ // 6 - K
+    //         0.5, 4, 15
+    //     ],
+    //     [ // 7 - Q
+    //         0.5, 2.5, 10
+    //     ],
+    //     [ // 8 - J
+    //         0.5, 2.5, 10
+    //     ],
+    //     [ // 9 - 10
+    //         0.5, 2.5, 10
+    //     ],
+    // ],
+    // percentuali guadagno della esqueleto explosivo 2
     percentuale_guadagno: [
         [ // 0 - faraone
-            1, 10, 100, 500
+            0.8, 1.5, 5
         ],
         [ // 1 - tavola d'oro, bonus e scatter
-            2, 20, 200
+            0.6, 1, 2.5
         ],
         [ // 2 - guardia
-            0.5, 4, 40, 200
+            0.6, 1, 2.5
         ],
         [ // 3 - piramide
-            0.5, 3, 10, 75
+            0.4, 0.7, 1.4
         ],
         [ // 4 - ufo
-            0.5, 3, 10, 75
+            0.4, 0.7, 1.4
         ],
         [ // 5 - A
-            0.5, 4, 15
+            0.3, 0.6, 1.2
         ],
         [ // 6 - K
-            0.5, 4, 15
+            0.3, 0.6, 1.2
         ],
         [ // 7 - Q
-            0.5, 2.5, 10
+            0.2, 0.4, 0.7
         ],
         [ // 8 - J
-            0.5, 2.5, 10
+            0.2, 0.4, 0.7
         ],
         [ // 9 - 10
-            0.5, 2.5, 10
+            0.2, 0.4, 0.7
         ],
     ],
     /**
@@ -108,8 +147,8 @@ const config = {
         32
     ],
     nomi_simboli: [
-        'Faraone',
         'Tavola Wild - Scatter',
+        'Faraone',
         'Guardia',
         'Piramide',
         'UFO',
@@ -120,13 +159,13 @@ const config = {
         '10'
     ],
     informazioni_simboli: [
-        // 0 - faraone
-        "Il leggendario faraone Kahmunrah"
-        ,
-        // 1 - tavola d'oro, bonus e scatter
+        // 0 - tavola d'oro, bonus e scatter
         `La tavola di Kahmunrah, anche conosciuta come Jolly o Scatter,
         si attiva il suo moltiplicatore se si trova in una linea, si sostituisce a tutti gli altri simboli, 
         se trovi almeno 3 tavole di Kahmunrah vinci 10/15/20 giri gratis!`
+        ,
+        // 1 - faraone
+        "Il leggendario faraone Kahmunrah"
         ,
         // 2 - guardia
         `Le impenetrabili guardie del faraone`

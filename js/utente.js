@@ -3,6 +3,7 @@ const utente = {
     wallet: config.wallet,
     lose: false, // verifica che il giocatore non vada sotto 0
     manage_wallet(guadagno) {
+        guadagno = Number(guadagno.toFixed(2));
         this.wallet += guadagno;
         // locale
         record.last_game = utente.wallet;

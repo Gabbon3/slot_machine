@@ -6,7 +6,7 @@ function dfs(matrix, target) {
     const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
 
     if (target == config.indice_wild) {
-        target = random.min_max(2, (config.n_emoji - 1));
+        target = random.min_max(1, (config.n_emoji - 1));
         config.simbolo_super = target;
     }
 
@@ -22,7 +22,8 @@ function dfs(matrix, target) {
             const [riga, colonna] = direzioni[i];
             const valid = isValidMove(riga, colonna);
             if (valid) {
-                if (matrix[riga][colonna] == target || matrix[riga][colonna] == config.indice_wild) {
+                const current = matrix[riga][colonna];
+                if (current == target || current == config.indice_wild) {
                     return true;
                 }
             }
@@ -33,7 +34,9 @@ function dfs(matrix, target) {
 
     function explore(row, col, path) {
         const currentValue = matrix[row][col];
-        if (currentValue != target && currentValue != config.indice_wild) return;
+        if (currentValue != config.indice_wild && currentValue != target) {
+            return;
+        }
 
         path.push([row, col]);
         visited[row][col] = true;

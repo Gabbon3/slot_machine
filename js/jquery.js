@@ -51,7 +51,7 @@ $(document).ready(() => {
             }
             // s - freggia giu
             else if (event.which === 40) {
-                if (current <= 10) {
+                if (current <= 0) {
                     return;
                 }
                 he.e.puntata.value = current - 1;

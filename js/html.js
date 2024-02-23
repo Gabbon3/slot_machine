@@ -132,6 +132,17 @@ const html = {
         m_ufo[current].classList.add('active');
     },
     /**
+     * mostra o meno il simbolo super al giocatore
+     * @param {Boolean} attiva 
+     */
+    simbolo_super(attiva) {
+        if (attiva) {
+            
+        } else {
+            
+        }
+    },
+    /**
      * mette a display le informazioni
      * @param {number} guadagno 
      */

@@ -159,16 +159,26 @@ const slot1 = {
      * verifica se ci sono possibili percorsi vincenti
      */
     check_percorsi(puntata) {
+        // init
         let guadagno = 0;
+        config.simbolo_super = -1;
         this.percorsi_vincenti = [];
         this.percorsi = percorso.genera_percorsi_vincenti();
+        // ---
         // console.log(this.percorsi);
+        // se è stato scelto un simbolo super
+        if (config.simbolo_super != -1) {
+            html.simbolo_super(true);
+        }
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
             const riga = this.percorsi[i];
             // per ogni percorso che ha una riga
             for (let j = 0; j < riga.length; j++) {
                 const percorso = riga[j];
+                if (percorso.length < 3) {
+                    continue;
+                }
                 const linea = [];
                 // il percorso
                 for (let p = 0; p < percorso.length; p++) {
@@ -190,22 +200,16 @@ const slot1 = {
                     // indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
                     indice_primo_simbolo = config.simbolo_super;
                 }
-                // se non sono stati trovati elementi diversi dal wild in una linea
-                // significa che la linea contiene solo wild
-                if (indice_primo_simbolo == undefined) {
-                    n_wild_linea = linea.length;
-                } else {
-                    // verifico quanti elementi sono uguali rispetto al primo nella linea e quanti wild ci sono nella linea
-                    // se almeno n elementi partendo dal primo sono uguali allora
-                    /**
-                     * il numero di elementi minimi richiesti del simbolo è uguale
-                     * al numero di colonne (5) - il numero dei moltiplicatori del simbolo + 1
-                     * infatti se un simbolo ha 4 moltiplicatori vuol dire che il numero minimo di elementi richiesti per
-                     * attivarlo è 5 - 4 + 1 = 2 elementi minimi
-                     */
-                    [n_elementi_uguali_al_primo, n_wild_linea] = this.elementi_identici_linea(linea, indice_primo_simbolo);
-                    elementi_minimi_richiesti_del_simbolo = config.colonne - config.percentuale_guadagno[indice_primo_simbolo].length + 1;
-                }
+                // verifico quanti elementi sono uguali rispetto al primo nella linea e quanti wild ci sono nella linea
+                // se almeno n elementi partendo dal primo sono uguali allora
+                /**
+                 * il numero di elementi minimi richiesti del simbolo è uguale
+                 * al numero di colonne (5) - il numero dei moltiplicatori del simbolo + 1
+                 * infatti se un simbolo ha 4 moltiplicatori vuol dire che il numero minimo di elementi richiesti per
+                 * attivarlo è 5 - 4 + 1 = 2 elementi minimi
+                 */
+                [n_elementi_uguali_al_primo, n_wild_linea] = this.elementi_identici_linea(linea, indice_primo_simbolo);
+                elementi_minimi_richiesti_del_simbolo = config.colonne - config.percentuale_guadagno[indice_primo_simbolo].length + 1;
                 let linea_vincente = false; // tiene traccia se l'utente ha vinto
                 // se la linea contiene dei wild di fila
                 const elementi_minimi_wild = config.colonne - config.percentuale_guadagno[config.indice_wild].length + 1;
@@ -227,7 +231,7 @@ const slot1 = {
                      * linea[0]: l'indice di rarità del simbolo
                      * n_elementi_uguali_al_primo: la frequenza del simbolo all'interno della linea
                      */
-                    guadagno += vincita_linea;
+                    guadagno += Number(vincita_linea.toFixed(2));
                     linea_vincente = true;
                 }
                 if (linea_vincente) {
@@ -295,14 +299,11 @@ const slot1 = {
     moltiplicatore_ufo(aumenta) {
         const MAX = config.moltiplicatori_ufo.length - 1; // indice moltiplicatore massimo
         let current = config.moltiplicatore_ufo_attivo;
-        // console.log(aumenta);
-        if (current == MAX) {
-            return;
+        if (!aumenta) {
+            current = 0;
         }
         if (aumenta && current < MAX) {
             current++;
-        } else {
-            current = 0;
         }
         html.moltiplicatore_ufo(config.moltiplicatore_ufo_attivo, current);
         config.moltiplicatore_ufo_attivo = current;
@@ -324,8 +325,13 @@ const slot1 = {
          * se x = 3.4 allora = 3
          * se x = 7.6 allora = 8
          */
+        // se la prima carta era un wild allora controllo se la carta scelta è quella corrente
+        if (indice_simbolo == config.simbolo_super) {
+            moltiplicatore **= 2;
+        }
         let total_coins = puntata * moltiplicatore;
         total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];
+        total_coins = Number(total_coins.toFixed(2));
         html.informazioni_giocata(
             total_coins, 
             puntata, 
