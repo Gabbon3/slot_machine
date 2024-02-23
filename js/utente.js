@@ -6,7 +6,7 @@ const utente = {
         guadagno = Number(guadagno.toFixed(2));
         this.wallet += guadagno;
         // locale
-        record.last_game = utente.wallet;
+        record.last_game = utente.get_wallet();
         record.set('last_game', record.last_game);
         record.check_new_record();
         // ----
@@ -19,6 +19,9 @@ const utente = {
             record.avviso('🚩 Hai perso! 🚩');
             // ----
         }
+    },
+    get_wallet() {
+        return Number(this.wallet.toFixed(2));
     },
     /**
      * controlla se il bro puo puntare x in base al suo wallet

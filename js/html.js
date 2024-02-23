@@ -30,7 +30,7 @@ const html = {
      * inizializza l'html
      */
     _init() {
-        dom.get1('#coin-value').innerHTML = utente.wallet;
+        dom.get1('#coin-value').innerHTML = utente.get_wallet();
         dom.get1('#versione_slot').innerHTML = config.versione;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
@@ -87,7 +87,6 @@ const html = {
         config.sta_giocando = true;
         // controllo se la puntata non è stata manomessa
         const puntata = slot1.check_puntata(Number(he.e.puntata.value));
-        utente.wallet = Number(utente.wallet.toFixed(2));
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
@@ -97,7 +96,7 @@ const html = {
             return;
         }
         slot1.spin(puntata);
-        he.e.coin.innerHTML = utente.wallet;
+        he.e.coin.innerHTML = utente.get_wallet();
         // carico html
         animazione.shuffle(() => {
             this.funzione_finale_allo_shuffle(puntata);
@@ -105,7 +104,7 @@ const html = {
     },
     funzione_finale_allo_shuffle(puntata) {
         slot1.check_player_wins(puntata);
-        he.e.coin.innerHTML = utente.wallet;
+        he.e.coin.innerHTML = utente.get_wallet();
     },
     /** 
      * attiva o disattiva

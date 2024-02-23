@@ -45,7 +45,7 @@ const record = {
     check_new_record() {
         if (utente.wallet > this.record_wallet) {
             this.avviso('💸 Nuovo record 💸');
-            this.record_wallet = utente.wallet;
+            this.record_wallet = utente.get_wallet();
             this.set('record_wallet', this.record_wallet);
         }
     },

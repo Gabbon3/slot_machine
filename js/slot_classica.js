@@ -113,7 +113,7 @@ const slot1 = {
                     // calcolo il guadagno del giocatore
                     this.check_player_wins(this.puntata_giro);
                     // html
-                    he.e.coin.innerHTML = Number(utente.wallet.toFixed(2));
+                    he.e.coin.innerHTML = utente.get_wallet();
                     // ripeto il ciclo
                 }, false); // one time animazione
             }, 500);
