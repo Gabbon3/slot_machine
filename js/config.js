@@ -1,6 +1,6 @@
 const config = {
     versione: '5.0.2', // versione della slot
-    wallet: 100, // valore di coin di partenza
+    wallet: 1000, // valore di coin di partenza
     max_random_number: 10000, // numero massimo estraibile dall estrattore di numeri casuali
     n_emoji: 0, // quanti elementi contiene un rullo | numero totale delle emoji usate
     esponente_moltiplicatori: 1.4, // costante utilizzata per fare la somma delle potenze
@@ -18,7 +18,7 @@ const config = {
      * allora il moltiplicatore del simbolo scelto viene raddoppiato elevato al quadrato
      */
     simbolo_super: -1, // 
-    moltiplicatore_super: 3, //
+    moltiplicatore_super: 16, //
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;
@@ -49,9 +49,9 @@ const config = {
         20,
         30,
         30,
-        50,
-        50,
-        50
+        40,
+        40,
+        40
     ],
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra

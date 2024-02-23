@@ -3,9 +3,17 @@ cd css/scss
 sass --watch main.scss:../main.css
 */
 @import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
+:root {
+  --bc: rgba(43, 50, 57, 1);
+  --bca: rgba(43, 50, 57, 0.3);
+  --bca-darker: rgba(43, 50, 57, 0.8);
+  --font-fam: system-ui;
+  --coin-font: "Protest Riot";
+}
+
 body {
   margin-bottom: 250px;
-  font-family: "Protest Riot";
+  font-family: var(--font-fam);
 }
 
 * {
@@ -14,17 +22,18 @@ body {
 
 #display {
   display: flex;
-  margin: 5px auto 20px auto;
+  margin: 0 auto 20px auto;
   flex-direction: column;
   width: 100%;
   flex-wrap: wrap;
   padding: 1px;
-  border: 5px solid rgba(43, 50, 57, 0.3);
-  background-color: rgba(43, 50, 57, 0.3);
+  border: 5px solid var(--bca);
+  background-color: var(--bca);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  border-radius: 15px;
-  max-width: 600px;
+  border-radius: 0 0 15px 15px;
+  max-width: 700px;
+  max-height: 70vh;
 }
 #display.scatter-attivo {
   animation: scatter-attivo ease-in-out 2.5s infinite;
@@ -32,9 +41,10 @@ body {
 #display .riga {
   display: flex;
   justify-content: center;
-  background-color: rgba(43, 50, 57, 0.3);
+  background-color: var(--bca);
   margin: 1px 0;
   position: relative;
+  width: 100%;
 }
 #display .riga:first-child {
   border-radius: 10px 10px 0 0;
@@ -88,8 +98,16 @@ body {
 .controller {
   position: fixed;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 97%;
+}
+.controller input {
+  opacity: 0.5;
+  transition: ease-in-out 0.2s;
+}
+.controller input:hover, .controller input:focus {
+  opacity: 1;
 }
 .controller img {
   position: absolute;
@@ -106,7 +124,7 @@ body {
 
 #info {
   position: fixed;
-  bottom: 20%;
+  bottom: 25%;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
@@ -154,6 +172,7 @@ body {
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: center;
+  font-family: var(--coin-font);
 }
 .container_saldo_moltiplicatori_ufo #coin {
   flex-grow: 1;
@@ -205,15 +224,29 @@ input {
   color: #198754;
 }
 .table img {
-  width: 25px;
+  width: 30px;
 }
 
 .glass-container {
   padding: 10px;
   border-radius: 10px;
-  background-color: rgba(43, 50, 57, 0.3);
+  background-color: var(--bca-darker);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
+}
+
+.modale {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 95%;
+  width: 600px;
+  max-height: 90vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  z-index: 6;
 }
 
 @keyframes up-down {
@@ -259,16 +292,16 @@ input {
 }
 @keyframes scatter-attivo {
   0% {
-    background-color: rgba(43, 50, 57, 0.3);
-    border-color: rgba(43, 50, 57, 0.3);
+    background-color: var(--bca);
+    border-color: var(--bca);
   }
   50% {
     background-color: rgba(184, 126, 26, 0.3);
     border-color: rgba(184, 126, 26, 0.3);
   }
   100% {
-    background-color: rgba(43, 50, 57, 0.3);
-    border-color: rgba(43, 50, 57, 0.3);
+    background-color: var(--bca);
+    border-color: var(--bca);
   }
 }
 

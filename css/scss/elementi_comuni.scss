@@ -23,14 +23,28 @@ input {
     }
 
     img {
-        width: 25px;
+        width: 30px;
     }
 }
 
 .glass-container {
     padding: 10px;
     border-radius: 10px;
-    background-color: rgba(43, 50, 57, 0.3);
+    background-color: var(--bca-darker);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
+}
+
+.modale {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 95%;
+    width: 600px;
+    max-height: 90vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    z-index: 6;
 }

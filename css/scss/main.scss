@@ -5,9 +5,17 @@ sass --watch main.scss:../main.css
 
 @import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
 
+:root {
+    --bc: rgba(43, 50, 57, 1);
+    --bca: rgba(43, 50, 57, 0.3);
+    --bca-darker: rgba(43, 50, 57, 0.8);
+    --font-fam: system-ui;
+    --coin-font: "Protest Riot";
+}
+
 body {
     margin-bottom: 250px;
-    font-family: "Protest Riot";
+    font-family: var(--font-fam);
 }
 
 * {

@@ -35,7 +35,22 @@ $(document).ready(() => {
     // info
     $('#info').click(() => {
         $('#info').hide(0);
-    })
+    });
+    /**
+     * modali
+     */
+    // apri
+    $(document).on('click', '.apri-modale', (btn) => {
+        btn = btn.currentTarget;
+        const id_modale = $(btn).attr('data-modale');
+        $('#' + id_modale).fadeIn('fast');
+    });
+    // chiudi
+    $(document).on('click', '.chiudi-modale', (btn) => {
+        btn = btn.currentTarget;
+        const id_modale = $(btn).attr('data-modale');
+        $('#' + id_modale).fadeOut('fast');
+    });
     // ---
     /**
      * Key Event
@@ -81,7 +96,7 @@ $(document).ready(() => {
         }
         // i - informazioni
         else if (event.which === 73) {
-            $('#info_slot').fadeToggle();
+            $('#tabella_informazioni').fadeToggle();
         }
         // r - ricomincia
         else if (event.which === 82) {

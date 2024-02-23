@@ -42,12 +42,11 @@
 </head>
 
 <body>
-    <div class="container" id="display">
+    <div id="display">
         <!-- generazione dinamica degli item -->
     </div>
     <div class="container my-2">
         <h1 id="info" class="coin testo-colorato">
-            <!-- <img src="img/ufo_2.jpeg" alt="Ufo"> -->
             <b></b>
         </h1>
         <p id="other_info">
@@ -56,24 +55,10 @@
         <p id="calcoli" style="display: none">
 
         </p>
-        <table class="table" id="info_slot" style="display: none">
-            <thead>
-                <th scope="col">#</th>
-                <th scope="col">Rarità %</th>
-                <th scope="col">Moltiplicatore</th>
-                <th scope="col">Lore</th>
-            </thead>
-            <tbody>
-
-            </tbody>
-            <tr>
-                <td colspan="4">Versione slot: <b id="versione_slot"></b></td>
-            </tr>
-        </table>
     </div>
     <div class="controller">
         <div class="container_saldo_moltiplicatori_ufo">
-            <div id="coin" class="coin"><b id="coin-value"></b> <i class="fa-brands fa-gg"></i></div>
+            <div id="coin" class="coin"><b id="coin-value"></b><i class="fa-brands fa-gg"></i></div>
             <div id="moltiplicatori_ufo">
                 <b class="active">x1</b>
                 <b>x2</b>
@@ -83,8 +68,20 @@
                 <b>x32</b>
             </div>
         </div>
-        <img src="img/moon_surface.png" alt="">
-        <div class="container input-group my-2 d-flex">
+        <!-- <img src="img/moon_surface.png" alt=""> -->
+        <div class="pulsanti d-flex">
+            <!-- --- -->
+            <div class="btn-group btn-azione" role="group">
+                <button title="Ricomincia" class="btn btn-danger" type="button" id="reset_game"><i
+                        class="fa-solid fa-rotate"></i></button>
+                <button title="Informazioni" class="btn btn-dark apri-modale" data-modale="tabella_informazioni" type="button" id="show_table"><i
+                        class="fa-solid fa-info"></i></button>
+                <button title="Informazioni" class="btn btn-dark" type="button" id="show_calcoli">
+                    <i class="fa-solid fa-calculator"></i></button>
+            </div>
+            <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
+        </div>
+        <div class="input-group my-2 d-flex">
             <div class="form-floating inline-flex">
                 <input type="number" class="form-control" id="puntata" title="Puntata" min="0.5" max="20" step="0.5"
                     value="2">
@@ -95,18 +92,26 @@
                 <label for="giri_bonus">Giri Bonus</label>
             </div>
         </div>
-        <nav class="container mb-2 d-flex">
-            <!-- --- -->
-            <div class="btn-group btn-azione" role="group">
-                <button title="Ricomincia" class="btn btn-danger" type="button" id="reset_game"><i
-                        class="fa-solid fa-rotate"></i></button>
-                <button title="Informazioni" class="btn btn-dark" type="button" id="show_table"><i
-                        class="fa-solid fa-info"></i></button>
-                <button title="Informazioni" class="btn btn-dark" type="button" id="show_calcoli">
-                    <i class="fa-solid fa-calculator"></i></button>
-            </div>
-            <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
-        </nav>
+    </div>
+    <!-- Modali -->
+    <div class="modale glass-container" id="tabella_informazioni">
+        <button class="btn chiudi-modale" data-modale="tabella_informazioni">Chiudi</button>
+        <h2>Tabella Informazioni</h2>
+        <hr>
+        <table class="table" id="info_slot">
+            <thead>
+                <th scope="col">#</th>
+                <th scope="col">Rarità %</th>
+                <th scope="col">Moltiplicatore</th>
+                <th scope="col">Lore</th>
+            </thead>
+            <tbody>
+                
+            </tbody>
+            <tr>
+                <td colspan="4">Versione slot: <b id="versione_slot"></b></td>
+            </tr>
+        </table>
     </div>
     <!-- --- -->
     <img src="img/wallpaper.jpg" id="sfondo-normale" alt="Immagine Sfondo" class="wallpaper">
