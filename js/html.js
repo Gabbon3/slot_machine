@@ -84,6 +84,7 @@ const html = {
         config.sta_giocando = true;
         // controllo se la puntata non è stata manomessa
         const puntata = slot1.check_puntata(Number(he.e.puntata.value));
+        utente.wallet = Number(utente.wallet.toFixed(2));
         // controllo se l'utente puo fare la puntata
         const user_can_spin = utente.check_puntata(puntata);
         if (!user_can_spin) {
@@ -139,7 +140,7 @@ const html = {
         if (attiva) {
             
         } else {
-            
+
         }
     },
     /**
