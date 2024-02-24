@@ -1,0 +1,13 @@
+@media screen and (max-width: 700px) {
+    #display {
+        .riga {
+            .guadagno-riga {
+                top: 0;
+                left: 0;
+                right: inherit;
+                transform: inherit;
+                padding: 2px 4px;
+            }
+        }
+    }
+}

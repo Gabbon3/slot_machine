@@ -32,13 +32,12 @@ function dfs(matrix, indice) {
      * @param {*} col 
      * @param {*} path 
      * @param {*} target il target
-     * @param {*} prec il simbolo precedente
      * @param {*} first_is_wild se si significa che il primo elemento era un wild e quindi devo cercare nei successivi il primo elemento
      * diverso dall'indice wild
      * 
      * @returns 
      */
-    function explore(row, col, path, target, prec, first_is_wild) {
+    function explore(row, col, path, target, first_is_wild) {
         const currentValue = matrix[row][col];
         // se ci troviamo nella prima colonna quindi abbiamo iniziato un nuovo percorso
         if (col == 0 && currentValue == config.indice_wild) {
@@ -49,7 +48,6 @@ function dfs(matrix, indice) {
          * se si allora il target diventa l'indice corrente e disattivo la variabile first is wild
          */
         if (first_is_wild && currentValue != config.indice_wild) {
-            // console.log(`[${row}][${col}]`);
             first_is_wild = false;
             target = currentValue;
         }
@@ -74,8 +72,8 @@ function dfs(matrix, indice) {
                 const newRow = row + dr;
                 const newCol = col + dc;
                 if (isValidMove(newRow, newCol)) {
-                    // riga succ, colonna succ, percorso, il target, il precedente, il primo era un wild?
-                    explore(newRow, newCol, path, target, currentValue, first_is_wild);
+                    // riga succ, colonna succ, percorso, il target, il primo era un wild?
+                    explore(newRow, newCol, path, target, first_is_wild);
                 }
             }
         }
@@ -86,12 +84,11 @@ function dfs(matrix, indice) {
     }
 
     for (let i = 0; i < rows; i++) {
-        explore(i, 0, [], indice, indice, false);
+        explore(i, 0, [], indice, false);
     }
 
     // Converti i percorsi unici da stringhe JSON a array di coordinate
     const uniquePathsArray = Array.from(uniquePaths).map(pathString => JSON.parse(pathString));
-
     return uniquePathsArray;
 }
 

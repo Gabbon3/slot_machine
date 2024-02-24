@@ -40,8 +40,8 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
+        5,
         10,
-        15,
         15,
         20,
         20,
@@ -102,11 +102,11 @@ const config = {
     // ],
     // percentuali guadagno della esqueleto explosivo 2
     percentuale_guadagno: [
-        [ // 0 - faraone
-            0.8, 1.5, 5
+        [ // 0 - tavola d'oro, bonus e scatter
+            1, 2, 5
         ],
-        [ // 1 - tavola d'oro, bonus e scatter
-            0.6, 1, 2.5
+        [ // 1 - faraone
+            0.8, 1.5, 3.5
         ],
         [ // 2 - guardia
             0.6, 1, 2.5

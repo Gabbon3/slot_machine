@@ -11,6 +11,7 @@ sass --watch main.scss:../main.css
     --bca-darker: rgba(43, 50, 57, 0.8);
     --font-fam: system-ui;
     --coin-font: "Protest Riot";
+    --display-max-width: 700px;
 }
 
 body {
@@ -24,3 +25,4 @@ body {
 @import 'specifici.scss';
 @import 'elementi_comuni.scss';
 @import 'animazioni.scss';
+@import 'media.scss';

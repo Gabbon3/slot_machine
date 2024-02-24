@@ -9,6 +9,7 @@ sass --watch main.scss:../main.css
   --bca-darker: rgba(43, 50, 57, 0.8);
   --font-fam: system-ui;
   --coin-font: "Protest Riot";
+  --display-max-width: 700px;
 }
 
 body {
@@ -31,7 +32,7 @@ body {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border-radius: 0 0 15px 15px;
-  max-width: 700px;
+  max-width: var(--display-max-width);
   max-height: 70vh;
 }
 #display.scatter-attivo {
@@ -303,6 +304,15 @@ input {
   100% {
     background-color: var(--bca);
     border-color: var(--bca);
+  }
+}
+@media screen and (max-width: 700px) {
+  #display .riga .guadagno-riga {
+    top: 0;
+    left: 0;
+    right: inherit;
+    transform: inherit;
+    padding: 2px 4px;
   }
 }
 

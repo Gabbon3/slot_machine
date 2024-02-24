@@ -10,7 +10,7 @@
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border-radius: 0 0 15px 15px;
-    max-width: 700px;
+    max-width: var(--display-max-width);
     max-height: 70vh;
 
     &.scatter-attivo {

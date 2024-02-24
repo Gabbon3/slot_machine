@@ -276,9 +276,10 @@ const slot1 = {
          */
         if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
             this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
-            this.giri_bonus += (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)));
+            const giri = (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)))
+            this.giri_bonus += giri;
             this.blocca_puntata = true;
-            html.giri_bonus(true);
+            html.giri_bonus(true, giri);
         }
         if (this.giri_bonus == 0) {
             this.blocca_puntata = false;

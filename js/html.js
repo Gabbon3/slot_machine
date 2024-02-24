@@ -109,15 +109,16 @@ const html = {
     /** 
      * attiva o disattiva
      * @param {bool} attiva true or false 
+     * @param {Number} n_giri numero dei giri
      */
-    giri_bonus(attiva) {
+    giri_bonus(attiva, n_giri = 0) {
         $(he.e.puntata).prop('disabled', attiva);
         if (attiva) {
             $('#sfondo-normale').fadeOut();
             $('#sfondo-bonus').fadeIn();
             dom.get1('#giri_bonus').value = slot1.giri_bonus;
             he.e.display.classList.add('scatter-attivo');
-            record.avviso('🔥 Hai vinto ' + slot1.giri_bonus + ' giri gratis! 🔥');
+            record.avviso('🔥 Hai vinto ' + n_giri + ' giri gratis! 🔥');
         } else {
             $('#sfondo-bonus').fadeOut();
             $('#sfondo-normale').fadeIn();
