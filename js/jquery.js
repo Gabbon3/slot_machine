@@ -21,12 +21,6 @@ $(document).ready(() => {
         slot1.reset_game();
     });
     /**
-     * mostra/nascondi tabella
-     */
-    $('#show_table').click(() => {
-        $('#info_slot').fadeToggle();
-    });
-    /**
      * mostra o meno i calcoli
      */
     $('#show_calcoli').click(() => {

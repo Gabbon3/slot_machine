@@ -200,8 +200,8 @@ const slot1 = {
                 let elementi_minimi_richiesti_del_simbolo = 0; // n elementi minimi necessari ad attivare i moltiplicatori
                 // se il primo elemento è il wild
                 if (indice_primo_simbolo === config.indice_wild) {
-                    // indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
-                    indice_primo_simbolo = config.simbolo_super;
+                    indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
+                    // indice_primo_simbolo = config.simbolo_super;
                 }
                 // verifico quanti elementi sono uguali rispetto al primo nella linea e quanti wild ci sono nella linea
                 // se almeno n elementi partendo dal primo sono uguali allora

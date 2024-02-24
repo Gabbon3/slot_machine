@@ -115,7 +115,6 @@ const percorso = {
                 }
             }
         }
-        // console.log(percorsi);
         return percorsi;
     },
     removeDuplicates(nums) {

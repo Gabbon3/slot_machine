@@ -167,26 +167,20 @@ body {
   display: none;
 }
 
-.container_saldo_moltiplicatori_ufo {
+.container_moltiplicatori_ufo {
   display: flex;
   flex-wrap: nowrap;
   align-items: stretch;
   justify-content: center;
   font-family: var(--coin-font);
 }
-.container_saldo_moltiplicatori_ufo #coin {
-  flex-grow: 1;
-  font-size: 2.5em;
-  text-align: center;
-  -webkit-text-stroke: 1px #222;
-}
-.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo {
+.container_moltiplicatori_ufo #moltiplicatori_ufo {
   flex-grow: 2;
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
 }
-.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b {
+.container_moltiplicatori_ufo #moltiplicatori_ufo b {
   flex-grow: 1;
   text-align: center;
   font-size: 2em;
@@ -195,9 +189,17 @@ body {
   transition: 0.2s;
   margin: auto;
 }
-.container_saldo_moltiplicatori_ufo #moltiplicatori_ufo b.active {
+.container_moltiplicatori_ufo #moltiplicatori_ufo b.active {
   color: gold;
   font-size: 2.5em;
+}
+
+#coin {
+  flex-grow: 1;
+  font-size: 2.5em;
+  text-align: center;
+  -webkit-text-stroke: 1px #222;
+  font-family: var(--coin-font);
 }
 
 .btn {

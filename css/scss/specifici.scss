@@ -182,19 +182,12 @@
     display: none;
 }
 
-.container_saldo_moltiplicatori_ufo {
+.container_moltiplicatori_ufo {
     display: flex;
     flex-wrap: nowrap;
     align-items: stretch;
     justify-content: center;
     font-family: var(--coin-font);
-
-    #coin {
-        flex-grow: 1;
-        font-size: 2.5em;
-        text-align: center;
-        -webkit-text-stroke: 1px #222;
-    }
 
     #moltiplicatori_ufo {
         flex-grow: 2;
@@ -217,4 +210,12 @@
             }
         }
     }
+}
+
+#coin {
+    flex-grow: 1;
+    font-size: 2.5em;
+    text-align: center;
+    -webkit-text-stroke: 1px #222;
+    font-family: var(--coin-font);
 }
