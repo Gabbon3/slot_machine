@@ -1,5 +1,5 @@
 const config = {
-    versione: '1.0.0', // versione della slot
+    versione: '1.0.1', // versione della slot
     wallet: 1000, // valore di coin di partenza
     max_random_number: 10000, // numero massimo estraibile dall estrattore di numeri casuali
     n_emoji: 0, // quanti elementi contiene un rullo | numero totale delle emoji usate

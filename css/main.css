@@ -12,7 +12,6 @@ sass --watch main.scss:../main.css
 }
 
 body {
-  margin-bottom: 250px;
   font-family: var(--font-fam);
 }
 

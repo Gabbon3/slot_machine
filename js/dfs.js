@@ -1,8 +1,9 @@
 function dfs(matrix, indice) {
     const rows = matrix.length;
     const cols = matrix[0].length;
-    const paths = [];
+    // const paths = [];
     const visited = Array.from({ length: rows }, () => Array(cols).fill(false));
+    const uniquePaths = new Set();
 
     function isValidMove(row, col) {
         return row >= 0 && row < rows && col >= 0 && col < cols && !visited[row][col];
@@ -64,7 +65,8 @@ function dfs(matrix, indice) {
 
         // Check if the path satisfies the indice_primo condition
         if (col === cols - 1 || !adiacenti(row, col, target)) {
-            paths.push([...path]);
+            // paths.push([...path]);
+            uniquePaths.add(JSON.stringify(path));
         } else {
             // Explore next moves: diagonal, down, up
             const moves = [[-1, 1], [0, 1], [1, 1]];
@@ -87,7 +89,10 @@ function dfs(matrix, indice) {
         explore(i, 0, [], indice, indice, false);
     }
 
-    return paths;
+    // Converti i percorsi unici da stringhe JSON a array di coordinate
+    const uniquePathsArray = Array.from(uniquePaths).map(pathString => JSON.parse(pathString));
+
+    return uniquePathsArray;
 }
 
 /**
