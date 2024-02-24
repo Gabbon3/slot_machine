@@ -161,17 +161,9 @@ const slot1 = {
     check_percorsi(puntata) {
         // init
         let guadagno = 0;
-        config.simbolo_super = -1;
         this.percorsi_vincenti = [];
         this.percorsi = percorso.genera_percorsi_vincenti();
         // ---
-        // console.log(this.percorsi);
-        // se è stato scelto un simbolo super
-        if (config.simbolo_super != -1) {
-            html.simbolo_super(true);
-        } else {
-            html.simbolo_super(false);
-        }
         // per ogni riga
         for (let i = 0; i < this.percorsi.length; i++) {
             const riga = this.percorsi[i];
@@ -201,7 +193,9 @@ const slot1 = {
                 // se il primo elemento è il wild
                 if (indice_primo_simbolo === config.indice_wild) {
                     indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
-                    // indice_primo_simbolo = config.simbolo_super;
+                    if (!indice_primo_simbolo) {
+                        indice_primo_simbolo = config.indice_wild;
+                    }
                 }
                 // verifico quanti elementi sono uguali rispetto al primo nella linea e quanti wild ci sono nella linea
                 // se almeno n elementi partendo dal primo sono uguali allora
@@ -328,10 +322,6 @@ const slot1 = {
          * se x = 3.4 allora = 3
          * se x = 7.6 allora = 8
          */
-        // se la prima carta era un wild allora controllo se la carta scelta è quella corrente
-        if (indice_simbolo == config.simbolo_super) {
-            moltiplicatore *= config.moltiplicatore_super;
-        }
         let total_coins = puntata * moltiplicatore;
         total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];
         html.informazioni_giocata(

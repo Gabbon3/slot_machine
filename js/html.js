@@ -135,24 +135,6 @@ const html = {
         m_ufo[current].classList.add('active');
     },
     /**
-     * mostra o meno il simbolo super al giocatore
-     * @param {Boolean} attiva 
-     */
-    simbolo_super(attiva) {
-        const indice = config.simbolo_super;
-        if (indice < 0) return;
-        if (attiva) {
-            const m = [];
-            for (let i = 0; i < config.percentuale_guadagno[indice].length; i++) {
-                const nuovo_moltiplicatore = config.percentuale_guadagno[indice][i] * config.moltiplicatore_super;
-                m.push(nuovo_moltiplicatore.toFixed(2));
-            }
-            $('#m_' + indice).html(`<b>${m.join(', ')}</b>`);
-        } else {
-            this._init_tabella();
-        }
-    },
-    /**
      * mette a display le informazioni su quanto è stato guadagnato
      * @param {number} guadagno 
      */
