@@ -73,12 +73,15 @@
             <div class="btn-group btn-azione" role="group">
                 <button title="Ricomincia" class="btn btn-danger" type="button" id="reset_game"><i
                         class="fa-solid fa-rotate"></i></button>
-                <button title="Informazioni" class="btn btn-dark apri-modale" data-modale="tabella_informazioni" type="button" id="show_table"><i
-                        class="fa-solid fa-info"></i></button>
+                <button title="Informazioni" class="btn btn-dark apri-modale" data-modale="tabella_informazioni"
+                    type="button" id="show_table"><i class="fa-solid fa-info"></i></button>
                 <button title="Informazioni" class="btn btn-dark" type="button" id="show_calcoli">
                     <i class="fa-solid fa-calculator"></i></button>
             </div>
-            <div id="coin" class="coin"><b id="coin-value"></b><i class="fa-brands fa-gg"></i></div>
+            <div id="coin" class="coin">
+                <b id="coin-value"></b>
+                <i class="fa-brands fa-gg"></i>
+            </div>
 
             <button onclick="html.spin()" id="spin_btn" class="btn btn-dark"><i class="fa-solid fa-play"></i></button>
         </div>
@@ -107,7 +110,7 @@
                 <th scope="col">Lore</th>
             </thead>
             <tbody>
-                
+
             </tbody>
             <tr>
                 <td colspan="4">Versione slot: <b id="versione_slot"></b></td>
@@ -116,7 +119,8 @@
     </div>
     <!-- --- -->
     <img src="img/wallpaper.jpg" id="sfondo-normale" alt="Immagine Sfondo" class="wallpaper">
-    <img src="img/sfondo_bonus.jpg" id="sfondo-bonus" alt="Immagine Sfondo Scatter" class="wallpaper" style="display:none">
+    <img src="img/sfondo_bonus.jpg" id="sfondo-bonus" alt="Immagine Sfondo Scatter" class="wallpaper"
+        style="display:none">
     <!-- bootstrap -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
