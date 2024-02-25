@@ -11,7 +11,8 @@ const config = {
     bonus_moltiplicatore: 0.5, // bonus moltiplicatore se si trovano oggetti in piu nelle linee
     elementi_minimi_linea: 3, // numero di elementi minimi che devono essere presenti in una linea per attivare il bonus percorsi
     sta_giocando: false, // memorizza quando la slot sta spinnando
-    max_puntata: 20, // massima puntata che si puo fare
+    max_puntata: 50, // massima puntata che si puo fare
+    n_m_ufo: 6, // numero dei moltiplicatori ufo totali
     /**
      * il moltiplicatore_prima_carta_wild viene attivato quando un wild si trova nella prima colonna
      * e scegliendo un simbolo casuale della slot, viene generato un percorso partendo dal wild,
@@ -20,6 +21,7 @@ const config = {
     _init() {
         this.rulli = this.righe * this.colonne;
         this.n_emoji = this.simboli.length;
+        this.n_m_ufo = this.moltiplicatori_ufo.length;
     },
     indice_wild: 0, // il wild è in posizione 1 - la tavola aliena d'oro
     indice_scatter: 0, // lo scatter è in posizione 1 - poichè è lo stesso oggetto che funge da wild

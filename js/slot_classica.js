@@ -26,6 +26,11 @@ const slot1 = {
     guadagno_totale: 0, // memorizza il guadagno totale in caso di serie
     puntata_giro: 0, // memorizza la puntata per ogni giro
     reroll_simboli: [], //
+    // ---
+    // indice del moltiplicatore ufo minimo quando 
+    indice_m_ufo_scatter: 0,
+    //
+    n_wild_durante_scatter: 0,
     /**
      * inizializza le probabilita
      */
@@ -273,17 +278,39 @@ const slot1 = {
     scatter() {
         /**
          * se il numero di scatter è superiore al numero minimo richiesto
+        */
+       if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
+           this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
+           const giri = (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)))
+           this.giri_bonus += giri;
+           this.blocca_puntata = true;
+           html.giri_bonus(true, giri); // html
+        }
+        /**
+         * se ci sono i giri bonus attivi
          */
-        if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
-            this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
-            const giri = (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)))
-            this.giri_bonus += giri;
-            this.blocca_puntata = true;
-            html.giri_bonus(true, giri);
+        if (this.giri_bonus > 0) {
+            const MAX = (config.n_m_ufo * 3);
+            const MAX_INDICE = config.n_m_ufo - 1; 
+            this.n_wild_durante_scatter += slot_elements.conteggio_scatter;
+            if (this.n_wild_durante_scatter > MAX) {
+                this.n_wild_durante_scatter = MAX;
+            }
+            // ogni 3 scatter aumento il moltiplicatore ufo minimo da cui partire
+            let moltiplicatore_ufo_minimo = this.indice_m_ufo_scatter;
+            if (this.n_wild_durante_scatter % 3 == 0) {
+                moltiplicatore_ufo_minimo = this.n_wild_durante_scatter / 3;
+            }
+            // moltiplicatore minimo = 6? se si allora MAX_INDICE se no moltiplicatore ufo minimo
+            this.indice_m_ufo_scatter = moltiplicatore_ufo_minimo == config.n_ufo ? MAX_INDICE : moltiplicatore_ufo_minimo;
+            html.m_ufo_durante_scatter(true); // html
         }
         if (this.giri_bonus == 0) {
             this.blocca_puntata = false;
-            html.giri_bonus(false);
+            this.indice_m_ufo_scatter = 0;
+            this.n_wild_durante_scatter = 0;
+            html.giri_bonus(false); // html
+            html.m_ufo_durante_scatter(false); // html
             this.vincita_durante_scatter = 0;
             this.giri_bonus = -1;
         }
@@ -295,10 +322,10 @@ const slot1 = {
      * gestisce il moltiplicatore ufo
      */
     moltiplicatore_ufo(aumenta) {
-        const MAX = config.moltiplicatori_ufo.length - 1; // indice moltiplicatore massimo
+        const MAX = config.n_m_ufo - 1; // indice moltiplicatore massimo
         let current = config.moltiplicatore_ufo_attivo;
         if (!aumenta) {
-            current = 0;
+            current = this.indice_m_ufo_scatter;
         }
         if (aumenta && current < MAX) {
             current++;
@@ -326,11 +353,11 @@ const slot1 = {
         let total_coins = puntata * moltiplicatore;
         total_coins *= config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo];
         html.informazioni_giocata(
-            total_coins, 
-            puntata, 
-            moltiplicatore, 
-            config.nomi_simboli[indice_simbolo], 
-            frequenza, 
+            total_coins,
+            puntata,
+            moltiplicatore,
+            config.nomi_simboli[indice_simbolo],
+            frequenza,
             config.moltiplicatori_ufo[config.moltiplicatore_ufo_attivo],
             riga
         );

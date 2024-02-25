@@ -179,6 +179,8 @@ body {
   display: flex;
   flex-wrap: nowrap;
   align-items: center;
+  position: relative;
+  margin: 4px auto;
 }
 .container_moltiplicatori_ufo #moltiplicatori_ufo b {
   flex-grow: 1;
@@ -188,10 +190,26 @@ body {
   -webkit-text-stroke: 1px #222;
   transition: 0.2s;
   margin: auto;
+  border-right: 2px solid var(--bc);
+}
+.container_moltiplicatori_ufo #moltiplicatori_ufo b:last-child {
+  border: none;
 }
 .container_moltiplicatori_ufo #moltiplicatori_ufo b.active {
   color: gold;
   font-size: 2.5em;
+}
+.container_moltiplicatori_ufo #moltiplicatori_ufo .barra_n_scatter {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  background-color: #198754;
+  opacity: 0.5;
+  z-index: -1;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out;
 }
 
 #coin {

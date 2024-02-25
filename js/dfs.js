@@ -1,4 +1,11 @@
-function dfs(matrix, indice) {
+/**
+ * 
+ * @param {Array} matrix matrice su cui ricercare i percorsi
+ * @param {*} indice // indice da utilizzare come target per iniziare la ricerca (puo svilupparsi)
+ * @param {*} from_set_to_array true per restituire un array di array, false un array di stringhe con i percorsi
+ * @returns i percorsi
+ */
+function dfs(matrix, indice, from_set_to_array = true) {
     const rows = matrix.length;
     const cols = matrix[0].length;
     // const paths = [];
@@ -86,9 +93,13 @@ function dfs(matrix, indice) {
     for (let i = 0; i < rows; i++) {
         explore(i, 0, [], indice, false);
     }
-
-    // Converti i percorsi unici da stringhe JSON a array di coordinate
-    const uniquePathsArray = Array.from(uniquePaths).map(pathString => JSON.parse(pathString));
+    let uniquePathsArray = uniquePaths;
+    if (from_set_to_array) {
+        // Converti i percorsi unici da stringhe JSON a array di coordinate
+        uniquePathsArray = Array.from(uniquePaths).map(pathString => JSON.parse(pathString));
+    } else {
+        uniquePathsArray = Array.from(uniquePaths).map(pathString => pathString);
+    }
     return uniquePathsArray;
 }
 

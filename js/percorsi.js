@@ -100,33 +100,52 @@ const percorso = {
         slot_elements.set_griglia_indici();
         // this._init_simboli_vicini();
         const percorsi = [[], [], []];
+        const set = new Set();
         const g = slot_elements.griglia_indici;
         // per ogni riga genero un percorso
         let primi = [g[0][0], g[1][0], g[2][0]];
-        primi = this.removeDuplicates(primi);
-        for (let r = 0; r < primi.length; r++) {
-            const result = dfs(slot_elements.griglia_indici, primi[r]);
+        // sostituisco i numeri duplicati con false
+        this.sostituisci_duplicati_k(primi, -1);
+        for (let r = 0; r < config.righe; r++) {
+            // se ce un duplicato continuo
+            if (primi[r] == -1) {
+                continue;
+            }
+            const result = dfs(slot_elements.griglia_indici, primi[r], false);
             // per ogni percorso generato
             for (let p = 0; p < result.length; p++) {
-                const percorso = result[p];
-                if (percorso.length >= 3) {
-                    const primo = percorso[0];
-                    percorsi[primo[0]].push(percorso);
-                }
+                set.add(result[p]);
+                // const percorso = result[p];
+                // if (percorso.length >= 3) {
+                // }
+            }
+        }
+        const array_from_set = Array.from(set);
+        const array_percorsi = array_from_set.map(str => JSON.parse(str));
+        for (let i = 0; i < array_percorsi.length; i++) {
+            const percorso = array_percorsi[i];
+            const riga = percorso[0][0];
+            if (percorso.length >= 3) {
+                percorsi[riga].push(percorso);
             }
         }
         return percorsi;
     },
-    removeDuplicates(nums) {
-        const uniqueNums = [];
+    /**
+     * sostituisce i duplicati in un array con un elemento k definito
+     * @param {Array} nums array di elementi
+     * @param {*} k elemento da sostituire
+     */
+    sostituisci_duplicati_k(nums, k = false) {
         const numSet = new Set();
-        for (const num of nums) {
+        for (let i = 0; i < nums.length; i++) {
+            const num = nums[i];
             if (!numSet.has(num)) {
-                uniqueNums.push(num);
                 numSet.add(num);
+            } else {
+                nums[i] = k;
             }
         }
-        return uniqueNums;
     }
 }
 

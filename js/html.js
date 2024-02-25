@@ -136,6 +136,18 @@ const html = {
         m_ufo[current].classList.add('active');
     },
     /**
+     * gestisce la barra dei moltiplicatori ufo quando è
+     * @param {Boolean} attiva 
+     */
+    m_ufo_durante_scatter(attiva) {
+        let width = 0;
+        if (attiva) {
+            const step_width = 100 / (config.n_m_ufo * 3);
+            width = step_width * slot1.n_wild_durante_scatter;
+        }
+        dom.get1('.barra_n_scatter').style.width = width + '%';
+    },
+    /**
      * mette a display le informazioni su quanto è stato guadagnato
      * @param {number} guadagno 
      */
