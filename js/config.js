@@ -42,7 +42,7 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        7,
+        6.5,
         10,
         15,
         20,
