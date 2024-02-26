@@ -69,12 +69,14 @@ const slot1 = {
     spin(puntata) {
         // controllo che la puntata non sia stata manomessa
         puntata = this.check_puntata(puntata);
+        record.conteggio_giocate++;
         // se ci sono giri bonus non tolgo la puntata e rimuovo man mano i giri bonus
         // quando saranno finiti torno a togliere come di norma la puntata
         if (this.giri_bonus > 0) {
             this.giri_bonus--;
         } else {
             utente.wallet -= puntata;
+            record.soldi_giocati += puntata;
         }
         slot_elements.set_griglia();
         this.guadagno_totale = 0;
@@ -127,9 +129,17 @@ const slot1 = {
             setTimeout(() => {
                 this.moltiplicatore_ufo(false);
                 config.sta_giocando = false;
+                // html
                 $(he.e.spin_btn).prop('disabled', false);
                 html._info(this.guadagno_totale, true);
-            }, 500);
+                // statistiche
+                record.soldi_restituiti += this.guadagno_totale;
+                record.calcola_rtp();
+                record.save_rtp_local();
+                html.statistiche_rtp(); // html
+                // autoplay
+                // utente.autoplay();
+            }, 200);
         }
     },
     /**
@@ -276,6 +286,13 @@ const slot1 = {
      * @param {number} conteggio_wild 
      */
     scatter() {
+        /**
+         * se la modalità bonus è attiva e se ci sono 2 scatter allora aumento i giri bonus di 3
+         */
+        if (this.blocca_puntata && slot_elements.conteggio_scatter) {
+            this.giri_bonus += 3;
+            html.giri_bonus(true, 3);
+        }
         /**
          * se il numero di scatter è superiore al numero minimo richiesto
         */

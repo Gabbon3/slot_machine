@@ -195,5 +195,11 @@ const html = {
         if (number.length <= 3) return number;
         // return [...[...number].reverse().join('').match(/.{1,3}/g).join('.')].reverse().join('');
         return number
-    }
+    },
+    /**
+     * stampa le statistiche relative all rtp
+     */
+    statistiche_rtp() {
+        dom.get1('#statistiche').innerHTML = record.log_statistiche();
+    },
 }

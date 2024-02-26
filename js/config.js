@@ -147,6 +147,9 @@ const config = {
         16,
         32
     ],
+    giri_bonus: [
+        3, 10, 15, 20
+    ],
     nomi_simboli: [
         'Tavola Wild - Scatter',
         'Faraone',

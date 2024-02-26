@@ -14,9 +14,21 @@ const record = {
     last_game: 0,
     partite_perse: 0, // memorizza quante partite perde l'utente
     /**
+     * var. usate per le statistiche della slot
+     */
+    conteggio_giocate: 0,
+    soldi_giocati: 0,
+    soldi_restituiti: 0,
+    /**
+     * RTP = (soldi restituiti / soldi giocati) * 100
+     */
+    rtp: 0,
+    // ---
+    /**
      * 
      */
     _init() {
+        this.init_rtp();
         this.record_wallet = this.get('record_wallet');
         this.partite_perse = this.get('partite_perse');
         this.last_game = this.get('last_game');
@@ -75,4 +87,37 @@ const record = {
         localStorage.setItem(key, value);
     },
     // ----
+    init_rtp() {
+        this.rtp = Number(this.get('rtp'));
+        if (!this.rtp) {
+            this.save_rtp_local();
+        } else {
+            this.soldi_giocati = Number(this.get('soldi_giocati'));
+            this.soldi_restituiti = Number(this.get('soldi_restituiti'));
+            this.conteggio_giocate = Number(this.get('conteggio_giocate'));
+        }
+    },
+    /**
+     * salva le statistiche in locale
+     */
+    save_rtp_local() {
+        this.set('rtp', this.rtp);
+        this.set('soldi_restituiti', this.soldi_restituiti);
+        this.set('soldi_giocati', this.soldi_giocati);
+        this.set('conteggio_giocate', this.conteggio_giocate);
+    },
+    calcola_rtp() {
+        this.rtp = (this.soldi_restituiti / this.soldi_giocati) * 100;
+        this.rtp = this.rtp.toFixed(2);
+        return this.rtp;
+    },
+    log_statistiche() {
+        this.calcola_rtp();
+        const text = `Su ${this.conteggio_giocate} volte che hai giocato:
+ - ${this.soldi_giocati}€ sono stati giocati
+ - ${this.soldi_restituiti}€ sono stati restituiti
+ RTP: ${this.rtp}`;
+        // console.log(text);
+        return text;
+    }
 }
