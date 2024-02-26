@@ -209,6 +209,8 @@ const slot1 = {
                 if (indice_primo_simbolo === config.indice_wild) {
                     indice_primo_simbolo = linea.find(simbolo => simbolo !== config.indice_wild);
                     if (!indice_primo_simbolo) {
+                        // se è una linea di soli wild
+                        // continue;
                         indice_primo_simbolo = config.indice_wild;
                     }
                 }
@@ -224,19 +226,13 @@ const slot1 = {
                 elementi_minimi_richiesti_del_simbolo = config.colonne - config.percentuale_guadagno[indice_primo_simbolo].length + 1;
                 let linea_vincente = false; // tiene traccia se l'utente ha vinto
                 // se la linea contiene dei wild di fila
-                const elementi_minimi_wild = config.colonne - config.percentuale_guadagno[config.indice_wild].length + 1;
                 /**
                  * se sulla stessa linea trovo dei wild allora calcolo la vincita
                  * indipendentemente dall'ordine
                  * i wild si attivano anche se non sono in successione
                  */
-                if (n_wild_linea >= elementi_minimi_wild) {
-                    const vincita_linea = this.calc_coins(puntata, config.indice_wild, n_wild_linea, elementi_minimi_wild, i);
-                    guadagno += vincita_linea;
-                    linea_vincente = true;
-                }
-                // attivo l'if se ci sono almeno n simboli e se i wild non coprono tutta la linea
-                if (n_elementi_uguali_al_primo >= elementi_minimi_richiesti_del_simbolo && n_wild_linea < config.colonne) {
+                // attivo l'if se ci sono almeno n simboli
+                if (n_elementi_uguali_al_primo >= elementi_minimi_richiesti_del_simbolo) {
                     const vincita_linea = this.calc_coins(puntata, indice_primo_simbolo, n_elementi_uguali_al_primo, elementi_minimi_richiesti_del_simbolo, i);
                     /**
                      * puntata: la puntata del giocatore
@@ -298,7 +294,7 @@ const slot1 = {
         */
         if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
             this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
-            let giri_aggiuntivi = 5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo);
+            let giri_aggiuntivi = 3 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo);
             // il numero massimo di giri bonus assegnabili ad ogni spin è 20 se no poi è troppo
             if (giri_aggiuntivi > 10) {
                 giri_aggiuntivi = 10;

@@ -32,7 +32,7 @@ const config = {
     simboli: [
         '<img src="img/items/tavola_aliena_oro.png"></img>', // 1 - wild e scatter
         '<img src="img/items/faraone_alieno.png"></img>', // 2
-        '<img src="img/items/guardia_faraone.png"></img>', // 3
+        // '<img src="img/items/guardia_faraone.png"></img>', // 3
         '<img src="img/items/piramide.png"></img>', // 4
         '<img src="img/items/ufo.png"></img>', // 5
         '<img src="img/items/card_a.png"></img>', // 6
@@ -42,16 +42,15 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        7,
         10,
-        15,
         20,
-        20,
-        30,
-        30,
-        35,
-        35,
-        35
+        28,
+        34,
+        40,
+        40,
+        45,
+        50,
+        50,
     ],
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra
@@ -107,16 +106,13 @@ const config = {
         [ // 0 - tavola d'oro, bonus e scatter
             1, 2, 5
         ],
-        [ // 1 - faraone
-            0.8, 1.5, 3.5
+        [ // 1 - 
+            1, 2, 5
         ],
-        [ // 2 - guardia
-            0.6, 1, 2.5
+        [ // 2 - 
+            0.5, 0.9, 2.5
         ],
-        [ // 3 - piramide
-            0.4, 0.7, 1.4
-        ],
-        [ // 4 - ufo
+        [ // 4 - 
             0.4, 0.7, 1.4
         ],
         [ // 5 - A
@@ -126,7 +122,7 @@ const config = {
             0.3, 0.6, 1.2
         ],
         [ // 7 - Q
-            0.2, 0.4, 0.7
+            0.3, 0.5, 0.9
         ],
         [ // 8 - J
             0.2, 0.4, 0.7
@@ -153,7 +149,7 @@ const config = {
     nomi_simboli: [
         'Tavola Wild - Scatter',
         'Faraone',
-        'Guardia',
+        // 'Guardia',
         'Piramide',
         'UFO',
         'Asso',
@@ -171,9 +167,9 @@ const config = {
         // 1 - faraone
         "Il leggendario faraone Kahmunrah"
         ,
-        // 2 - guardia
-        `Le impenetrabili guardie del faraone`
-        ,
+        // // 2 - guardia
+        // `Le impenetrabili guardie del faraone`
+        // ,
         // 3 - piramide
         `La piramide dove sono sepolti tutti i misteri e le storie di un popolo vissuto ormai millenni addietro`
         ,
