@@ -289,7 +289,7 @@ const slot1 = {
         /**
          * se la modalità bonus è attiva e se ci sono 2 scatter allora aumento i giri bonus di 3
          */
-        if (this.blocca_puntata && slot_elements.conteggio_scatter) {
+        if (this.blocca_puntata && slot_elements.conteggio_scatter == 2) {
             this.giri_bonus += 3;
             html.giri_bonus(true, 3);
         }
