@@ -3,14 +3,15 @@ cd css/scss
 sass --watch main.scss:../main.css
 */
 
-@import url('https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Protest+Riot&display=swap');
 
 :root {
     --bc: rgba(43, 50, 57, 1);
     --bca: rgba(43, 50, 57, 0.3);
     --bca-darker: rgba(43, 50, 57, 0.8);
     --font-fam: system-ui;
-    --coin-font: "Protest Riot";
+    --coin-font: "Kode Mono";
+    --coin-letter-spacing: -0.05em;
     --display-max-width: 700px;
 }
 

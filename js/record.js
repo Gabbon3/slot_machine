@@ -35,9 +35,9 @@ const record = {
         }
     },
     _init_avvisi() {
-        this.avviso('💸 Record denaro ' + html.better_big_nums(this.record_wallet) + ' <i class="fa-brands fa-gg"></i> 💸');
+        this.avviso('💸 Record denaro ' + html.better_big_nums(this.record_wallet) + ' € 💸');
         this.avviso('🚩 Hai perso ' + this.partite_perse + ' game 🚩');
-        this.avviso('🪙 L\'ultima volta che hai giocato avevi ' + html.better_big_nums(this.last_game) + ' <i class="fa-brands fa-gg"></i> 🪙');
+        this.avviso('🪙 L\'ultima volta che hai giocato avevi ' + html.better_big_nums(this.last_game) + ' € 🪙');
     },
     /**
      * verifica se l'utente ha fatto un nuovo record, se si il nuovo record viene salvato

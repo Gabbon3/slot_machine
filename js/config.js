@@ -1,5 +1,5 @@
 const config = {
-    versione: '1.0.1', // versione della slot
+    versione: '1.1.0', // versione della slot
     wallet: 1000, // valore di coin di partenza
     max_random_number: 10000, // numero massimo estraibile dall estrattore di numeri casuali
     n_emoji: 0, // quanti elementi contiene un rullo | numero totale delle emoji usate
@@ -42,16 +42,16 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        5,
+        7,
         10,
         15,
         20,
         20,
         30,
         30,
-        40,
-        40,
-        40
+        35,
+        35,
+        35
     ],
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra

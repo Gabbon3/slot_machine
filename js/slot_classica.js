@@ -121,7 +121,7 @@ const slot1 = {
                     he.e.coin.innerHTML = utente.get_wallet();
                     // ripeto il ciclo
                 }, false); // one time animazione
-            }, 500);
+            }, 400);
         } else {
             // quando la serie (la STREAK) di vincite consecutive finisce:
             setTimeout(() => {
@@ -279,30 +279,41 @@ const slot1 = {
         /**
          * se il numero di scatter è superiore al numero minimo richiesto
         */
-       if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
-           this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
-           const giri = (10 + (5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo)))
-           this.giri_bonus += giri;
-           this.blocca_puntata = true;
-           html.giri_bonus(true, giri); // html
+        if (slot_elements.conteggio_scatter >= config.quantita_scatter_minimo) {
+            this.giri_bonus = this.giri_bonus == -1 ? this.giri_bonus + 1 : this.giri_bonus;
+            let giri_aggiuntivi = 5 * (slot_elements.conteggio_scatter - config.quantita_scatter_minimo);
+            // il numero massimo di giri bonus assegnabili ad ogni spin è 20 se no poi è troppo
+            if (giri_aggiuntivi > 10) {
+                giri_aggiuntivi = 10;
+            }
+            const giri = 10 + giri_aggiuntivi;
+            this.giri_bonus += giri;
+            // se non è gia stata attivata la modalita bonus
+            // allora azzero il conteggio scatter cosi si parte da 1x e non da 2x come prima
+            if (!this.blocca_puntata) {
+                slot_elements.conteggio_scatter = 0;
+            }
+            this.blocca_puntata = true;
+            html.giri_bonus(true, giri); // html
         }
         /**
          * se ci sono i giri bonus attivi
          */
         if (this.giri_bonus > 0) {
-            const MAX = (config.n_m_ufo * 3);
-            const MAX_INDICE = config.n_m_ufo - 1; 
+            const MAX_INDICE = config.n_m_ufo - 1;
+            /**
+             * 15 è il numero massimo raggiungibile durante i giri bonus
+             */
+            const MAX = 3 * MAX_INDICE;
             this.n_wild_durante_scatter += slot_elements.conteggio_scatter;
             if (this.n_wild_durante_scatter > MAX) {
                 this.n_wild_durante_scatter = MAX;
             }
             // ogni 3 scatter aumento il moltiplicatore ufo minimo da cui partire
             let moltiplicatore_ufo_minimo = this.indice_m_ufo_scatter;
-            if (this.n_wild_durante_scatter % 3 == 0) {
-                moltiplicatore_ufo_minimo = this.n_wild_durante_scatter / 3;
-            }
-            // moltiplicatore minimo = 6? se si allora MAX_INDICE se no moltiplicatore ufo minimo
-            this.indice_m_ufo_scatter = moltiplicatore_ufo_minimo == config.n_ufo ? MAX_INDICE : moltiplicatore_ufo_minimo;
+            // il numero massimo è 5
+            moltiplicatore_ufo_minimo = parseInt(this.n_wild_durante_scatter / 3);
+            this.indice_m_ufo_scatter = moltiplicatore_ufo_minimo;
             html.m_ufo_durante_scatter(true); // html
         }
         if (this.giri_bonus == 0) {

@@ -1,7 +1,7 @@
 const animazione = {
     intervalli: {},
     wins: [],
-    tempo_intervallo: 200,
+    tempo_intervallo: 90,
     start_time: 100,
     /**
      * 
@@ -9,10 +9,10 @@ const animazione = {
      */
     shuffle(funzione_finale) {
         // per ogni riga eseguo le animazioni
-        let timeout = 1000;
+        let timeout = 500;
         let start_timeout = 0;
         for (let c = 0; c < config.colonne; c++) {
-            timeout = 1000;
+            timeout = 500;
             for (let r = 0; r < config.righe; r++) {
                 const simbolo = slot_elements.griglia[r][c];
                 this.scramble(simbolo, he.e.items[r][c], timeout, start_timeout);
@@ -104,10 +104,10 @@ const animazione = {
                     // lo mostro
                     const [x, y] = percorso[j];
                     slot1.reroll_simboli.push(slot_elements.griglia[x][y]); // pusho gli elementi da rerollare
-                    this.animate_item(he.e.items[x][y], 200, 'rgba(212, 174, 89, 0.9)');
+                    this.animate_item(he.e.items[x][y], 150, 'rgba(212, 174, 89, 0.9)');
                 }
             }, timeout);
-            timeout += (800);
+            timeout += (450);
         }
         setTimeout(() => {
             slot1.reroll();
@@ -121,7 +121,7 @@ const animazione = {
             $(item).animate({
                 // backgroundColor: 'rgba(43, 50, 57, 0.3)'
                 backgroundColor: 'rgba(43, 50, 57, 0)'
-            }, duration * 3)
+            }, duration * 2)
         });
     },
     esplodi_wild(riga, colonna) {
@@ -156,10 +156,10 @@ const animazione = {
         let numero = somma;
         let i = 0;
         var increaser = setInterval(() => {
-            $(html_target).text(math.approssima(numero));
+            $(html_target).text(math.approssima(numero).toFixed(2));
             if (i == step) {
                 clearInterval(increaser);
-                $(html_target).text(math.approssima(stop));
+                $(html_target).text(math.approssima(stop).toFixed(2));
             }
             i++;
             numero += somma;

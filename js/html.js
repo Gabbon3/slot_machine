@@ -124,7 +124,7 @@ const html = {
             $('#sfondo-normale').fadeIn();
             he.e.display.classList.remove('scatter-attivo');
             dom.get1('#giri_bonus').value = 0;
-            record.avviso('💰 Durante i giri gratis hai vinto ' + slot1.vincita_durante_scatter + ' <i class="fa-brands fa-gg" aria-hidden="true"></i> 💰');
+            record.avviso('💰 Durante i giri gratis hai vinto ' + slot1.vincita_durante_scatter + ' € 💰');
         }
     },
     /**
@@ -142,7 +142,7 @@ const html = {
     m_ufo_durante_scatter(attiva) {
         let width = 0;
         if (attiva) {
-            const step_width = 100 / (config.n_m_ufo * 3);
+            const step_width = 100 / ((config.n_m_ufo - 1) * 3);
             width = step_width * slot1.n_wild_durante_scatter;
         }
         dom.get1('.barra_n_scatter').style.width = width + '%';
@@ -191,8 +191,9 @@ const html = {
      */
     better_big_nums(number) {
         number = `${number}`;
+        // number = number.replace('.', ',');
         if (number.length <= 3) return number;
-        // return [...[...number].reverse().join('').match(/.{1,3}/g).join('ˈ')].reverse().join('');
+        // return [...[...number].reverse().join('').match(/.{1,3}/g).join('.')].reverse().join('');
         return number
     }
 }

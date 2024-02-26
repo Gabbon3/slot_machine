@@ -2,13 +2,14 @@
 cd css/scss
 sass --watch main.scss:../main.css
 */
-@import url("https://fonts.googleapis.com/css2?family=Protest+Riot&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&family=Protest+Riot&display=swap");
 :root {
   --bc: rgba(43, 50, 57, 1);
   --bca: rgba(43, 50, 57, 0.3);
   --bca-darker: rgba(43, 50, 57, 0.8);
   --font-fam: system-ui;
-  --coin-font: "Protest Riot";
+  --coin-font: "Kode Mono";
+  --coin-letter-spacing: -0.05em;
   --display-max-width: 700px;
 }
 
@@ -72,13 +73,13 @@ body {
   animation: up-down cubic-bezier(0.59, 0.23, 0.4, 0.75) 2s infinite;
 }
 #display .riga .item.spin img {
-  animation: spin linear 0.2s infinite;
+  animation: spin linear 0.09s infinite;
 }
 #display .riga .item.spin-finale img {
-  animation: spin-finale ease-out 0.2s 1;
+  animation: spin-finale ease-out 0.09s 1;
 }
 #display .riga .item.spin-start img {
-  animation: spin-start ease-in 0.2s 1;
+  animation: spin-start ease-in 0.09s 1;
 }
 #display .riga .guadagno-riga {
   position: absolute;
@@ -128,11 +129,13 @@ body {
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
-  font-size: calc((20vh + 20vw) / 2);
+  font-size: calc((15vh + 15vw) / 2);
   color: #fff;
   -webkit-text-stroke: calc((0.5vh + 0.5vw) / 2) #000717;
   font-weight: bolder;
   z-index: 5;
+  letter-spacing: var(--coin-letter-spacing);
+  font-family: var(--coin-font);
 }
 
 .wallpaper {
@@ -197,7 +200,6 @@ body {
 }
 .container_moltiplicatori_ufo #moltiplicatori_ufo b.active {
   color: gold;
-  font-size: 2.5em;
 }
 .container_moltiplicatori_ufo #moltiplicatori_ufo .barra_n_scatter {
   position: absolute;
@@ -218,6 +220,10 @@ body {
   text-align: center;
   -webkit-text-stroke: 1px #222;
   font-family: var(--coin-font);
+  letter-spacing: var(--coin-letter-spacing);
+}
+#coin b {
+  letter-spacing: var(--coin-letter-spacing);
 }
 
 .btn {

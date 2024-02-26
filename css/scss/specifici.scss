@@ -54,15 +54,15 @@
             }
 
             &.spin img {
-                animation: spin linear 0.2s infinite;
+                animation: spin linear 0.09s infinite;
             }
 
             &.spin-finale img {
-                animation: spin-finale ease-out 0.2s 1;
+                animation: spin-finale ease-out 0.09s 1;
             }
 
             &.spin-start img {
-                animation: spin-start ease-in 0.2s 1;
+                animation: spin-start ease-in 0.09s 1;
             }
         }
 
@@ -121,13 +121,15 @@
     left: 50%;
     transform: translateX(-50%);
     text-align: center;
-    font-size: calc((20vh + 20vw) / 2);
+    font-size: calc((15vh + 15vw) / 2);
     // text-shadow: 5px 5px 5px rgba(255,215,0,0.6);
     color: #fff;
     -webkit-text-stroke: calc((0.5vh + 0.5vw) / 2) #000717;
     font-weight: bolder;
     // animazione numero
     z-index: 5;
+    letter-spacing: var(--coin-letter-spacing);
+    font-family: var(--coin-font);
 
     // b {
     //     position: absolute;
@@ -213,7 +215,7 @@
 
             &.active {
                 color: gold;
-                font-size: 2.5em;
+                // font-size: 2.5em;
             }
         }
 
@@ -238,4 +240,9 @@
     text-align: center;
     -webkit-text-stroke: 1px #222;
     font-family: var(--coin-font);
+    letter-spacing: var(--coin-letter-spacing);
+
+    b {
+        letter-spacing: var(--coin-letter-spacing);
+    }
 }
