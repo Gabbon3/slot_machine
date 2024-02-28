@@ -66,18 +66,25 @@ const slot1 = {
      * esegue l'azione di spin della macchina
      * @returns {Array} array degli elementi del rullo
      */
+    primo_giro: true,
     spin(puntata) {
         // controllo che la puntata non sia stata manomessa
         puntata = this.check_puntata(puntata);
         record.conteggio_giocate++;
         // se ci sono giri bonus non tolgo la puntata e rimuovo man mano i giri bonus
         // quando saranno finiti torno a togliere come di norma la puntata
-        if (this.giri_bonus > 0) {
+        if (this.giri_bonus > 0) {   
             this.giri_bonus--;
         } else {
             utente.wallet -= puntata;
             record.soldi_giocati += puntata;
         }
+        // if (this.primo_giro) {
+        //     this.primo_giro = false;
+        //     slot_elements.set_griglia(0);
+        // } else {
+        //     slot_elements.set_griglia();
+        // }
         slot_elements.set_griglia();
         this.guadagno_totale = 0;
     },

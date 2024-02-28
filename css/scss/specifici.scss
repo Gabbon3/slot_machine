@@ -50,19 +50,19 @@
                 text-align: center;
                 width: 100%;
                 max-height: 100%;
-                animation: up-down cubic-bezier(.59, .23, .4, .75) 2s infinite;
+                // animation: up-down cubic-bezier(.59, .23, .4, .75) 2s infinite;
             }
 
             &.spin img {
-                animation: spin linear 0.09s infinite;
+                animation: spin linear 0.15s infinite;
             }
 
             &.spin-finale img {
-                animation: spin-finale ease-out 0.09s 1;
+                animation: spin-finale ease-out 0.15s 1;
             }
 
             &.spin-start img {
-                animation: spin-start ease-in 0.09s 1;
+                animation: spin-start ease-in 0.15s 1;
             }
         }
 

@@ -1,16 +1,26 @@
 const animazione = {
     intervalli: {},
     wins: [],
-    tempo_intervallo: 90,
-    start_time: 100,
+    tempo_intervallo: 150,
+    start_time: 250,
     /**
      * 
      * @param {*} funzione_finale
      */
     shuffle(funzione_finale) {
         // per ogni riga eseguo le animazioni
-        let timeout = 500;
+        let timeout = 900;
         let start_timeout = 0;
+        for (let r = 0; r < config.righe; r++) {
+            timeout = 900;
+            for (let c = 0; c < config.colonne; c++) {
+                const simbolo = slot_elements.griglia[r][c];
+                this.scramble(simbolo, he.e.items[r][c], timeout, start_timeout);
+            }
+            timeout += this.tempo_intervallo;
+            start_timeout += this.start_time;
+        }
+        /*
         for (let c = 0; c < config.colonne; c++) {
             timeout = 500;
             for (let r = 0; r < config.righe; r++) {
@@ -19,21 +29,7 @@ const animazione = {
             }
             timeout += this.tempo_intervallo;
             start_timeout += this.start_time;
-        }
-        // per ogni colonna eseguo le animazioni
-        /*
-        for (let c = 0; c < config.colonne; c++) {
-            timeout = 1000;
-            start_timeout = 0;
-            // itero 3 colonne alla volta
-            for (let r = 0; r < config.righe; r++) {
-                const simbolo = slot_elements.griglia[r][c];
-                this.scramble(simbolo, he.e.items[r][c], timeout, start_timeout);
-            }
-            timeout += this.tempo_intervallo;
-            start_timeout += this.start_time;
-        }
-        */
+        }*/
         // eseguo del codice quando l'animazione finisce
         // in qesto cas sara quando la slot non gira piu allora faccio i calcoli
         setTimeout(() => {
@@ -104,10 +100,10 @@ const animazione = {
                     // lo mostro
                     const [x, y] = percorso[j];
                     slot1.reroll_simboli.push(slot_elements.griglia[x][y]); // pusho gli elementi da rerollare
-                    this.animate_item(he.e.items[x][y], 150, 'rgba(212, 174, 89, 0.9)');
+                    this.animate_item(he.e.items[x][y], 200, 'rgba(212, 174, 89, 0.9)');
                 }
             }, timeout);
-            timeout += (450);
+            timeout += (600);
         }
         setTimeout(() => {
             slot1.reroll();

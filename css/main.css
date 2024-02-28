@@ -70,16 +70,15 @@ body {
   text-align: center;
   width: 100%;
   max-height: 100%;
-  animation: up-down cubic-bezier(0.59, 0.23, 0.4, 0.75) 2s infinite;
 }
 #display .riga .item.spin img {
-  animation: spin linear 0.09s infinite;
+  animation: spin linear 0.15s infinite;
 }
 #display .riga .item.spin-finale img {
-  animation: spin-finale ease-out 0.09s 1;
+  animation: spin-finale ease-out 0.15s 1;
 }
 #display .riga .item.spin-start img {
-  animation: spin-start ease-in 0.09s 1;
+  animation: spin-start ease-in 0.15s 1;
 }
 #display .riga .guadagno-riga {
   position: absolute;

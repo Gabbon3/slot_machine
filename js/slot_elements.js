@@ -27,15 +27,16 @@ const slot_elements = {
     },
     /**
      * gestisce l'intero processo di restituzione degli elementi
+     * @param {Number} indice crea una griglia di un singolo simbolo **sperimentale
      */
-    set_griglia() {
+    set_griglia(indice = null) {
         // inizializzo
         this.griglia = this._init_griglia();
         this.griglia_indici = this._init_griglia();
         // ----
         for (let r = 0; r < config.righe; r++) {
             for (let c = 0; c < config.colonne; c++) {
-                this.griglia[r][c] = this.inizializza_nuovo_simbolo(r, c);
+                this.griglia[r][c] = this.inizializza_nuovo_simbolo(r, c, indice);
                 this.griglia_indici[r][c] = this.griglia[r][c].index;
             }
         }
@@ -64,8 +65,15 @@ const slot_elements = {
         }
         return matrice;
     },
-    inizializza_nuovo_simbolo(riga, colonna) {
-        const indice_del_simbolo = this.get_element(config.rarita);
+    /**
+     * 
+     * @param {Number} riga 
+     * @param {Number} colonna 
+     * @param {Number} indice forzatura indice
+     * @returns 
+     */
+    inizializza_nuovo_simbolo(riga, colonna, indice = null) {
+        const indice_del_simbolo = indice != null ? indice : this.get_element(config.rarita);
         // creo un nuovo oggetto per memorizzare l'item
         const result = {
             r: riga,
@@ -187,5 +195,5 @@ const slot_elements = {
                 this.griglia[r][c].controllato = controllato;
             }
         }
-    }
+    },
 }
