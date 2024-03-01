@@ -7,6 +7,7 @@ const slot_elements = {
     griglia_indici: [],
     conteggio_scatter: 0, // numero totale dei wild per giro
     posizioni_scatter: [],
+    posizioni_wild: [],
     /**
      * restituisce un simbolo
      */
@@ -90,8 +91,12 @@ const slot_elements = {
     n_scatter() {
         let n = 0;
         this.posizioni_scatter = [];
+        this.posizioni_wild = [];
         for (let r = 0; r < config.righe; r++) {
             for (let c = 0; c < config.colonne; c++) {
+                if (this.griglia[r][c].index == config.indice_wild) {
+                    this.posizioni_wild.push([r, c]);
+                }
                 if (this.griglia[r][c].index == config.indice_scatter) {
                     this.posizioni_scatter.push([r, c]);
                     n++;

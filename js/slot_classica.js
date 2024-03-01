@@ -96,8 +96,8 @@ const slot1 = {
         slot_elements.reset_elementi(false, []);
         // rimuovo i duplicati
         // cerco i wild e li faccio esplodere
-        for (let i = 0; i < slot_elements.posizioni_scatter.length; i++) {
-            const [r, c] = slot_elements.posizioni_scatter[i];
+        for (let i = 0; i < slot_elements.posizioni_wild.length; i++) {
+            const [r, c] = slot_elements.posizioni_wild[i];
             slot_elements.esplodi_wild(r, c);
         }
         this.reroll_simboli = Array.from(new Set(this.reroll_simboli.map(JSON.stringify)), JSON.parse);
