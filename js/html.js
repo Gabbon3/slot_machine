@@ -30,7 +30,7 @@ const html = {
      * inizializza l'html
      */
     _init() {
-        dom.get1('#coin-value').innerHTML = utente.get_wallet();
+        dom.get1('#coin-value').innerHTML = html.better_big_nums(utente.get_wallet());
         dom.get1('#versione_slot').innerHTML = config.versione;
         // mostro le rarita e i moltiplicatori sulla tabella
         // genero dinamicamente la griglia e inserisco gli id ad ogni item, memorizzando la posizione x e y
@@ -67,7 +67,7 @@ const html = {
      */
     _reset() {
         $(he.e.spin_btn).prop('disabled', false);
-        he.e.coin.innerHTML = config.wallet;
+        he.e.coin.innerHTML = this.better_big_nums(config.wallet);
         he.e.other_info.innerHTML = '';
         he.e.items.forEach(item => {
             item.innerHTML = '';
@@ -96,7 +96,7 @@ const html = {
             return;
         }
         slot1.spin(puntata);
-        he.e.coin.innerHTML = utente.get_wallet();
+        he.e.coin.innerHTML = html.better_big_nums(utente.get_wallet());
         // carico html
         animazione.shuffle(() => {
             this.funzione_finale_allo_shuffle(puntata);
@@ -104,7 +104,7 @@ const html = {
     },
     funzione_finale_allo_shuffle(puntata) {
         slot1.check_player_wins(puntata);
-        he.e.coin.innerHTML = utente.get_wallet();
+        he.e.coin.innerHTML = html.better_big_nums(utente.get_wallet());
     },
     /** 
      * attiva o disattiva
@@ -190,11 +190,11 @@ const html = {
      * migliora la visibilita dei numeri grandi
      */
     better_big_nums(number) {
-        number = `${number}`;
-        // number = number.replace('.', ',');
-        if (number.length <= 3) return number;
-        // return [...[...number].reverse().join('').match(/.{1,3}/g).join('.')].reverse().join('');
-        return number
+        number = Number(number).toFixed(2);
+        number = number.split('.');
+        number[0] = [...[...number[0]].reverse().join('').match(/.{1,3}/g).join('.')].reverse().join('');
+        // if (number.length <= 3) return number;
+        return number.join(',');
     },
     /**
      * stampa le statistiche relative all rtp

@@ -8,7 +8,7 @@ sass --watch main.scss:../main.css
   --bca: rgba(43, 50, 57, 0.3);
   --bca-darker: rgba(43, 50, 57, 0.8);
   --font-fam: system-ui;
-  --coin-font: "Kode Mono";
+  --coin-font: "Kode Mono", monospace;
   --coin-letter-spacing: -0.05em;
   --display-max-width: 700px;
 }
@@ -215,7 +215,7 @@ body {
 
 #coin {
   flex-grow: 1;
-  font-size: 2.5em;
+  font-size: 1.8em;
   text-align: center;
   -webkit-text-stroke: 1px #222;
   font-family: var(--coin-font);

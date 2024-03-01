@@ -23,18 +23,18 @@ const config = {
         this.n_emoji = this.simboli.length;
         this.n_m_ufo = this.moltiplicatori_ufo.length;
     },
-    indice_wild: 0, // il wild è in posizione 1 - la tavola aliena d'oro
-    indice_scatter: 0, // lo scatter è in posizione 1 - poichè è lo stesso oggetto che funge da wild
+    indice_scatter: 0, // lo scatter 
+    indice_wild: 1, // il wild 
     quantita_scatter_minimo: 3, // numero minimo di scatter che devono essere presenti in un giro
     /**
      * simboli
      */
     simboli: [
-        '<img src="img/items/tavola_aliena_oro.png"></img>', // 1 - wild e scatter
-        '<img src="img/items/faraone_alieno.png"></img>', // 2
-        '<img src="img/items/guardia_faraone.png"></img>', // 3
+        '<img src="img/items/faraone_alieno.png"></img>', // 1 - scatter
+        '<img src="img/items/tavola_aliena_oro.png"></img>', // 2 - wild
+        // '<img src="img/items/guardia_faraone.png"></img>', // 3
         '<img src="img/items/piramide.png"></img>', // 4
-        '<img src="img/items/ufo.png"></img>', // 5
+        // '<img src="img/items/ufo.png"></img>', // 5
         '<img src="img/items/card_a.png"></img>', // 6
         '<img src="img/items/card_k.png"></img>', // 7
         '<img src="img/items/card_q.png"></img>', // 8
@@ -42,16 +42,14 @@ const config = {
         '<img src="img/items/card_10.png"></img>', // 10
     ],
     rarita: [
-        10,
-        15,
-        20,
-        28,
-        34,
-        40,
-        40,
-        45,
-        50,
-        50,
+        4, // scatter
+        7, // wild
+        15, // carta alta
+        20, // asso
+        24, // re
+        28, // donna
+        32, // jack
+        36, // 10
     ],
     /**
      * idea di come strutturare i moltiplicatori prendendo spunto dalla book of ra
@@ -104,32 +102,26 @@ const config = {
     // ],
     // percentuali guadagno della esqueleto explosivo 2
     percentuale_guadagno: [
-        [ // 0 - tavola d'oro, bonus e scatter
+        [ // 0 - scatter
+            
+        ],
+        [ // 1 - wild
+            
+        ],
+        [ // 2 - Piramide
             1, 2, 5
-        ],
-        [ // 1 - 
-            1, 2, 5
-        ],
-        [ // 2 - 
-            0.5, 0.9, 2.5
-        ],
-        [ // 3 - 
-            0.4, 0.8, 1.8
-        ],
-        [ // 4 - 
-            0.4, 0.7, 1.4
         ],
         [ // 5 - A
-            0.3, 0.6, 1.2
+            0.5, 0.9, 2.5
         ],
         [ // 6 - K
-            0.3, 0.6, 1.2
+            0.4, 0.7, 1.4
         ],
         [ // 7 - Q
-            0.3, 0.5, 0.8
+            0.3, 0.6, 1.2
         ],
         [ // 8 - J
-            0.2, 0.4, 0.7
+            0.3, 0.5, 0.9
         ],
         [ // 9 - 10
             0.2, 0.4, 0.7
@@ -151,11 +143,11 @@ const config = {
         3, 10, 15, 20
     ],
     nomi_simboli: [
-        'Tavola Wild - Scatter',
         'Faraone',
-        'Guardia',
+        'Tavola Wild',
+        // 'Guardia',
         'Piramide',
-        'UFO',
+        // 'UFO',
         'Asso',
         'Re',
         'Donna',
@@ -163,16 +155,12 @@ const config = {
         '10'
     ],
     informazioni_simboli: [
-        // 0 - tavola d'oro, bonus e scatter
-        `La tavola di Kahmunrah, anche conosciuta come Jolly o Scatter,
-        si attiva il suo moltiplicatore se si trova in una linea, si sostituisce a tutti gli altri simboli, 
-        se trovi almeno 3 tavole di Kahmunrah vinci 10/15/20 giri gratis!`
-        ,
         // 1 - faraone
-        "Il leggendario faraone Kahmunrah"
+        "Il leggendario faraone Kahmunrah, lo scatter"
         ,
-        // 2 - guardia
-        `Le impenetrabili guardie del faraone`
+        // 0 - tavola d'oro, bonus e scatter
+        `La tavola di Kahmunrah, anche conosciuta come Wild,
+        si sostituisce a tutti gli altri simboli`
         ,
         // 3 - piramide
         `La piramide dove sono sepolti tutti i misteri e le storie di un popolo vissuto ormai millenni addietro`
